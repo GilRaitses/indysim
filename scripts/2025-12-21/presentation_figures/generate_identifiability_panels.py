@@ -114,8 +114,9 @@ def panel_B_fisher_information():
     ax.text(0.5, 0.55, f'Burst: {burst["fisher"]:.2f}', fontsize=20, ha='center',
             color=COLORS['success'], transform=ax.transAxes)
     
-    ax.text(0.5, 0.40, '─────────────', fontsize=20, ha='center',
-            color=COLORS['text'], transform=ax.transAxes)
+    # Draw a simple horizontal line using plot
+    ax.plot([0.3, 0.7], [0.40, 0.40], color=COLORS['text'], linewidth=2, 
+            transform=ax.transAxes, clip_on=False)
     
     ratio = burst["fisher"] / continuous["fisher"]
     ax.text(0.5, 0.25, f'Burst extracts {ratio:.0f}× more info', fontsize=22, ha='center',
