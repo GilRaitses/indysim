@@ -1,0 +1,671 @@
+# Presentation Summary for Drafting Notes
+# Combined Study: Sensorimotor Habituation in Drosophila Larvae
+# Date: December 21, 2025
+# Author: Gil Raitses
+
+---
+
+meta:
+  title: Sensorimotor Habituation in Drosophila Larvae
+  subtitle: Population-Level Modeling and Individual Phenotyping Validation
+  total_slides: 27
+  version: v3
+  last_updated: 2025-12-21
+
+---
+
+# SCIENTIFIC CONTEXT
+
+positioning_within_neuroscience:
+  
+  outer_ring_systems_neuroscience:
+    description: >
+      The study addresses how neural circuits transform sensory input into motor output
+      at the systems level. Optogenetic activation of sensory neurons triggers stereotyped
+      motor responses that can be quantified as discrete reorientation events.
+    contribution: >
+      Demonstrates that population-level sensorimotor dynamics follow predictable temporal
+      kernels with identifiable timescales for excitation and inhibition.
+  
+  middle_ring_behavioral_neuroscience:
+    description: >
+      The study characterizes behavioral habituation in a genetically tractable model organism.
+      Repeated optogenetic stimulation produces progressively altered behavioral responses
+      quantified as changes in turning fraction across pulse number.
+    contribution: >
+      Provides quantitative framework for measuring habituation dynamics under controlled
+      stimulation protocols with parametric variation in intensity and temporal structure.
+  
+  inner_ring_neurotheory:
+    description: >
+      The study applies point process models from computational neuroscience to behavioral
+      event data. The gamma-difference kernel represents a biologically interpretable model
+      of temporal filtering in sensorimotor transformation.
+    contribution: >
+      Demonstrates that difference-of-gammas kernels capture excitatory and inhibitory
+      timescales that may correspond to distinct neural circuit mechanisms.
+
+  convergence_point:
+    statement: >
+      This work sits at the intersection where quantitative neurotheory meets behavioral
+      measurement meets systems-level circuit function. The kernel parameters provide
+      a bridge between circuit timescales and observable behavior.
+
+---
+
+# NARRATIVE ARC
+
+study_arc:
+
+  original_study:
+    question: >
+      Can larval reorientation dynamics under optogenetic stimulation be modeled
+      as a point process with a parametric temporal kernel?
+    answer: >
+      Yes. The gamma-difference kernel with two timescales accurately predicts
+      population-level PSTH and generalizes across experimental conditions.
+    key_finding: >
+      Fast excitation with tau_1 = 0.3s and slow suppression with tau_2 = 4s
+      govern the temporal dynamics of reorientation probability.
+
+  followup_study:
+    question: >
+      Can the same kernel be used to phenotype individual larvae based on
+      their unique timescale parameters?
+    answer: >
+      No with current protocols. Sparse data with only 25 events per track
+      makes 6-parameter kernel estimation unreliable at the individual level.
+    key_finding: >
+      Apparent phenotypic clusters are statistical artifacts. Gap statistic
+      shows k=1 is optimal. Only 8.6% of tracks show genuine individual differences.
+
+  arc_synthesis:
+    statement: >
+      Population-level modeling succeeds because pooled data provides sufficient
+      statistical power. Individual phenotyping fails because the same model
+      is overparameterized for sparse individual data. The solution requires
+      either more data per individual or simpler models.
+
+---
+
+# FIGURES AND RELATIONSHIPS
+
+figures:
+
+  # ORIGINAL STUDY FIGURES
+  
+  figure1_kernel:
+    slide: 3
+    title: Kernel Structure
+    source: figures/figure1_kernel.png
+    timestamp: Dec 14
+    panels:
+      left: Combined gamma-difference kernel showing excitation then suppression
+      right: Decomposition into fast excitatory and slow suppressive components
+    caption_summary: >
+      The gamma-difference kernel K(t) modulates reorientation hazard rate following
+      LED onset. Peak excitation at 0.3s followed by suppression minimum at 3s.
+    relationship_to_arc: >
+      Establishes the central theoretical construct of the original study.
+      This kernel is the mathematical representation of sensorimotor transformation.
+    relationship_to_other_figures:
+      - fig_simulation_design: Kernel generates simulated events that match empirical
+      - figure_habituation: Kernel timescales explain habituation dynamics
+      - fig7_model_comparison: Gamma-difference form compared to flexible alternatives
+
+  fig_simulation_design:
+    slide: 4
+    title: Simulated vs Empirical Event Counts
+    source: phenotyping_followup/figures/fig_simulation_design.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Overlapping histograms of event counts
+      B: Box plot comparison
+    caption_summary: >
+      Simulation model validated against empirical data. Simulated tracks match
+      empirical distribution with similar median of 15 events.
+    relationship_to_arc: >
+      Validates that the kernel-based generative model produces realistic event counts.
+      This is prerequisite for using simulations in power analysis.
+    relationship_to_other_figures:
+      - figure1_kernel: Uses fitted kernel to generate events
+      - fig5_power_analysis: Simulation framework enables power calculations
+
+  figure_habituation:
+    slide: 5
+    title: Habituation Dynamics
+    source: figures/figure_habituation.png
+    timestamp: Dec 14
+    panels:
+      single: Four-condition line plot with confidence bands
+    caption_summary: >
+      Turn fraction increases across pulses in all conditions. Steeper slopes
+      indicate faster habituation. 0-250 Cycling shows strongest effect.
+    relationship_to_arc: >
+      Demonstrates the behavioral phenomenon the model aims to explain.
+      Habituation is the accumulation of kernel-driven suppression across pulses.
+    relationship_to_other_figures:
+      - figure1_kernel: Slow tau_2 component underlies habituation
+      - figure_behavior_stacked: Complementary view of same dynamics
+
+  figure_behavior_stacked:
+    slide: 6
+    title: Behavioral State Analysis
+    source: figures/figure_behavior_stacked_cinnamoroll.png
+    timestamp: Dec 14
+    panels:
+      four_panel: 2x2 grid of stacked bar charts by condition
+    caption_summary: >
+      Fractional behavioral state usage across pulses. Turn fraction increases
+      while run fraction decreases. Pause remains below 5%.
+    relationship_to_arc: >
+      Provides detailed breakdown of how behavior changes with habituation.
+      Confirms that habituation manifests as increased turning not pausing.
+    relationship_to_other_figures:
+      - figure_habituation: Same phenomenon different visualization
+
+  loeo_permutation_null:
+    slide: 7
+    title: Leave-One-Experiment-Out Validation
+    source: figures/loeo_permutation_null.png
+    timestamp: Dec 14
+    panels:
+      single: Histogram with observed value marker
+    caption_summary: >
+      LOEO pass rate of 50% falls within null distribution with p=0.618.
+      Cross-experiment generalization is no better than chance.
+    relationship_to_arc: >
+      Reveals limitation of population model. While overall fit is good
+      individual experiments show high variability. Foreshadows individual-level problems.
+    relationship_to_other_figures:
+      - fig1_clustering_illusion: Both show individual-level instability
+
+  # FOLLOW-UP STUDY FIGURES
+
+  fig1_clustering_illusion:
+    slide: 9
+    title: The Clustering Illusion
+    source: phenotyping_followup/figures/core/fig1_clustering_illusion.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: PCA distribution showing unimodal structure
+      B: Validation failures with ARI below 0.13
+      C: Gap statistic minimized at k=1
+    caption_summary: >
+      True PCA distribution is unimodal. All validation methods fail.
+      Gap statistic indicates no discrete clusters exist.
+    relationship_to_arc: >
+      Central negative result of follow-up study. Apparent clusters are artifacts
+      not genuine phenotypes. This motivates all subsequent analysis.
+    relationship_to_other_figures:
+      - fig2_data_sparsity: Explains why clustering fails
+      - fig3_hierarchical_shrinkage: Alternative to clustering
+
+  fig2_data_sparsity:
+    slide: 10
+    title: Data Sparsity Explains Instability
+    source: phenotyping_followup/figures/core/fig2_data_sparsity.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Event count histogram showing mean 25 vs required 100
+      B: MLE estimates showing implausible range
+      C: Math problem of 4 params / 25 events = 6:1 ratio
+    caption_summary: >
+      Mean 25 events per track versus 100 required. Many MLE estimates
+      fall in implausible range. Data-to-parameter ratio is 6:1 when 10:1 needed.
+    relationship_to_arc: >
+      Root cause explanation. Individual phenotyping fails because there is
+      insufficient data per track not because the model is wrong.
+    relationship_to_other_figures:
+      - fig1_clustering_illusion: Sparsity causes clustering artifacts
+      - fig5_power_analysis: Quantifies how much more data needed
+
+  fig3_hierarchical_shrinkage:
+    slide: 11
+    title: Hierarchical Shrinkage
+    source: phenotyping_followup/figures/core/fig3_hierarchical_shrinkage.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Individual estimates with population mean overlay
+      B: Shrinkage scatter showing MLE vs Bayesian
+    caption_summary: >
+      Bayesian estimates shrink toward population mean proportionally to sparsity.
+      Tracks with extreme MLE values show most shrinkage.
+    relationship_to_arc: >
+      Demonstrates partial mitigation through hierarchical Bayesian estimation
+      but confirms that shrinkage cannot create information that is absent.
+    relationship_to_other_figures:
+      - fig2_data_sparsity: Shrinkage is response to sparsity problem
+
+  fig2_identifiability_v3:
+    slide: 12
+    title: The Identifiability Problem
+    source: phenotyping_followup/figures/fig2_identifiability_v3.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Bias and RMSE by design
+      B: Fisher Information comparison
+      C: MLE recovery by design
+      D: Why continuous fails explanation
+    caption_summary: >
+      Continuous design produces high bias and RMSE. Burst design extracts
+      10x more Fisher Information. Continuous fails because inhibition dominates.
+    relationship_to_arc: >
+      Key mechanistic insight. The problem is not just data quantity but
+      data quality. Protocol design determines information content per event.
+    relationship_to_other_figures:
+      - fig_stimulation_schematic: Shows the protocol designs compared
+      - fig4_recommendations_v2: Leads to protocol modification recommendation
+
+  fig_stimulation_schematic:
+    slide: 13
+    title: Stimulation Protocol Comparison
+    source: phenotyping_followup/figures/fig_stimulation_schematic.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Current continuous 10s
+      B: Recommended burst 10x0.5s
+      C: Alternative medium 4x1s
+      D: Alternative long 2x2s
+    caption_summary: >
+      Four LED stimulation designs showing 30-second cycle structure.
+      Burst design provides 8x more information than continuous.
+    relationship_to_arc: >
+      Concrete visualization of the recommended protocol change.
+      Connects identifiability analysis to experimental design.
+    relationship_to_other_figures:
+      - fig2_identifiability_v3: Quantifies information gain
+
+  fig7_model_comparison:
+    slide: 14
+    title: Kernel Model Comparison
+    source: phenotyping_followup/figures/fig7_model_comparison.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: BIC difference between models
+      B: Model preference pie chart
+      C: Summary statistics
+    caption_summary: >
+      Gamma-difference achieves R2=0.968 with 6 parameters versus raised cosine
+      R2=0.974 with 12 parameters. Gamma-difference provides interpretability.
+    relationship_to_arc: >
+      Justifies choice of gamma-difference over flexible alternatives.
+      Biological interpretability matters for understanding mechanism.
+    relationship_to_other_figures:
+      - figure1_kernel: Shows the chosen kernel form
+
+  # RECOMMENDATION FIGURES
+
+  fig4_recommendations_v2:
+    slide: 15
+    title: Recommendation 1 - Protocol Modification
+    source: phenotyping_followup/figures/fig4_recommendations_v2.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Data gap visualization
+      B: Protocol options checklist
+      C: Fast responder distribution
+      D: Robust population kernel
+    caption_summary: >
+      Replace continuous with burst trains. Each burst event carries 10x more
+      Fisher information. Could reduce required events from 100 to 30.
+    relationship_to_arc: >
+      Primary actionable recommendation. Protocol change is highest leverage
+      intervention for enabling individual phenotyping.
+    relationship_to_other_figures:
+      - fig2_identifiability_v3: Quantitative basis for recommendation
+      - fig_stimulation_schematic: Visual comparison of protocols
+
+  fig5_power_analysis:
+    slide: 16
+    title: Recommendation 2 - Extended Recording
+    source: phenotyping_followup/figures/fig5_power_analysis.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      A: Power curve versus event count
+      B: Type I error control
+    caption_summary: >
+      Target 40+ minutes recording for 50+ events. Power analysis indicates
+      100 events required for 80% power to detect 0.2s difference in tau_1.
+    relationship_to_arc: >
+      Secondary recommendation for data quantity. Complements protocol
+      modification which addresses data quality.
+    relationship_to_other_figures:
+      - fig2_data_sparsity: Shows current vs required event counts
+
+  fig4_fast_responders:
+    slide: 18
+    title: Recommendation 4 - Alternative Phenotypes
+    source: phenotyping_followup/figures/core/fig4_fast_responders.pdf
+    timestamp: Dec 21 12:52
+    panels:
+      multiple: Distribution of fast responders and alternative metrics
+    caption_summary: >
+      Use robust composite phenotypes that avoid kernel fitting. ON/OFF ratio
+      and first-event latency require only event counts not full estimation.
+    relationship_to_arc: >
+      Pragmatic alternative when full kernel estimation is infeasible.
+      Simpler phenotypes may be sufficient for many applications.
+    relationship_to_other_figures:
+      - fig2_data_sparsity: Motivates need for simpler approaches
+
+---
+
+# SLIDE GRADES
+
+slide_grades:
+
+  slide_01:
+    title: Title Slide
+    grade: A
+    strengths:
+      - Clean typography
+      - Clear title and subtitle hierarchy
+    improvements: null
+
+  slide_02:
+    title: Executive Summary Original Study
+    grade: B+
+    strengths:
+      - Concise summary of key findings
+      - Clear structure with bold headers
+    improvements:
+      - Could benefit from a key figure preview
+      - Timescale values could be more prominent
+
+  slide_03:
+    title: Kernel Structure
+    grade: A
+    strengths:
+      - Excellent two-panel layout
+      - Clear color coding of components
+      - Good caption explaining equation
+    improvements:
+      - Caption is cut off at bottom
+
+  slide_04:
+    title: Simulated vs Empirical Event Counts
+    grade: B+
+    strengths:
+      - Good validation visualization
+      - Clear comparison between datasets
+    improvements:
+      - Could use more descriptive panel labels
+      - Sample sizes could be more prominent
+
+  slide_05:
+    title: Habituation Dynamics
+    grade: A-
+    strengths:
+      - Clear trend visualization
+      - Confidence bands included
+      - Statistical annotations present
+    improvements:
+      - Legend is small and hard to read
+      - Could highlight the key condition more
+
+  slide_06:
+    title: Behavioral State Analysis
+    grade: A-
+    strengths:
+      - Comprehensive four-condition view
+      - Good color scheme
+    improvements:
+      - Individual panels are small
+      - Could use larger font for axis labels
+
+  slide_07:
+    title: LOEO Validation
+    grade: B
+    strengths:
+      - Clear null distribution
+      - P-value clearly shown
+    improvements:
+      - Needs more context in caption
+      - Interpretation not immediately obvious
+
+  slide_08:
+    title: Executive Summary Follow-Up
+    grade: B+
+    strengths:
+      - Clear problem statement
+      - Key findings summarized
+    improvements:
+      - Could preview the solution approach
+      - Dense text could be streamlined
+
+  slide_09:
+    title: The Clustering Illusion
+    grade: A
+    strengths:
+      - Compelling three-panel argument
+      - Clear failure of all methods
+    improvements:
+      - Gap statistic panel needs legend fix
+      - PCA axis labels hard to read
+
+  slide_10:
+    title: Data Sparsity Explains Instability
+    grade: A
+    strengths:
+      - Clear visual of the math problem
+      - Panel C provides intuitive explanation
+    improvements:
+      - Color scheme could be more consistent
+
+  slide_11:
+    title: Hierarchical Shrinkage
+    grade: B+
+    strengths:
+      - Shows shrinkage effect clearly
+      - Two complementary panels
+    improvements:
+      - Population mean line hard to see
+      - Could add percentage of outliers
+
+  slide_12:
+    title: The Identifiability Problem
+    grade: A
+    strengths:
+      - Comprehensive four-panel analysis
+      - Clear quantitative comparisons
+    improvements:
+      - Panel D text is small
+      - Could highlight the 10x difference more
+
+  slide_13:
+    title: Stimulation Protocol Comparison
+    grade: A-
+    strengths:
+      - Clear visual of all four designs
+      - Statistics shown for each
+    improvements:
+      - Could emphasize recommended design
+      - Power percentages hard to read
+
+  slide_14:
+    title: Kernel Model Comparison
+    grade: B+
+    strengths:
+      - Clear model preference visualization
+      - Summary statistics present
+    improvements:
+      - BIC panel interpretation not obvious
+      - Could show kernel curves directly
+
+  slide_15:
+    title: Recommendation 1 Protocol Modification
+    grade: A-
+    strengths:
+      - Actionable recommendation
+      - Quantitative benefit stated
+    improvements:
+      - Figure is busy with four panels
+      - Key message could be larger
+
+  slide_16:
+    title: Recommendation 2 Extended Recording
+    grade: B+
+    strengths:
+      - Power curve is informative
+      - Clear target stated
+    improvements:
+      - Type I error panel less relevant
+      - Could show current vs target duration
+
+  slide_17:
+    title: Recommendation 3 Model Simplification
+    grade: B
+    strengths:
+      - Shows shrinkage as solution
+    improvements:
+      - Repeats earlier figure
+      - Could show simplified model results
+
+  slide_18:
+    title: Recommendation 4 Alternative Phenotypes
+    grade: B+
+    strengths:
+      - Practical alternative approach
+    improvements:
+      - Figure is dense
+      - Could show example of simple phenotype
+
+  slide_19:
+    title: Recommendation 5 Within-Condition Analysis
+    grade: B
+    strengths:
+      - Important methodological point
+    improvements:
+      - Repeats clustering illusion figure
+      - Could show condition-specific results
+
+  slide_20:
+    title: Conclusions Original Study
+    grade: B+
+    strengths:
+      - Clear summary of success
+      - Key timescales highlighted
+    improvements:
+      - Text-heavy without visual support
+
+  slide_21:
+    title: Conclusions Follow-Up Study
+    grade: B+
+    strengths:
+      - Honest assessment of limitations
+      - Clear bottom line
+    improvements:
+      - Could benefit from summary figure
+
+  slide_22:
+    title: Thank You
+    grade: A
+    strengths:
+      - Clean and simple
+    improvements: null
+
+  slides_23_to_27:
+    title: FAQ Slides
+    grade: B
+    strengths:
+      - Comprehensive coverage
+      - Good anticipation of questions
+    improvements:
+      - Text-heavy without figures
+      - Could use visual aids
+      - Consider reducing to 3 FAQ slides
+
+---
+
+# RECOMMENDATIONS FOR IMPROVEMENT
+
+improvement_recommendations:
+
+  high_priority:
+
+    caption_cutoff:
+      issue: Several slide captions are cut off at the bottom
+      affected_slides: [3, 4, 5, 6]
+      solution: Reduce figure height from 0.68 to 0.62 or adjust vspace
+
+    legend_readability:
+      issue: Legends in multi-panel figures are too small
+      affected_slides: [5, 6, 9, 13]
+      solution: Regenerate source figures with larger legend fonts
+
+    faq_visual_aids:
+      issue: FAQ slides are text-only walls of text
+      affected_slides: [23, 24, 25, 26, 27]
+      solution: Add small icons or diagrams to each FAQ slide
+
+  medium_priority:
+
+    repeated_figures:
+      issue: Same figures used in multiple slides
+      affected_slides: [11 and 17, 9 and 19]
+      solution: Create unique variations or zoomed views for each use
+
+    panel_labels:
+      issue: Some multi-panel figures have inconsistent or missing panel labels
+      affected_slides: [4, 14, 18]
+      solution: Add clear A/B/C/D labels to all panels
+
+    color_consistency:
+      issue: Color schemes vary between original and follow-up study figures
+      affected_slides: [3 vs 12, 5 vs 15]
+      solution: Consider unified color palette for presentation
+
+  low_priority:
+
+    transition_slides:
+      issue: Abrupt transition from original to follow-up study
+      location: Between slides 7 and 8
+      solution: Add a transition slide summarizing what worked and what remains
+
+    quantitative_emphasis:
+      issue: Key numbers could be more prominent
+      examples:
+        - tau_1 = 0.3s
+        - tau_2 = 4s
+        - 100 events required
+        - 10x information gain
+      solution: Use callout boxes or larger font for key statistics
+
+    recommendation_hierarchy:
+      issue: All five recommendations appear equally important
+      solution: Visually distinguish primary recommendation from secondary
+
+---
+
+# OVERALL ASSESSMENT
+
+overall_assessment:
+  
+  grade: B+
+  
+  summary: >
+    The presentation effectively communicates the scientific narrative from
+    population-level success to individual-level failure to recommended solutions.
+    The figures are authentic and data-driven. The main weaknesses are visual
+    polish issues like caption cutoff and legend size rather than content problems.
+
+  strongest_elements:
+    - Clear narrative arc from original study to follow-up
+    - Honest assessment of limitations
+    - Actionable recommendations
+    - Figures use real analysis data not placeholders
+
+  areas_for_improvement:
+    - Visual consistency across studies
+    - FAQ slides need visual support
+    - Repeated figures reduce impact
+    - Quantitative takeaways could be more prominent
+
+  recommended_next_steps:
+    1: Fix caption cutoff in slides 3-6
+    2: Regenerate figures with larger legends
+    3: Add visual aids to FAQ slides or reduce to 3 slides
+    4: Create unique figure variations for recommendation slides
+    5: Add transition slide between original and follow-up sections
+
