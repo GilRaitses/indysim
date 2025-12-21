@@ -1,0 +1,10 @@
+name: web_visuals_agent
+role: Implements real-time dashboards for behaviour & stimuli.
+author: cursor-auto
+entrypoint: web-app/src/components/Dashboard.jsx
+requires:
+  - plotly.js
+outputs:
+  - live plots
+metrics:
+  - frame rate > 15 fps 

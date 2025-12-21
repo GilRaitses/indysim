@@ -1,0 +1,196 @@
+\section{Methods}
+
+\subsection{Experimental Data}
+
+Data were collected from GMR61 \textit{Drosophila} larvae expressing
+channelrhodopsins. Animals were tracked at 20 Hz on an agar substrate
+while receiving optogenetic LED stimulation in a square-wave pattern: 10
+s at peak intensity, 20 s at baseline intensity (30 s cycle). The
+present analysis includes 55 tracks containing 1,407 reorientation-onset
+events from 2 experimental sessions under the 0-to-250 PWM condition
+with constant 7 PWM blue LED background.
+
+Throughout the paper, ``stimulus onset'' refers to the transition from
+baseline to peak LED intensity, while ``stimulus offset'' refers to the
+transition from peak back to baseline. For the
+0-to-250 PWM condition, baseline intensity is 0 (LED off). For the
+50-to-250 PWM condition used in factorial analyses, baseline intensity
+is 50 PWM (\({\sim}20\%\) of maximum), representing reduced rather than
+absent stimulation. Figure \ref{fig:psth_kernels} shows the resulting
+peri-stimulus turn rate histograms for each experimental condition.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure6_psth_kernels_combined.png}
+\caption{\textbf{Condition-specific temporal dynamics and model validation.} \textbf{Panels A--D:} Peri-stimulus turn rate histograms for each experimental condition showing turn rate aligned to LED onset at time = 0. Pink shaded region indicates the peak-intensity period from 0--10 s. The 0-to-250 PWM conditions with Constant and Cycling backgrounds in panels A and B show pronounced pre-stimulus peaks and strong post-onset suppression. The 50-to-250 PWM conditions in panels C and D show weaker modulation, consistent with partial adaptation to elevated baseline intensity. Shaded bands indicate 95\% confidence intervals. \textbf{Panel E:} Empirical peri-stimulus turn rate with all four conditions overlaid showing condition-dependent suppression depth. \textbf{Panel F:} Direct comparison of empirical PSTH and LNP model prediction. The model captures the temporal dynamics of turn rate modulation including the initial transient peak at LED onset, deep suppression during peak intensity from 1--4 s, and gradual recovery. Model parameters t1 = 0.29 s and t2 = 3.81 s.}
+\label{fig:psth_kernels}
+\end{figure}
+
+Reorientation events were detected using a curvature-threshold algorithm
+that identifies the onset of heading changes. The algorithm captures
+large sustained turns and brief head sweeps alike. Events with
+measurable duration exceeding 0.1 s were classified as ``true turns''
+(\(N=319\)) for behavioral interpretation.
+
+Trajectories were segmented into five behavioral states using rule-based
+algorithms adapted from Klein et al.~(2015). Locomotion states include
+runs (forward motion with SpeedRunVel \(> 0\)) and pauses (speed below
+0.1 mm/s for $\geq 0.5$ s). Reorientation events include turns (heading
+changes exceeding 30$^\circ$ within 1 s) and reorientations (turn onset
+frames for LNP modeling). Escape behaviors comprise reverse crawls
+(backward motion with SpeedRunVel \(< 0\) sustained for $\geq 3$ s). The
+five-state segmentation enables extraction of duration statistics for
+each behavioral class (Supplementary Figure S7).
+
+Of 701 total tracks across 14 experiments, 79 (11.3\%) spanned the full
+20-minute experiment and were used for individual variability analysis.
+Incomplete tracks were excluded to avoid right-censoring bias. A
+\(t\)-test confirmed no significant difference in mean locomotor speed
+between complete and incomplete tracks (\(p = 0.24\)), indicating the
+subset is representative. Population-level kernel parameters were
+estimated from all tracks using pooled event data.
+
+\subsection{LNP Regression Model Structure}
+
+Reorientation timing is modeled using linear nonlinear Poisson (LNP)
+regression, which describes the time-dependent probability that an event
+(here, a reorientation) occurs at time \(t\). The instantaneous rate is
+given by:
+
+\begin{equation}
+\lambda(t) = \exp\left(\beta_0 + u_{\text{track}} + K_{\text{on}}(t_{\text{onset}}) + K_{\text{off}}(t_{\text{offset}})\right)
+\label{eq:hazard}
+\end{equation}
+
+\noindent where:
+
+\begin{itemize}
+    \item $\beta_0 = -6.23$: Calibrated global intercept (log-rate baseline)
+    \item $u_{\text{track}} \sim \mathcal{N}(0, \sigma^2)$ with $\sigma = 0.47$: Track-specific random effect capturing individual variability
+    \item $K_{\text{on}}(t)$: Stimulus-onset temporal kernel (response to LED intensity increase)
+    \item $K_{\text{off}}(t)$: Stimulus-offset temporal kernel (response to LED intensity decrease)
+\end{itemize}
+
+The model is fit as a negative-binomial GLM (NB-GLM) with logarithmic
+link, treating each video frame (\(dt = 0.05\) s) as a Bernoulli trial
+for event occurrence.
+
+\subsection{Stimulus-Onset Kernel: Gamma-Difference}
+
+The stimulus-onset kernel \(K_{\text{on}}(t)\) is parameterized as a
+difference of two gamma probability density functions
+(Equation \ref{eq:kernel}), where:
+
+\begin{equation}
+\Gamma(t; \alpha, \beta) = \frac{t^{\alpha-1} e^{-t/\beta}}{\beta^\alpha \Gamma(\alpha)}
+\end{equation}
+
+\noindent is the gamma PDF with shape \(\alpha\) and scale \(\beta\).
+
+\begin{table}[h]
+\centering
+\caption{Fitted kernel parameters with 95\% bootstrap confidence intervals.}
+\label{tab:params}
+\begin{tabular}{llll}
+\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{95\% CI} & \textbf{Interpretation} \\
+\hline
+$A$ & 0.456 & [0.409, 0.499] & Fast component amplitude \\
+$\alpha_1$ & 2.22 & [1.93, 2.65] & Fast shape ($\sim$2 stages) \\
+$\beta_1$ & 0.132 s & [0.102, 0.168] & Fast timescale \\
+$B$ & 12.54 & [12.43, 12.66] & Slow component amplitude \\
+$\alpha_2$ & 4.38 & [4.30, 4.46] & Slow shape ($\sim$4 stages) \\
+$\beta_2$ & 0.869 s & [0.852, 0.890] & Slow timescale \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure2_validation.png}
+\caption{\textbf{LNP model validation against empirical data.} The calibrated LNP model reproduces features of larval reorientation behavior. \textbf{(A)} Model hazard rate showing event probability over time relative to LED onset at time = 0. The model shows an initial excitatory peak followed by rapid suppression within 0.5 s of LED activation, with yellow shaded region indicating peak-intensity period from 0--10 s. The model captures both the ${\sim}2\times$ reduction in event rate during stimulation and the gradual recovery after LED offset at 10 s. \textbf{(B)} Suppression dynamics comparison. During peak-intensity phase, both empirical and simulated data show $\sim$50\% reduction in turn probability relative to baseline. Early suppression from 0--3 s and late suppression from 3--8 s are both captured within 5\% of empirical values. \textbf{(C)} Simulated peri-stimulus turn rate from LNP model predictions across conditions. The model-predicted rates show condition-dependent suppression depth matching the amplitude parameters fitted to each condition. \textbf{(D)} Gamma-difference kernels fitted separately to each experimental condition. All four conditions share similar kernel shape with fast excitation followed by slow suppression, but differ in amplitude. The 0-to-250 PWM conditions show deeper suppression troughs than the 50-to-250 PWM conditions, consistent with the amplitude modulation observed in suppression dynamics.}
+\label{fig:validation}
+\end{figure}
+
+The fast component peaks at 0.16 s with mean
+\(\tau_1 = \alpha_1 \beta_1 = 0.29\) s, while the slow component peaks
+at 2.94 s with mean \(\tau_2 = \alpha_2 \beta_2 = 3.81\) s.
+
+\subsection{Stimulus-Offset Kernel}
+
+A separate exponential kernel captures transient effects after LED
+intensity decreases:
+
+\begin{equation}
+K_{\text{off}}(t) = D \cdot \exp(-t/\tau_{\text{off}})
+\label{eq:rebound}
+\end{equation}
+
+\noindent with \(D = -0.114\) and \(\tau_{\text{off}} = 2.0\) s. The
+negative coefficient represents continued suppression during recovery,
+with a half-life of 1.39 s.
+
+\subsection{Event Definition}
+
+The LNP model was fit to all 1,407 inclusive onset events, comprising
+salient reorientations (``true turns'') as well as minor events such
+as head sweeps and curvature fluctuations.
+
+For trajectory simulation and behavioral interpretation, events were
+filtered to those with \texttt{turn\_duration} \(> 0.1\) s (\(N = 319\),
+23\% of total). Fitting the LNP model to all events while focusing
+behavioral output on filtered events follows standard practice in larval
+navigation modeling.
+
+For the factorial extension
+(Section \ref{sec:factorial}), 14 experiments comprising
+7,867 events across 701 tracks were pooled. Two experiments with
+anomalously high event counts (approximately \(10\)--\(20\times\) other
+sessions) were excluded because their annotation statistics were
+inconsistent with the remaining dataset.
+
+\subsection{Rate Calibration}
+
+The NB-GLM intercept (\(\beta_0 = -6.76\)) represents log-hazard per
+frame at 20 Hz. Discrete-time simulation with the raw intercept produced
+$\sim$60\% of empirical events. A calibration factor was applied:
+
+\begin{equation}
+\beta_0^{\text{cal}} = \beta_0 + \log\left(\frac{N_{\text{emp}}}{N_{\text{sim}}}\right) = -6.76 + \log(1.695) = -6.23
+\end{equation}
+
+Global rate normalization preserves kernel dynamics (shape and timing)
+as well as relative condition effects while matching empirical event
+rates. All factorial contrasts are independent of the calibration.
+
+\subsection{Trajectory Simulation}
+
+A run/turn state machine driven by the LNP model was implemented.
+During runs, the larva moves forward at 1.0 mm/s with Brownian heading
+noise (\(\sigma = 0.03\) rad/\(\sqrt{\text{s}}\)) and transition to a
+turn is governed by the instantaneous hazard \(\lambda(t)\). During
+turns, heading angle is sampled from
+\(\mathcal{N}(\mu = 7^\circ, \sigma = 86^\circ)\) with duration sampled
+from a lognormal distribution (median \(= 1.1\) s). Speed is reduced to
+\(0.4\times\) the run speed and the larva returns to running after the
+turn duration elapses.
+
+The trajectory simulator uses the LNP model to drive run/turn
+transitions and reproduces event rates and timing. Spatial statistics
+such as path shapes and arena occupancy were not systematically
+validated. The simulator demonstrates hazard-driven timing rather than
+providing a fully calibrated locomotion model.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure3_trajectories.png}
+\caption{\textbf{Trajectory comparison: simulated vs empirical.} \textbf{(A)} Spatial trajectories over 20 minutes showing runs punctuated by reorientation events. Blue segments indicate LED off periods and orange segments indicate LED on periods. Red circles mark turn onsets scaled by angle magnitude. The left two panels display LNP model simulations and the right panel displays an empirical GMR61 larva track. \textbf{(B)} Cumulative turn counts over time with yellow shading during LED on periods. Stochastic sampling produces individual track rates ranging from 6--13 turns/min in simulations and 12.7 turns/min in the empirical track shown. Pooled rates across all 20-minute tracks match closely at 10.98 turns/min for simulated data and 10.44 turns/min for empirical data.}
+\label{fig:trajectories}
+\end{figure}
+
+\subsection{Validation Metrics}
+
+Model performance was assessed through four metrics grouped by
+validation type: fit quality metrics include kernel \(R^2\) and PSTH correlation,
+while rate matching metrics include rate ratio and suppression magnitude.
+

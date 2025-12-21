@@ -1,0 +1,12 @@
+{
+    "window.commandCenter": 1,
+    "explorer.confirmDragAndDrop": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "matlab.interrupt"
+    ],
+    "diffEditor.maxComputationTime": 0,
+    "powershell.promptToUpdatePowerShell": false,
+    "workbench.sideBar.location": "right",
+    "git.autofetch": true,
+    "explorer.confirmDelete": false
+}

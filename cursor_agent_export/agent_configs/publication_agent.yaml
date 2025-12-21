@@ -1,0 +1,11 @@
+name: publication_agent
+role: Generates publication-ready figures & method text.
+author: cursor-auto
+entrypoint: scripts/publication/figure_maker.py
+requires:
+  - matplotlib
+outputs:
+  - figures/*.png
+  - methods_draft.md
+metrics:
+  - journal format compliance check OK 

@@ -1,0 +1,10 @@
+name: behavior_compare_agent
+role: Compares LarvaTagger primitives to manifold classifications.
+author: cursor-auto
+entrypoint: scripts/2025-07-28/track_analysis_and_export_strategy.py
+requires:
+  - pandas
+outputs:
+  - comparison_report.md
+metrics:
+  - summary generated with no missing IDs 

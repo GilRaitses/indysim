@@ -1,0 +1,10 @@
+name: collab_features_agent
+role: Adds collaboration & annotation features to web portal.
+author: cursor-auto
+entrypoint: web-app/src/collab/index.js
+requires:
+  - MongoDB backend
+outputs:
+  - annotation API
+metrics:
+  - user story tests pass 

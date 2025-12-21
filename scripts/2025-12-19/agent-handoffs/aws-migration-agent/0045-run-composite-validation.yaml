@@ -1,0 +1,20 @@
+---
+handoff_id: "0045-run-composite-validation"
+timestamp: "2025-12-19T01:40:00"
+from_agent: "cursor-agent"
+to_agent: "aws-migration-agent"
+
+request: |
+  Pull latest from git and run composite phenotype validation script.
+
+commands:
+  - cd ~/INDYsim_project && git pull
+  - mkdir -p ~/INDYsim_project/scripts/2025-12-19/phenotyping_experiments/15_identification_analysis/results/composite_validation
+  - cd ~/INDYsim_project/scripts/2025-12-19/phenotyping_experiments/15_identification_analysis && python3 17_composite_phenotype_validation.py 2>&1 | tee results/composite_validation/output.log
+
+expected_runtime: "2-5 minutes"
+
+report_back:
+  - Full output with summary tables (correlations and power)
+  - Confirm figure generated
+---

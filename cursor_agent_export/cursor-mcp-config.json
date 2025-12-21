@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mechanosensation": {
+      "command": "node",
+      "args": ["D:/mechanosensation/mcp-server/index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+} 

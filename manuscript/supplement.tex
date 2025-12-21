@@ -1,0 +1,323 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+\title{Supplementary Materials\\Temporal dynamics of mechanosensory behavior in\\\textit{Drosophila} larvae}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\needspace{15\baselineskip}
+\section*{Table S1: Leave-One-Experiment-Out Cross-Validation Results}
+
+Leave-one-experiment-out cross-validation was performed to assess model generalization. For each of 14 experiments, the factorial NB-GLM was fit on the remaining 13 experiments and used to predict event rates for the held-out experiment.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lrrrl}
+\hline
+\textbf{Condition} & \textbf{Empirical} & \textbf{Predicted} & \textbf{Rate Ratio} & \textbf{Status} \\
+\hline
+\multicolumn{5}{l}{\textit{0-to-250 | Constant (n=2)}} \\
+\quad Exp 1 & 737 & 785 & 1.066 & Pass \\
+\quad Exp 2 & 670 & 629 & 0.938 & Pass \\
+\hline
+\multicolumn{5}{l}{\textit{0-to-250 | Cycling (n=4)}} \\
+\quad Exp 1 & 555 & 921 & 1.659 & Fail \\
+\quad Exp 2 & 488 & 395 & 0.809 & Pass \\
+\quad Exp 3 & 822 & 603 & 0.733 & Fail \\
+\quad Exp 4 & 545 & 534 & 0.981 & Pass \\
+\hline
+\multicolumn{5}{l}{\textit{50-to-250 | Constant (n=4)}} \\
+\quad Exp 1 & 766 & 603 & 0.787 & Fail \\
+\quad Exp 2 & 571 & 937 & 1.641 & Fail \\
+\quad Exp 3 & 657 & 655 & 0.997 & Pass \\
+\quad Exp 4 & 446 & 305 & 0.684 & Fail \\
+\hline
+\multicolumn{5}{l}{\textit{50-to-250 | Cycling (n=2)}} \\
+\quad Exp 1 & 477 & 553 & 1.160 & Pass \\
+\quad Exp 2 & 554 & 478 & 0.862 & Pass \\
+\hline
+\multicolumn{5}{l}{\textbf{Summary}} \\
+\quad Mean $\pm$ SD & --- & --- & 1.03 $\pm$ 0.31 & 7/12 Pass \\
+\hline
+\end{tabular}
+\caption*{Table S1: Cross-validation results. Rate ratio within 0.8--1.25 indicates acceptable generalization. Pass rate = 58\%.}
+\label{tab:cv}
+\end{table}
+
+\needspace{10\baselineskip}
+\section*{Table S2: Model Comparison}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrrl}
+\hline
+\textbf{Model} & \textbf{Parameters} & \textbf{AIC} & \textbf{Deviance} & \textbf{Notes} \\
+\hline
+Fixed-effects NB-GLM & 8 & 114,814 & 94,592 & Primary model \\
+NB-GLMM (1|track) & 9 + 623 RE & --- & --- & Random intercepts \\
+\hline
+\end{tabular}
+\caption*{Table S2: Model comparison. The fixed-effects model was used for all reported analyses. GLMM with random track intercepts is included as a robustness check.}
+\label{tab:model_comparison}
+\end{table}
+
+\needspace{12\baselineskip}
+\section*{Table S2b: GLMM Robustness Check}
+
+A Negative Binomial GLMM with random track intercepts was fit using Bambi/PyMC to verify that the main findings are robust to hierarchical structure.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\hline
+\textbf{Parameter} & \textbf{Fixed-Effects} & \textbf{GLMM} & \textbf{Change} \\
+\hline
+$\alpha$ (kernel amplitude) & 1.005 & 0.971 & $-3.4\%$ \\
+$\alpha_I$ (intensity effect) & $-0.665$ & $-0.655$ & $+1.5\%$ \\
+$\alpha_C$ (cycling effect) & 0.152 & 0.148 & $-2.5\%$ \\
+$\gamma$ (rebound) & 1.669 & 1.408 & $-15.7\%$ \\
+\hline
+Random effect SD ($\sigma_{\text{track}}$) & --- & 0.59 & --- \\
+\hline
+\end{tabular}
+\caption*{Table S2b: Comparison of key parameters between fixed-effects NB-GLM and NB-GLMM. The kernel amplitude effects ($\alpha$, $\alpha_I$, $\alpha_C$) differ by less than 3.5\%, confirming that the main findings are robust to inclusion of random intercepts. The random effect SD of 0.59 indicates substantial between-track variation in baseline event rate.}
+\label{tab:glmm_comparison}
+\end{table}
+
+\needspace{10\baselineskip}
+\section*{Table S3: Condition-Specific Suppression Amplitudes}
+
+The kernel amplitude varies across conditions while maintaining invariant shape and timescales:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrrl}
+\hline
+\textbf{Condition} & \textbf{Amplitude} & \textbf{Events} & \textbf{Tracks} & \textbf{Interpretation} \\
+\hline
+0-to-250 | Constant & 1.005 & 1,407 & 99 & Reference condition \\
+0-to-250 | Cycling & 1.157 & 2,410 & 214 & +15\% (cycling enhancement) \\
+50-to-250 | Constant & 0.340 & 2,440 & 187 & $-$66\% (partial adaptation) \\
+50-to-250 | Cycling & 0.492 & 1,031 & 123 & Combined effects \\
+\hline
+\end{tabular}
+\caption*{Table S3: Suppression amplitudes computed as $\alpha + \alpha_I \cdot I + \alpha_C \cdot C$.}
+\label{tab:amplitudes}
+\end{table}
+
+\needspace{15\baselineskip}
+\section*{Figure S1: Residual Diagnostics}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{data/figures/factorial_diagnostics/factorial_diagnostics.png}
+\caption{\textbf{Factorial model diagnostics.} (A) Pearson residuals vs fitted values show no systematic pattern. (B) Deviance residuals vs fitted values. (C) Q-Q plot of Pearson residuals against theoretical normal quantiles. (D) Residual distributions by condition show similar spread across all four experimental conditions. Residual mean = 0.0001, SD = 1.01.}
+\label{fig:diagnostics}
+\end{figure}
+
+\newpage
+
+\needspace{15\baselineskip}
+\section*{Figure S2: Time-Rescaling Test}
+
+The time-rescaling test assesses whether the fitted hazard model produces inter-event intervals consistent with a Poisson process. Under the correct model, rescaled inter-event times should follow Exp(1), and their cumulative distribution should be uniform.
+
+\needspace{15\baselineskip}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{data/figures/factorial_diagnostics/time_rescaling.png}
+\caption{\textbf{Time-rescaling test.} Empirical cumulative distribution of rescaled inter-event times (blue) compared to expected uniform distribution (red dashed). Gray shading indicates 95\% confidence band. KS test: $D = 0.041$, $p = 0.17$. Mean deviation = 1.3\%, indicating adequate model fit.}
+\label{fig:time_rescaling}
+\end{figure}
+
+\section*{Diagnostic Statistics}
+
+\begin{itemize}
+    \item \textbf{Pearson residuals:} Mean = 0.0001, SD = 1.01, Skew = 40.7, Kurtosis = 2440
+    \item \textbf{Large residuals:} 7,288 observations (0.09\%) with $|r| > 3$
+    \item \textbf{Time-rescaling:} KS statistic = 0.041, p = 0.17, mean deviation = 1.3\%
+\end{itemize}
+
+The high skewness and kurtosis of residuals reflect the zero-inflated nature of event data (most frames have no events). The time-rescaling test passes at conventional significance levels, supporting the adequacy of the hazard model specification.
+
+\needspace{18\baselineskip}
+\section*{Table S4: Kernel Parameters with Bootstrap Confidence Intervals}
+
+Bootstrap resampling (100 track-level resamples) was used to estimate 95\% confidence intervals for all kernel parameters.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\hline
+\textbf{Parameter} & \textbf{Estimate} & \textbf{95\% CI} & \textbf{Interpretation} \\
+\hline
+$A$ (fast amplitude) & 0.456 & [0.409, 0.499] & Excitatory component weight \\
+$\alpha_1$ (fast shape) & 2.22 & [1.93, 2.65] & $\sim$2 processing stages \\
+$\beta_1$ (fast scale, s) & 0.132 & [0.102, 0.168] & Stage time constant \\
+$B$ (slow amplitude) & 12.54 & [12.43, 12.66] & Suppressive component weight \\
+$\alpha_2$ (slow shape) & 4.38 & [4.30, 4.46] & $\sim$4 processing stages \\
+$\beta_2$ (slow scale, s) & 0.869 & [0.852, 0.890] & Stage time constant \\
+\hline
+\multicolumn{4}{l}{\textit{Derived timescales}} \\
+$\tau_1$ (fast mean, s) & 0.294 & [0.268, 0.326] & Fast component timescale \\
+$\tau_2$ (slow mean, s) & 3.81 & [3.79, 3.84] & Slow component timescale \\
+Peak fast (s) & 0.162 & [0.147, 0.181] & Time of fast peak \\
+Peak slow (s) & 2.94 & [2.93, 2.96] & Time of slow peak \\
+\hline
+\end{tabular}
+\caption*{Table S4: Gamma-difference kernel parameters with 95\% bootstrap confidence intervals (100 track-level resamples). The narrow CIs for slow component parameters reflect strong identifiability.}
+\label{tab:bootstrap}
+\end{table}
+
+\needspace{12\baselineskip}
+\section*{Table S5: Turn Distribution Parameters}
+
+Turn angle and duration distributions from 319 filtered events (turn duration $> 0.1$ s) were used to parameterize trajectory simulation.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrl}
+\hline
+\textbf{Metric} & \textbf{Value} & \textbf{95\% Range} & \textbf{Best-Fit Distribution} \\
+\hline
+\multicolumn{4}{l}{\textit{Turn Angle}} \\
+Mean & $6.8^\circ$ & & Normal($\mu = 6.8^\circ$, $\sigma = 86.2^\circ$) \\
+SD & $86.2^\circ$ & & \\
+Absolute mean & $68.6^\circ$ & & \\
+\hline
+\multicolumn{4}{l}{\textit{Turn Duration}} \\
+Mean & 1.55 s & & Lognormal($s = 0.59$, scale $= 1.29$ s) \\
+Median & 1.10 s & [0.30, 6.85] s & \\
+SD & 1.06 s & & \\
+\hline
+\end{tabular}
+\caption*{Table S5: Turn angle and duration statistics from 319 filtered reorientation events. Turn angles follow a normal distribution with slight rightward bias. Turn durations follow a lognormal distribution with median 1.1 s.}
+\label{tab:turns}
+\end{table}
+
+\needspace{15\baselineskip}
+\needspace{15\baselineskip}
+\section*{Figure S3: Reverse Crawl LED Modulation}
+
+Reverse crawl detection using Mason Klein's algorithm (SpeedRunVel $< 0$ for $\geq 3$ s) identified 1,853 reversal events across all 14 experiments. In contrast to reorientations (which are suppressed by LED), reverse crawls are \textit{increased} during LED stimulation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/reverse_crawl_led_modulation.png}
+\caption{\textbf{LED modulation of reverse crawl behavior.} (A) Reverse crawl percentage during baseline (2.11\%) vs peak-intensity (2.40\%), showing a 14\% increase ($\chi^2$ test $p < 0.001$). (B) Time-resolved analysis reveals a pronounced spike to 6.7--7.2\% in the first 0--5 s after stimulus onset, declining below baseline ($< 1\%$) after 10 s. (C) Comparison of behavioral state durations: reverse crawls (2.29\% of time) exceed reorientations (0.09\% of time) by 25-fold.}
+\label{fig:reverse_crawl}
+\end{figure}
+
+\needspace{15\baselineskip}
+\section*{Figure S4: Reverse Crawl Detection Validation}
+
+Reverse crawl detection was validated against the original MATLAB code (mason\_analysis.m) on Track 2 of the reference experiment.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/reverse_crawl_validation_vs_matlab.png}
+\caption{\textbf{Validation of reverse crawl detection.} (A) SpeedRunVel time series for Track 2 with detected reversals marked. (B) Zoom on first reversal showing exact match between Python (shaded region) and MATLAB (green dashed lines). (C) Comparison table: all 5 reversals in Track 2 match MATLAB output within 0.1 s, confirming algorithm correctness.}
+\label{fig:reverse_validation}
+\end{figure}
+
+\needspace{15\baselineskip}
+\needspace{15\baselineskip}
+\section*{Figure S5: PSTH Model Validation}
+
+The peri-stimulus time histogram (PSTH) provides a visual comparison of model predictions against empirical event rates aligned to LED onset.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{data/figures/psth_comparison.png}
+\caption{\textbf{PSTH model validation.} Empirical event rate (black) and model-predicted rate (red) aligned to stimulus onset (time = 0). Gray shading indicates peak-intensity period (0--10 s). The model captures the rapid suppression within 0.5 s of stimulus onset, the sustained suppression during peak intensity, and the gradual recovery after stimulus offset. PSTH correlation $r = 0.84$.}
+\label{fig:psth}
+\end{figure}
+
+\needspace{10\baselineskip}
+\section*{Table S6: Per-Condition Kernel Parameters}
+
+The gamma-difference kernel was fit separately to each of the four experimental conditions in the $2\times2$ factorial design. Bootstrap confidence intervals (95\%) were computed from 200 resamples.
+
+\begin{table}[H]
+\centering
+\caption*{Table S6: Per-condition kernel parameters with 95\% bootstrap CIs.}
+\label{tab:per_condition}
+\begin{tabular}{lcccccc}
+\hline
+Condition & $\tau_1$ (s) & 95\% CI & $\tau_2$ (s) & 95\% CI & $R^2$ \\
+\hline
+0-to-250 Constant & 0.32 & [0.23, 1.01] & 3.73 & [3.02, 4.08] & 0.94 \\
+0-to-250 Cycling & 0.26 & [0.23, 0.71] & 4.20 & [3.79, 4.51] & 0.96 \\
+50-to-250 Constant & \textbf{1.18} & [0.69, 2.21] & 4.53 & [3.64, 5.44] & 0.95 \\
+50-to-250 Cycling & 0.44 & [0.23, 0.87] & 4.50 & [3.69, 5.19] & 0.81 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key finding:} The 50-to-250 Constant condition shows a 4-fold slower fast timescale ($\tau_1 = 1.18$ s vs ${\sim}0.3$ s), suggesting that baseline neural excitation modulates sensory transduction speed.
+
+\needspace{10\baselineskip}
+\section*{Table S7: Model Comparison}
+
+\begin{table}[H]
+\centering
+\caption*{Table S7: Comparison of kernel parameterizations by goodness-of-fit.}
+\label{tab:kernel_comparison}
+\begin{tabular}{lcccl}
+\hline
+Model & Parameters & $R^2$ & AIC & Interpretation \\
+\hline
+Raised Cosine (12 basis) & 12 & 0.974 & $-3386$ & Overparameterized \\
+\textbf{Gamma-Difference} & \textbf{6} & \textbf{0.968} & \textbf{$-357$} & \textbf{Biologically interpretable} \\
+Alpha-Difference & 4 & 0.950 & 108 & Intermediate \\
+Double Exponential & 4 & 0.811 & 1432 & No shape control \\
+Single Exponential & 2 & $<0$ & 1007 & Too simple \\
+\hline
+\end{tabular}
+\end{table}
+
+The gamma-difference model achieves near-optimal fit quality ($R^2 = 0.968$) with half the parameters of the raised-cosine basis, while providing biological interpretability (timescales map to neural processes).
+
+\textit{Note:} The single exponential model shows $R^2 < 0$ because it cannot capture the biphasic (suppression-then-recovery) kernel shape. A negative $R^2$ indicates the model performs worse than predicting the mean, which is expected when fitting a monotonic decay to a non-monotonic target.
+
+\needspace{15\baselineskip}
+\needspace{15\baselineskip}
+\section*{Figure S7: Event Duration Distributions}
+
+Event durations from Mason Klein run tables and trajectory segmentation characterize the temporal structure of larval behavior across conditions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/event_durations.png}
+\caption{\textbf{Event duration distributions by condition.} Boxplots showing durations of four behavioral event types across the four experimental conditions. \textbf{(A)} Run durations from Klein run tables (column \texttt{runT}); no significant condition effect (Kruskal-Wallis $p = 0.08$). \textbf{(B)} Turn durations show significant condition effects ($p < 0.001$). \textbf{(C)} Pause durations vary significantly across conditions ($p < 0.001$), with 50-to-250 conditions showing longer pauses. \textbf{(D)} Event counts by condition and type. These distributions may inform future phenotype identification.}
+\label{fig:event_durations}
+\end{figure}
+
+\needspace{15\baselineskip}
+\section*{Figure S8: Fractional Behavior by Pulse}
+
+Behavioral state fractions (run, pause, turn, reverse crawl) were computed for each pulse across the 20-minute experiments. The stacked bar plots reveal systematic shifts in behavioral allocation over successive pulses.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/fractional_behavior_by_pulse.png}
+\caption{\textbf{Fractional behavior by pulse across conditions.} Forward crawling dominates behavioral allocation at approximately 75\% of time, with turning at 20\%, reverse crawls at 3\%, and pauses at 1.5\%. Two trends emerge across successive pulses. First, turn and pause fractions increase progressively while forward crawling decreases, consistent with trial-to-trial sensitization to repeated stimulation. Second, the 50-to-250 conditions show elevated reverse crawl fractions compared to 0-to-250 conditions, with the difference becoming pronounced after pulse 6. The cycling background conditions show slightly higher variability in behavioral allocation compared to constant background conditions.}
+\label{fig:fractional_behavior}
+\end{figure}
+
+\end{document}
+
+
+

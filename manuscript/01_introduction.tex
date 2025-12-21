@@ -1,0 +1,71 @@
+\section{Introduction}
+
+\subsection{Larval Navigation and Optogenetic Control}
+
+\textit{Drosophila} larvae navigate their environment using a
+characteristic locomotor pattern of forward crawling (runs) punctuated
+by reorientation maneuvers (turns) during which the animal samples new
+heading directions (Gershow et al., 2012; Gomez-Marin et al., 2011). Turn timing and direction are not random but modulated by
+sensory input, enabling larvae to perform gradient-based navigation
+(climbing and tracking) as well as phototaxis (Gershow et al., 2012;
+Kane et al., 2013).
+
+Optogenetic tools provide precise temporal control over neural activity,
+allowing researchers to probe how specific circuits influence behavioral
+decisions. In GMR61 larvae expressing channelrhodopsins, LED
+illumination activates neurons that suppress forward locomotion and
+increase the probability of reorientation events (Gepner et al., 2015).
+Understanding how turn probability evolves after stimulus onset and
+offset is central to modeling sensorimotor integration.
+
+\subsection{LNP Regression and the Role of Temporal Kernels}
+
+Previous work has modeled larval turning probability using linear
+nonlinear Poisson (LNP) regression models with temporal basis functions
+(Paninski, 2004; Pillow et al., 2008; Hernandez-Nunez et al., 2015;
+Klein et al., 2015). LNP regression fits flexible temporal kernels to
+capture stimulus-response dynamics. Raised-cosine bases (smooth,
+overlapping bump functions centered at different time lags) with many
+parameters are common choices for the temporal kernel.
+
+Flexible basis representations give good predictive performance but
+offer little interpretability. A 12-parameter raised-cosine kernel may
+fit the data well but does not directly reveal the relevant timescales
+or separate the effects of sensory transduction and adaptation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure1_kernel.png}
+\caption{\textbf{Analytic hazard kernel decomposition.} The stimulus-onset response is modeled as a difference of two gamma probability density functions, enabling direct interpretation of temporal dynamics. \textbf{(A)} Full kernel reconstruction: the analytic gamma-difference form K$_{\text{on}}$(t) shown as a blue solid line. The red shaded region indicates the suppression phase where K$_{\text{on}}$(t) $< 0$. Peak suppression of $-3.06$ occurs at $t^* = 2.9$ s. The kernel shows characteristic biphasic dynamics with an initial transient followed by sustained suppression. \textbf{(B)} Component decomposition: the fast excitatory component shown in green with $\alpha_1 = 2.22$, $\beta_1 = 0.132$ s, and mean $\tau_1 = 0.29$ s peaks early and captures rapid sensory transduction. The slow suppressive component shown in red with $\alpha_2 = 4.38$, $\beta_2 = 0.869$ s, and mean $\tau_2 = 3.81$ s peaks at $\sim$2.9 s and represents synaptic adaptation. The combined kernel shown as a blue dashed line matches Panel A. Vertical dashed lines indicate peak times for each component.}
+\label{fig:kernel}
+\end{figure}
+
+\subsection{Contribution}
+
+An analytic temporal kernel addresses the interpretability gap for
+LNP regression models of optogenetically-driven reorientation. The
+kernel is a difference of two gamma probability density functions:
+
+\begin{equation}
+K_{\text{on}}(t) = A \cdot \Gamma(t; \alpha_1, \beta_1) - B \cdot \Gamma(t; \alpha_2, \beta_2)
+\label{eq:kernel}
+\end{equation}
+
+\noindent where \(\Gamma(t; \alpha, \beta)\) denotes the gamma
+probability density function with shape \(\alpha\) and scale \(\beta\).
+
+The gamma-difference kernel captures a fast excitatory component peaking
+at 0.16 s with mean \(\tau_1 = 0.29\) s, representing rapid sensory
+transduction, alongside a slow suppressive component peaking at 2.9 s with mean
+\(\tau_2 = 3.81\) s, representing synaptic or network adaptation.
+
+The gamma-difference form arises naturally as the impulse response of
+cascaded first-order processes, making parameters directly interpretable
+in terms of processing stages and time constants.
+
+Validation against GMR61 data under 10 s peak / 20 s baseline LED stimulation
+supports kernel accuracy. The analytic form matches both the 12-basis
+reference with \(R^2 = 0.968\) and empirical event rates with ratio = 0.97.
+The kernel also drives a trajectory simulator that recapitulates
+observed behavior.
+

@@ -1,0 +1,11 @@
+name: track_resolution_agent
+role: Resolves track fragmentation and ID conflicts across experiments.
+author: cursor-auto
+entrypoint: scripts/2025-07-28/investigate_track_processing.m
+requires:
+  - MATLAB
+outputs:
+  - resolved_tracks.csv
+  - validation_report.json
+metrics:
+  - mismatch rate < 5% 

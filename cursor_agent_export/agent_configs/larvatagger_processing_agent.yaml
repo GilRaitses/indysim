@@ -1,0 +1,11 @@
+name: larvatagger_processing_agent
+role: Automates LarvaTagger batch processing and fetches results.
+author: cursor-auto
+entrypoint: integration/larvatagger_runner.sh
+requires:
+  - LarvaTagger repo
+outputs:
+  - primitives.json
+  - processing_log.txt
+metrics:
+  - processing success for all tracks 

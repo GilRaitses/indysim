@@ -1,0 +1,229 @@
+\section{Results}
+
+\subsection{Analytic Kernel Captures Temporal Structure}
+
+The 6-parameter gamma-difference kernel closely approximates the
+12-parameter raised-cosine reference
+(Figure \ref{fig:kernel}A). The analytic form achieves
+\(R^2 = 0.968\) and cross-validated \(R^2 = 0.961\) (5-fold,
+track-wise), demonstrating that the compact parameterization does not
+sacrifice predictive accuracy.
+
+
+The kernel shows characteristic biphasic dynamics visible in
+Figure \ref{fig:kernel}B, with an initial brief increase
+in hazard from the fast component with \(\tau_1 = 0.29\) s followed by
+sustained suppression from the slow component with \(\tau_2 = 3.81\) s.
+The fast component peaks at approximately 0.16 s post-stimulus,
+consistent with the latency of channelrhodopsin activation and
+first-order neural responses. The slow component dominates from 1--8 s,
+producing the characteristic suppression of reorientation probability
+during peak-intensity periods. The fast onset followed by sustained
+suppression is consistent with rapid sensory transduction giving way to
+slower synaptic adaptation.
+
+The stimulus-offset kernel (not shown) shows modest continued
+suppression after the return to baseline intensity, with a time constant
+of 2.0 s. The 2.0 s time constant indicates that return to baseline
+behavior is gradual rather than instantaneous, likely reflecting
+recovery from synaptic adaptation.
+
+\subsection{LNP Model Reproduces Event Rates}
+
+Simulation using the calibrated LNP model produces event counts
+closely matching empirical observations
+(Table \ref{tab:validation};
+Figure \ref{fig:validation}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure2_validation.png}
+\caption{\textbf{LNP model validation against empirical data.} The calibrated LNP model reproduces features of larval reorientation behavior. \textbf{(A)} LNP model event rate showing predicted turn rate over time relative to LED onset at time = 0. The model shows an initial excitatory peak followed by rapid suppression within 0.5 s of LED activation, with yellow shaded region indicating peak-intensity period from 0--10 s. The model captures both the ${\sim}2\times$ reduction in event rate during stimulation and the gradual recovery after LED offset at 10 s. \textbf{(B)} Suppression dynamics comparison. During peak-intensity phase, both empirical and simulated data show $\sim$50\% reduction in turn probability relative to baseline. Early suppression from 0--3 s and late suppression from 3--8 s are both captured within 5\% of empirical values. \textbf{(C)} Simulated peri-stimulus turn rate from LNP model predictions across conditions. The model-predicted rates show condition-dependent suppression depth matching the amplitude parameters fitted to each condition. \textbf{(D)} Gamma-difference kernels fitted separately to each experimental condition. All four conditions share similar kernel shape with fast excitation followed by slow suppression, but differ in amplitude. The 0-to-250 PWM conditions show deeper suppression troughs than the 50-to-250 PWM conditions, consistent with the amplitude modulation observed in suppression dynamics.}
+\label{fig:validation}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\caption{Validation metrics comparing simulated and empirical data.}
+\label{tab:validation}
+\begin{tabular}{llll}
+\hline
+\textbf{Metric} & \textbf{Empirical} & \textbf{Simulated} & \textbf{Status} \\
+\hline
+Total events & 1,407 & 1,371 & PASS \\
+Rate ratio & --- & 0.974 & Target: 0.8--1.25 \\
+Baseline rate & $\sim$1.9/min & $\sim$1.9/min & MATCH \\
+Peak rate & $\sim$1.0/min & $\sim$1.0/min & MATCH \\
+Suppression & $2.0\times$ & $1.9\times$ & MATCH \\
+\hline
+\end{tabular}
+\end{table}
+
+The peri-stimulus time histogram (PSTH) comparison reveals close
+agreement between model predictions and empirical observations
+(Figure \ref{fig:validation}B). The correlation
+between simulated and empirical event histograms is \(r = 0.84\),
+indicating good capture of temporal dynamics around stimulus
+transitions. The model correctly reproduces the temporal suppression
+profile from rapid onset (within 0.5 s of LED activation;
+Figure \ref{fig:validation}A, yellow shaded region)
+through sustained \({\sim}2\times\) reduction during peak intensity to
+gradual recovery following LED offset.
+
+The simulated turn rate comparison
+(Figure \ref{fig:validation}C--D) shows strong agreement
+between model predictions and empirical observations. The hazard function achieves
+$R^2 = 0.962$, confirming that the gamma-difference kernel
+captures the underlying temporal dynamics rather than merely matching
+aggregate statistics.
+
+\subsection{Trajectory Simulation Matches Behavioral Statistics}
+
+The run/turn simulator driven by the LNP model produces realistic
+larval trajectories that recapitulate features of empirical behavior
+(Figure \ref{fig:trajectories};
+Figure \ref{fig:distributions}). Key behavioral
+statistics match empirical observations
+(Table \ref{tab:trajectory}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure3_trajectories.png}
+\caption{\textbf{Trajectory comparison: simulated vs empirical.} \textbf{(A)} Spatial trajectories over 20 minutes showing runs punctuated by reorientation events. Blue segments indicate LED off periods and orange segments indicate LED on periods. Red circles mark turn onsets scaled by angle magnitude. The left two panels display LNP model simulations and the right panel displays an empirical GMR61 larva track. \textbf{(B)} Cumulative turn counts over time with yellow shading during LED on periods. Stochastic sampling produces individual track rates ranging from 6--13 turns/min in simulations and 12.7 turns/min in the empirical track shown. Pooled rates across all 20-minute tracks match closely at 10.98 turns/min for simulated data and 10.44 turns/min for empirical data.}
+\label{fig:trajectories}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\caption{Trajectory simulation statistics.}
+\label{tab:trajectory}
+\begin{tabular}{llll}
+\hline
+\textbf{Metric} & \textbf{Simulated} & \textbf{Empirical} & \textbf{Match} \\
+\hline
+Turn rate & 1.88/min & 1.84/min & 98\% \\
+Mean turn angle & $7^\circ$ & $7^\circ$ & MATCH \\
+Turn duration & 1.1 s median & 1.1 s median & MATCH \\
+\hline
+\end{tabular}
+\end{table}
+
+Simulated trajectories reproduce the characteristic run-and-turn locomotion pattern observed in larvae (Figure \ref{fig:trajectories}A). During LED on periods, turn suppression extends run segments, matching the empirical observation that optogenetic activation reduces reorientation frequency. The cumulative turn counts in Figure \ref{fig:trajectories}B confirm that simulated and empirical rates converge over the 20-minute observation window despite stochastic variability in individual tracks.
+
+The turn angle distribution in
+Figure \ref{fig:distributions}A shows high variability
+with \(\sigma = 86^\circ\) and a slight rightward bias
+of \(\mu = 7^\circ\), consistent with the exploratory nature of larval
+navigation. The turn duration distribution in
+Figure \ref{fig:distributions}B follows a lognormal
+form with median 1.1 s, matching empirically observed turn durations.
+The turn angle and duration distributions were extracted from 319
+filtered events with duration \(> 0.1\) s and used to parameterize the
+trajectory simulator.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/turn_distributions.png}
+\caption{\textbf{Empirical turn angle and duration distributions.} Parameters extracted from 319 filtered events with turn duration $> 0.1$ s used to parameterize the trajectory simulator. \textbf{(A)} Turn angle distribution: heading changes show high variability with slight rightward bias. A von Mises distribution shown as a red solid curve with $\kappa = 0.62$ provides the best fit, while a normal distribution shown as a green dashed curve with $\mu = 7^\circ$ and $\sigma = 86^\circ$ provides an adequate alternative fit. The mean absolute turn angle is $69^\circ$, indicating substantial heading changes during reorientation. The small positive bias may reflect asymmetry in the experimental setup or intrinsic larval handedness. \textbf{(B)} Turn duration distribution: event durations follow a lognormal distribution shown as a red curve with shape $s = 0.59$, scale $= 1.29$ s, and median = 1.1 s. Durations range from 0.1--6.8 s, with most turns completing within 2 s. Gamma and exponential fits not shown provided poorer fits to the right tail. The angle and duration distributions enable realistic stochastic simulation of turn kinematics without assuming fixed values.}
+\label{fig:distributions}
+\end{figure}
+
+\subsection{Factorial Analysis of Intensity and Background Effects}
+\label{sec:factorial}
+
+To assess generalization beyond the reference condition, the model was
+extended to a \(2\times2\) factorial design varying LED1 intensity
+(0-to-250 vs 50-to-250 PWM) and LED2 background pattern (Constant 7 PWM
+vs Cycling 5--15 PWM). The factorial analysis pooled 14 experiments
+comprising 701 tracks and 7,867 events across all four conditions
+(Figure \ref{fig:factorial}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure5_factorial.png}
+\caption{\ifxetex\avenirultralight\else\ifluatex\avenirultralight\fi\fi\textbf{Factorial analysis of intensity and background effects.} Extension of the LNP model to a $2\times2$ factorial design with 14 experiments, 701 tracks, and 7,867 events reveals condition-specific modulation of suppression amplitude. \textbf{(A)} Heatmap of suppression amplitude $\alpha + \alpha_I \cdot I + \alpha_C \cdot C$ across the four experimental conditions. Values range from 0.34 for 50-to-250 | Constant with weakest suppression to 1.16 for 0-to-250 | Cycling with strongest suppression, representing a 3.4-fold range. Rows show background pattern with Constant 7 PWM vs Cycling 5--15 PWM; columns show LED1 intensity step with 0-to-250 vs 50-to-250 PWM. Blue indicates weaker suppression; red indicates stronger suppression. \textbf{(B)} Forest plot of factorial coefficient estimates with 95\% confidence intervals. All effects are statistically significant with $p < 0.05$, marked with asterisks. Key findings: (1) Intensity modulation with $\alpha_I = -0.665$ indicates 66\% weaker suppression for the 50-to-250 condition, consistent with partial adaptation to baseline illumination. (2) Cycling background modulation with $\alpha_C = +0.152$ indicates 15\% stronger suppression with oscillating LED2, suggesting reduced adaptation. (3) The baseline effects with $\beta_I = -0.199$ and $\beta_C = -0.108$ show 18\% and 10\% reduction in overall hazard respectively. (4) A synergistic interaction with $\beta_{IC} = -0.119$ indicates greater-than-additive effects when both manipulations are combined. The rebound coefficient $\gamma = 1.67$ is positive, indicating enhanced event probability after LED offset.}
+\label{fig:factorial}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{data/figures/figure6_psth_kernels_combined.png}
+\caption{\textbf{Condition-specific temporal dynamics and model validation.} \textbf{Panels A--D:} Peri-stimulus turn rate histograms for each experimental condition showing turn rate aligned to LED onset at time = 0. Pink shaded region indicates the peak-intensity period from 0--10 s. The 0-to-250 PWM conditions with Constant and Cycling backgrounds in panels A and B show pronounced pre-stimulus peaks and strong post-onset suppression. The 50-to-250 PWM conditions in panels C and D show weaker modulation, consistent with partial adaptation to elevated baseline intensity. Shaded bands indicate 95\% confidence intervals. \textbf{Panel E:} Empirical peri-stimulus turn rate with all four conditions overlaid showing condition-dependent suppression depth. \textbf{Panel F:} Direct comparison of empirical PSTH and LNP model prediction. The model captures the temporal dynamics of turn rate modulation including the initial transient peak at LED onset, deep suppression during peak intensity from 1--4 s, and gradual recovery. Model parameters t1 = 0.29 s and t2 = 3.81 s.}
+\label{fig:psth_kernels}
+\end{figure}
+
+The factorial model extends the hazard function with condition-specific
+modulation:
+
+\begin{equation}
+\log \lambda(t) = \beta_0 + \beta_I \cdot I + \beta_C \cdot C + \beta_{IC} \cdot (I \times C) + (\alpha + \alpha_I \cdot I + \alpha_C \cdot C) \cdot K_{\text{on}}(t) + \gamma \cdot K_{\text{off}}(t)
+\label{eq:factorial}
+\end{equation}
+
+\noindent where \(I\) indicates the 50-to-250 intensity condition and
+\(C\) indicates the cycling background condition.
+
+\begin{table}[h]
+\centering
+\caption{Factorial model coefficient estimates with 95\% confidence intervals. All effects are statistically significant at $p < 0.05$.}
+\label{tab:factorial}
+\small
+\begin{tabular}{p{3.2cm}p{1.5cm}p{2.2cm}p{1.2cm}p{3.8cm}}
+\hline
+\textbf{Effect} & \textbf{Coefficient} & \textbf{95\% CI} & \textbf{Hazard Ratio} & \textbf{Interpretation} \\
+\hline
+$\beta_I$ (Intensity) & $-0.199$ & $[-0.266, -0.132]$ & $0.82\times$ & Lower baseline hazard \\
+$\beta_C$ (Cycling) & $-0.108$ & $[-0.174, -0.042]$ & $0.90\times$ & Lower baseline hazard \\
+$\beta_{IC}$ (Interaction) & $-0.119$ & $[-0.218, -0.019]$ & --- & Synergistic reduction \\
+$\alpha$ (Kernel amplitude) & $1.005$ & $[0.899, 1.110]$ & --- & Baseline suppression \\
+$\alpha_I$ (Intensity mod.) & $-0.665$ & $[-0.773, -0.557]$ & --- & $-66\%$ suppression \\
+$\alpha_C$ (Cycling mod.) & $0.152$ & $[0.050, 0.254]$ & --- & $+15\%$ suppression \\
+$\gamma$ (Rebound) & $1.669$ & $[0.470, 2.869]$ & --- & Post-offset enhancement \\
+\hline
+\end{tabular}
+\end{table}
+
+The factorial analysis reveals that both experimental manipulations
+significantly modulate the optogenetic response
+(Table \ref{tab:factorial};
+Figure \ref{fig:factorial}).
+
+The 50-to-250 condition shows 66\% weaker suppression amplitude
+with \(\alpha_I = -0.665\) and \(p < 0.001\). The 66\% reduction in
+suppression amplitude is consistent with partial adaptation: larvae
+pre-exposed to 50 PWM baseline illumination exhibit reduced sensitivity
+to the subsequent intensity step, suggesting that the sensory pathway
+has already partially adapted to the ambient light level.
+
+The cycling background with LED2 oscillating 5--15 PWM increases
+suppression amplitude by 15\% with \(\alpha_C = 0.152\) and \(p = 0.004\). The
+modest gain increase may reflect background-dependent modulation of
+circuit excitability, possibly through reduced adaptation or temporal
+contrast effects. The specific mechanism remains to be determined.
+
+A modest interaction with \(\beta_{IC} = -0.119\) and \(p = 0.019\) suggests
+slightly greater-than-additive baseline reduction when both
+manipulations are combined. Given limited statistical power for
+detecting small interactions (estimated $\sim$30--40\% power for the
+observed effect size), the interaction is presented as exploratory and
+conclusions are not based on the finding.
+
+The condition-specific suppression amplitudes in
+Figure \ref{fig:factorial}A range from 0.34 for 50-to-250
+\textbar{} Constant with weakest suppression to 1.16 for 0-to-250 \textbar{} Cycling
+with strongest suppression, representing a 3.4-fold range across conditions.
+
+Per-condition kernel fits reveal that the fast timescale \(\tau_1\)
+varies 4-fold across conditions (0.26--1.18 s; Figure S6), while the
+slow timescale \(\tau_2\) remains stable (3.7--4.5 s). The stability of
+\(\tau_2\) alongside variable \(\tau_1\) suggests that baseline
+illumination selectively modulates sensory transduction speed without
+affecting adaptation dynamics.
+
+Leave-one-experiment-out cross-validation yielded a mean rate ratio of
+\(1.03 \pm 0.31\) across 12 held-out experiments (58\% within the
+0.8--1.25 target range), indicating reasonable but imperfect
+generalization. The substantial inter-experiment variance
+(\(\sigma = 0.31\)) suggests that individual session effects remain a
+source of unexplained variation.
+

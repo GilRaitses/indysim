@@ -1,0 +1,334 @@
+/* INDYsim Manuscript Styling - PDF-like webpage with Avenir Ultralight aesthetic */
+
+/* Use system Avenir if available, fallback to Nunito (Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600&display=swap');
+
+:root {
+  --font-primary: 'Avenir Next', 'Avenir', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-weight-ultralight: 200;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --text-color: #1a1a1a;
+  --text-muted: #555;
+  --accent-color: #2c5282;
+  --border-color: #e2e8f0;
+  --background: #ffffff;
+  --page-width: 8.5in;
+}
+
+/* Base document styling */
+html {
+  font-size: 11pt;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+  color: var(--text-color);
+  line-height: 1.65;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main content area - paper-like appearance */
+.quarto-container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  background: var(--background);
+  box-shadow: 0 0 40px rgba(0,0,0,0.08);
+}
+
+main.content {
+  max-width: 6.5in;
+  margin: 0 auto;
+  padding: 1in;
+  background: var(--background);
+}
+
+#quarto-content {
+  background: var(--background);
+}
+
+/* Title block */
+.quarto-title-block {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h1.title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-ultralight);
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.quarto-title-meta {
+  font-weight: var(--font-weight-light);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Abstract */
+.abstract {
+  background: #fafafa;
+  border-left: 3px solid var(--accent-color);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0 2rem 0;
+  font-size: 0.95rem;
+}
+
+.abstract h2 {
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--accent-color);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+  color: var(--text-color);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-ultralight);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-light);
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-regular);
+}
+
+/* Section numbers */
+.header-section-number {
+  color: var(--accent-color);
+  margin-right: 0.5rem;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.35rem;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+thead {
+  border-bottom: 2px solid var(--text-color);
+}
+
+th {
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  padding: 0.5rem;
+}
+
+td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+tbody tr:last-child td {
+  border-bottom: 2px solid var(--text-color);
+}
+
+/* Figures */
+figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-color);
+}
+
+figcaption {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: left;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+figcaption strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+}
+
+/* Equations */
+.math.display {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* Code blocks */
+code {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  font-size: 0.85em;
+  background: #f4f4f4;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+
+pre {
+  background: #f8f8f8;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+/* Links */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Table of Contents */
+#TOC {
+  font-size: 0.9rem;
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 4px;
+}
+
+#TOC a {
+  color: var(--text-color);
+  font-weight: var(--font-weight-light);
+}
+
+#TOC a:hover {
+  color: var(--accent-color);
+}
+
+.sidebar nav[role=doc-toc] {
+  padding: 1rem;
+}
+
+.sidebar nav[role=doc-toc] h2 {
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.sidebar nav[role=doc-toc] ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar nav[role=doc-toc] li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar nav[role=doc-toc] a {
+  font-weight: var(--font-weight-light);
+  font-size: 0.85rem;
+}
+
+/* Strong/Bold text - use regular weight for contrast */
+strong, b {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Emphasis */
+em, i {
+  font-style: italic;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 3px solid var(--border-color);
+  padding-left: 1rem;
+  margin-left: 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2rem 0;
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+  }
+  
+  .quarto-container {
+    box-shadow: none;
+  }
+  
+  main.content {
+    padding: 0;
+  }
+  
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  main.content {
+    padding: 1rem;
+  }
+  
+  h1.title {
+    font-size: 1.5rem;
+  }
+  
+  table {
+    font-size: 0.8rem;
+  }
+}

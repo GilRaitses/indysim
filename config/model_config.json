@@ -1,0 +1,115 @@
+{
+  "model": {
+    "events": ["turn", "stop", "reverse"],
+    "temporal_kernel": {
+      "kernel_type": "raised_cosine",
+      "n_basis": 10,
+      "time_range": [-3.0, 8.0],
+      "units": "seconds",
+      "description": "Analysis window: 3 seconds before onset to 8 seconds after onset"
+    },
+    "bin_width": 0.05,
+    "regularization": {
+      "type": "L2",
+      "lambda": 0.1
+    },
+    "cross_validation": {
+      "method": "leave_one_larva_out",
+      "n_folds": null
+    }
+  },
+  "simulation": {
+    "max_time": 300.0,
+    "dt": 0.1,
+    "n_replications": 30,
+    "random_seed": 42,
+    "arena": {
+      "width": 1000,
+      "height": 1000,
+      "units": "pixels"
+    }
+  },
+  "doe": {
+    "n_conditions": 27,
+    "n_replications_per_condition": 30,
+    "factors": {
+      "intensity": {
+        "levels": [25, 50, 100],
+        "units": "percent"
+      },
+      "pulse_duration": {
+        "levels": [0.5, 1.0, 2.0],
+        "units": "seconds"
+      },
+      "inter_pulse_interval": {
+        "levels": [5, 10, 20],
+        "units": "seconds"
+      }
+    }
+  },
+  "confidence_intervals": {
+    "target_coverage": 0.95,
+    "target_half_width_pct": 10.0,
+    "pilot_n": 10,
+    "min_replications": 30
+  },
+  "data_paths": {
+    "h5_dir": "/Users/gilraitses/mechanosensation/h5tests",
+    "h5_file": "GMR61_202509051201_tier1 1.h5",
+    "engineered_data_dir": "data/engineered",
+    "trajectory_dir": "/Users/gilraitses/mechanosensation/output/spatial_analysis",
+    "stimulus_file": "/Users/gilraitses/mechanosensation/led_stimulus_data_2025-08-19_14-58-40.csv",
+    "runs_csv": "runs.csv",
+    "reorientations_csv": "reorientations.csv"
+  },
+  "output": {
+    "base_dir": "./output",
+    "fitted_models_dir": "./output/fitted_models",
+    "simulation_results_dir": "./output/simulation_results",
+    "arena_csvs_dir": "./output/arena_csvs"
+  },
+  "kpis": {
+    "turn_rate": {
+      "name": "Mean Turn Rate",
+      "units": "turns/min",
+      "calculation": "total_turns / (total_time / 60)"
+    },
+    "latency": {
+      "name": "Latency to First Turn",
+      "units": "seconds",
+      "calculation": "min(turn_times) - stimulus_onset"
+    },
+    "stop_fraction": {
+      "name": "Stop Fraction",
+      "units": "dimensionless",
+      "calculation": "total_stop_time / total_time"
+    },
+    "tortuosity": {
+      "name": "Path Tortuosity",
+      "units": "dimensionless",
+      "calculation": "euclidean_distance / path_length"
+    },
+    "dispersal": {
+      "name": "Spatial Dispersal",
+      "units": "pixels",
+      "calculation": "mean(distance_from_start)"
+    },
+    "pause_rate": {
+      "name": "Pause Rate",
+      "units": "pauses/min",
+      "calculation": "total_pauses / (total_time / 60)"
+    },
+    "mean_spine_curve_energy": {
+      "name": "Mean Spine Curve Energy",
+      "units": "dimensionless",
+      "calculation": "mean(spine_curve_energy)"
+    },
+    "reversal_rate": {
+      "name": "Heading Reversal Rate",
+      "units": "reversals/min",
+      "calculation": "total_heading_reversals / (total_time / 60)",
+      "note": "Discrete turn events (~180°), different from reverse crawling"
+    }
+  }
+}
+

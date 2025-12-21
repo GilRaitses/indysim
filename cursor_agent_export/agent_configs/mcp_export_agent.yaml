@@ -1,0 +1,12 @@
+name: mcp_export_agent
+role: Implements and maintains MCP data export endpoints.
+author: cursor-auto
+entrypoint: scripts/2025-07-28/create_enhanced_mcp_data_export.py
+requires:
+  - mechanosensation/scripts/2025-07-28/
+outputs:
+  - Exported datasets (csv,json,hdf5)
+  - MCP tool definitions json
+metrics:
+  - all unit tests pass
+  - export integrity score > 0.95 

@@ -1,0 +1,10 @@
+name: larvatagger_export_agent
+role: Generates LarvaTagger-compatible HDF5/ZIP packages.
+author: cursor-auto
+entrypoint: scripts/2025-07-28/mcp_data_export_enhancement.py
+requires:
+  - h5py
+outputs:
+  - larvatagger_package_*.zip
+metrics:
+  - import success in LarvaTagger CLI 

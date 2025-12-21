@@ -1,0 +1,11 @@
+name: web_app_agent
+role: Builds REST API and React UI for mechanosensation web portal.
+author: cursor-auto
+entrypoint: web-app/src/index.js
+requires:
+  - mechanosensation/mcp-server/
+outputs:
+  - Running Node service with /api/export endpoints
+  - Docker image
+metrics:
+  - endpoint test suite success 100% 

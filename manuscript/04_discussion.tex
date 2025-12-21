@@ -1,0 +1,225 @@
+\section{Discussion}
+
+\subsection{Interpretability of the Gamma-Difference Kernel}
+
+The gamma-difference parameterization has a clear biological
+interpretation. The shape parameters (\(\alpha_1 \approx 2\),
+\(\alpha_2 \approx 4\)) suggest two-stage and four-stage cascades of
+first-order processes for the fast and slow components. Shape parameters
+of 2 and 4 are consistent with multi-stage signal transduction, where
+rapid sensory processing involves photoreceptor activation with 2 stages while slow circuit
+adaptation involves synaptic summation with 4 stages.
+
+These timescales match known neurophysiological processes: the fast
+timescale (\(\tau_1 = 0.29\) s) corresponds to channelrhodopsin activation
+latency and first-order neural responses, while the slow timescale
+(\(\tau_2 = 3.81\) s) matches adaptation processes observed in
+sensory circuits.
+
+\subsection{Practical Utility}
+
+The analytic kernel supports direct parameter comparison across conditions
+and allows testing whether experimental manipulations affect the fast or
+slow component. Simulations run directly without requiring precomputed
+basis functions.
+
+\subsection{Condition-Dependent Timescales}
+
+The fast timescale \(\tau_1\) shows condition-dependence, ranging from
+0.26 s (0-to-250 Cycling) to 1.18 s (50-to-250 Constant). The 4-fold
+range in \(\tau_1\) suggests that baseline neural excitation modulates
+the speed of sensory transduction. In contrast, the slow timescale
+\(\tau_2\) remains relatively stable (3.7--4.5 s) across conditions,
+indicating that synaptic adaptation operates on an intrinsic circuit
+timescale independent of stimulus parameters.
+
+The 50-to-250 Constant condition, which has persistent low-level LED
+activation, produces the slowest fast component. The slowed fast
+component may reflect partial adaptation of the rapid sensory pathway
+under tonic stimulation, reducing the contrast of stimulus onset and
+slowing the initial response.
+
+\subsection{Factorial Design Insights}
+
+The extension to a \(2\times2\) factorial design reveals a dissociation
+between stable properties such as kernel shape and timescales in contrast to
+condition-dependent properties such as amplitude. Stable kernel shape suggests
+that circuit dynamics are intrinsic to the GMR61 pathway, while gain
+modulation reflects sensory context.
+
+The partial adaptation effect shows 66\% weaker suppression for 50-to-250,
+matching ratio-based scaling as described by the Weber-Fechner law, where
+response magnitude depends on the intensity ratio rather than the
+absolute level. The cycling background enhancement produces 15\% stronger
+suppression and may reflect background-dependent gain modulation; possible
+mechanisms include reduced steady-state adaptation or temporal contrast
+effects, though the specific circuit basis remains to be determined.
+
+Notably, baseline hazard and LED1-driven suppression gain are
+dissociable. Intensity manipulation affects both properties by
+reducing baseline turning alongside suppression amplitude, in contrast
+to cycling background manipulation which reduces baseline while increasing
+suppression gain. The dissociation indicates that tonic excitability
+and stimulus-locked modulation are independently tunable circuit
+properties.
+
+\subsection{Limitations}
+
+Although point estimates of \(\tau_1\) span approximately 4-fold across
+conditions (0.26--1.18 s), formal tests for heterogeneity based on
+bootstrap resampling do not reach significance (Cochran's \(Q\)
+\(p = 0.252\); \(I^2 = 27\%\), moderate heterogeneity). The observed
+range may reflect genuine biological variation or estimator noise given
+the sample size. The \(\tau_1\) variation is therefore interpreted as a
+hypothesis for future investigation rather than a demonstrated effect.
+Effect size analysis (Supplementary Material) reveals that the largest
+pairwise difference (0-to-250 Cycling vs 50-to-250 Constant) corresponds
+to Hedges' \(g = 3.1\) (large effect), but overlapping confidence
+intervals preclude strong claims about condition-specific timescales.
+
+While the factorial model captures main effects well with mean rate ratio =
+1.03, the 58\% leave-one-out pass rate with 7/12 experiments within
+$\pm$25\% of target does not significantly exceed chance with binomial
+\(p = 0.39\). The 58\% pass rate indicates modest rather than strong
+out-of-sample validation, likely reflecting substantial
+session-to-session variability from experimental factors such as agar
+moisture and larval developmental stage not captured by the model.
+
+The primary analysis uses a fixed-effects NB-GLM that pools across
+experiments. A robustness check using NB-GLMM with random track
+intercepts (Supplementary Table S2b) showed that the kernel parameters
+differ by less than 3.5\% between models, with random effect SD
+\(= 0.59\) indicating substantial between-track variation in baseline
+rate.
+
+Reorientation events were defined using
+\texttt{is\_reorientation\_start} from the tracking pipeline, yielding
+7,288 events across all factorial conditions. Of these, 77\%
+have zero measured duration, representing onset events including micro head sweeps,
+while 23\% have duration \(> 0.1\) s and qualify as true turns. The hazard model was
+fit to all events to maximize power; trajectory simulations use only the
+filtered subset.
+
+Time-rescaling analysis showed modest deviation from the ideal Poisson
+model with KS test \(p = 0.17\) and mean deviation 1.3\%, within acceptable
+limits for point process models. Remaining deviation may reflect
+short-term dependencies such as refractoriness. An explicit post-event
+kernel could improve IEI fits but would not change the main LED1-driven
+suppression dynamics.
+
+The run/turn simulator omits edge avoidance as well as head sweeps and
+speed gradients. The simplified dynamics suffice for demonstrating
+hazard-driven timing but limit biomechanical realism.
+
+Using Mason Klein's reverse crawl detection algorithm with SpeedRunVel
+\(< 0\) for \(\geq 3\) s, 1,853 reversal events were identified across
+all 14 experiments, comprising 2.3\% of total observation time. Reverse
+crawls show the \textit{opposite} LED modulation from reorientations:
+LED stimulation \textit{increases} reverse crawl probability by 14\%
+(\(\chi^2\) test \(p < 0.001\)), with a pronounced spike to 7\% in the
+first 0--5 s after LED onset before declining below baseline. The
+pattern suggests a biphasic escape response with immediate backward
+locomotion followed by suppression of turning. A three-state model
+including run, turn, and reverse states could capture the full behavioral repertoire but is
+beyond the current scope.
+
+Event detection relies on fixed thresholds of 30\(^\circ\) for turns, 0.5
+s for pauses, and 3 s for reverse crawls that have not been formally
+sensitivity-tested. Changes in stimulus intensity may alter movement
+kinematics such that fixed thresholds misclassify events differently
+across conditions, potentially biasing \(\tau_1\) estimates. Threshold
+robustness analysis with $\pm$20\% variation and model refitting is
+warranted to confirm that the reported timescale differences are not
+detection artifacts.
+
+\subsection{Alternative Explanations}
+
+The interpretation that baseline illumination modulates sensory
+transduction speed \(\tau_1\) and gain amplitude is presented as a
+hypothesis consistent with the data, not a firm conclusion. Several
+alternative explanations cannot be excluded:
+
+The \(\tau_1\) variation admits several alternative explanations.
+Behavioral state confounds represent one possibility, as larvae in
+high-intensity or high-background conditions may differ in arousal,
+fatigue, or adaptation states that affect reaction time independently of
+sensory transduction. Event detection artifacts offer another
+explanation, since fixed turn-angle thresholds applied to conditions
+with different movement kinematics could bias which events are detected
+and when, shifting apparent \(\tau_1\) without reflecting true sensory
+dynamics. Track selection bias cannot be excluded, as the 79 complete
+tracks comprising 11\% of total used for variability analysis may differ
+systematically from incomplete tracks, though speed comparisons show no
+significant difference (\(p = 0.24\)). Fitting noise may also
+contribute, given the non-significant heterogeneity test
+(\(p = 0.252\)); some of the apparent \(\tau_1\) range may reflect
+estimator variance rather than genuine biological differences.
+
+The amplitude variation also admits alternative explanations. Motor
+decision probability represents one possibility, as the suppression
+amplitude may reflect the probability of initiating a reorientation
+given a stimulus as a motor decision rather than purely sensory gain
+modulation. State occupancy differences offer another explanation, since
+conditions that promote more running versus pausing could shift apparent
+amplitude due to different baseline behavioral distributions. Model
+mis-specification cannot be excluded, as a gamma-difference kernel that
+cannot capture all relevant temporal structure such as
+non-stationarities or individual differences may show amplitude
+compensation for unmodeled dynamics.
+
+Testing these alternative explanations would require genetic
+manipulations to change baseline excitation or hazard-model analyses
+that include covariates for speed and run history as well as time since
+experiment start.
+
+\subsection{Behavioral Variability and Phenotype Identification}
+
+The event duration distributions (Supplementary Figure S7) reveal
+condition-dependent differences in behavioral timing that may serve as
+phenotypic signatures. Pause durations are significantly longer in
+50-to-250 conditions (\(p < 0.001\), Kruskal-Wallis), suggesting that
+baseline illumination affects not only reorientation probability but
+also the temporal structure of exploratory pauses. Turn durations also
+vary significantly across conditions (\(p < 0.001\)), while run
+durations show only marginal differences (\(p = 0.08\)).
+
+Event durations varied significantly for turns and pauses in contrast to
+runs which showed only marginal differences, suggesting that
+kernel-derived timescales \(\tau_1\) and \(\tau_2\) combined with event
+duration statistics could provide a multidimensional behavioral
+fingerprint for phenotype identification. Animals with similar
+stimulus-response dynamics in kernel shape but different behavioral tempo
+in event durations may represent distinct behavioral phenotypes within
+the same genotype. Future work should leverage complete tracks spanning
+the full experiment to establish individual-level variability bounds
+before attempting phenotype clustering.
+
+\subsection{Trial-to-Trial Sensitization}
+
+Analysis of fractional behavior usage across repeated LED pulses
+revealed a systematic sensitization effect not captured by the stationary
+kernel assumption. Turn fraction increased approximately 2-3 fold over
+the 20-minute experiment. At pulse 0, turn fraction ranged from 8-28\%
+across conditions; by pulse 17, it reached 37-78\%. All conditions
+showed significant positive slopes with \(p < 0.001\) for linear trend.
+Cycling background conditions showed faster sensitization with slopes
+of \(+0.029\) to \(+0.031\) per pulse compared to constant background
+conditions with slopes of \(+0.015\) to \(+0.021\) per pulse. Pause fraction
+and reverse crawl fraction remained relatively flat across pulses,
+indicating that the sensitization effect is specific to turning behavior
+rather than a general arousal change. The increasing turn propensity
+over time suggests that animals become more responsive to the LED
+stimulus with repeated exposure, possibly through sensitization of the
+reorientation circuit. Future models may need to incorporate
+trial-to-trial non-stationarity to fully capture behavioral dynamics
+across extended experiments.
+
+\subsection{Future Directions}
+
+Several extensions would enhance the model, including temporal
+refinements such as a refractory kernel for post-event suppression alongside a
+random-effects GLMM for track-level heterogeneity, spatial extensions such as
+edge avoidance for bounded arenas alongside chemotaxis integration for gradient
+navigation, and downstream applications such as phenotype clustering using kernel parameters and event
+duration features.
+
