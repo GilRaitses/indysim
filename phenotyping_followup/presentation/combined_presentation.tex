@@ -10,7 +10,7 @@
 
 \title{Sensorimotor Habituation in \textit{Drosophila} Larvae}
 \subtitle{Population-Level Modeling and Individual Phenotyping Validation}
-\author{Gil Raitses, Daniel Grisham, Mason M. Klein}
+\author{Gil Raitses}
 \institute{Syracuse University}
 \date{December 22, 2025}
 
@@ -24,7 +24,7 @@
 %% PART 1: ORIGINAL STUDY
 %% ===========================================
 
-\begin{frame}{Executive Summary: Original Study}
+\begin{frame}{Executive Summary -- Original Study}
 \textbf{Population-Level Sensorimotor Habituation Model}
 
 \begin{itemize}
@@ -36,139 +36,139 @@
 \end{itemize}
 
 \vspace{0.5cm}
-\textbf{Key Result:} The gamma-difference kernel accurately predicts population-level reorientation dynamics under optogenetic stimulation.
+\textbf{Key Result} \quad The gamma-difference kernel accurately predicts population-level reorientation dynamics under optogenetic stimulation.
 \end{frame}
 
-\begin{frame}{Figure 1: Kernel Structure}
+\begin{frame}{Kernel Structure}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/figure1_kernel.png}
 
-\textbf{Caption:} The gamma-difference kernel $K(t) = A \cdot \Gamma(t; \alpha_1, \beta_1) - B \cdot \Gamma(t; \alpha_2, \beta_2)$ modulates reorientation hazard rate. Fast excitation peaks at $\sim$0.3s; slow suppression persists for $\sim$4s.
+The gamma-difference kernel $K(t) = A \cdot \Gamma(t; \alpha_1, \beta_1) - B \cdot \Gamma(t; \alpha_2, \beta_2)$ modulates reorientation hazard rate. Fast excitation peaks at $\sim$0.3s; slow suppression persists for $\sim$4s.
 \end{frame}
 
-\begin{frame}{Figure 2: Model Validation}
+\begin{frame}{Model Validation}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/figure2_validation.png}
 
-\textbf{Caption:} Cross-validation demonstrates model robustness. Fitted kernels generalize across experiments with consistent $\tau_1$ and $\tau_2$ estimates.
+Cross-validation demonstrates model robustness. Fitted kernels generalize across experiments with consistent $\tau_1$ and $\tau_2$ estimates.
 \end{frame}
 
-\begin{frame}{Figure 3: Trajectory Analysis}
+\begin{frame}{Trajectory Analysis}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/figure3_trajectories.png}
 
-\textbf{Caption:} Example larval trajectories showing reorientation events aligned to LED stimulation cycles. The kernel captures event clustering after stimulus onset.
+Example larval trajectories showing reorientation events aligned to LED stimulation cycles. The kernel captures event clustering after stimulus onset.
 \end{frame}
 
-\begin{frame}{Figure 4: Habituation Dynamics}
+\begin{frame}{Habituation Dynamics}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/figure_habituation.png}
 
-\textbf{Caption:} Habituation effects across repeated stimulation cycles. Response magnitude decreases with cumulative exposure, consistent with sensorimotor adaptation.
+Habituation effects across repeated stimulation cycles. Response magnitude decreases with cumulative exposure, consistent with sensorimotor adaptation.
 \end{frame}
 
-\begin{frame}{Figure 5: Factorial Design}
+\begin{frame}{Factorial Design}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/figure5_factorial.png}
 
-\textbf{Caption:} Factorial analysis of kernel parameters across experimental conditions. $\tau_1$ varies 4-fold across baseline illumination levels.
+Factorial analysis of kernel parameters across experimental conditions. The fast timescale $\tau_1$ varies 4-fold across baseline illumination levels.
 \end{frame}
 
-\begin{frame}{Supplement: Behavioral State Analysis}
+\begin{frame}{Behavioral State Analysis}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/figure_behavior_stacked_cinnamoroll.png}
 
-\textbf{Caption:} Fractional time in behavioral states (run, turn, head swing) across stimulation protocols. LED-ON periods show increased turn fraction.
+Fractional time in behavioral states including run, turn, and head swing across stimulation protocols. LED-ON periods show increased turn fraction.
 \end{frame}
 
-\begin{frame}{Supplement: Leave-One-Experiment-Out Validation}
+\begin{frame}{Leave-One-Experiment-Out Validation}
 \centering
 \includegraphics[height=0.8\textheight]{../../figures/loeo_permutation_null.png}
 
-\textbf{Caption:} LOEO permutation test. Observed log-likelihood ratio exceeds 95\% of null distribution, confirming kernel generalization.
+LOEO permutation test. Observed log-likelihood ratio exceeds 95\% of null distribution, confirming kernel generalization.
 \end{frame}
 
 %% ===========================================
 %% PART 2: FOLLOW-UP STUDY
 %% ===========================================
 
-\begin{frame}{Executive Summary: Follow-Up Study}
+\begin{frame}{Executive Summary -- Follow-Up Study}
 \textbf{Individual-Level Phenotyping Validation}
 
 \begin{itemize}
-    \item \textbf{Question:} Can individual larvae be phenotyped using kernel parameters?
-    \item \textbf{Challenge:} Sparse data ($\sim$18--25 events per 10--20 min track)
-    \item \textbf{Finding:} Apparent phenotypic clusters are artifacts of sparse data
-    \item Gap statistic suggests optimal $k=1$ cluster (no discrete phenotypes)
-    \item Round-trip validation ARI = 0.128 (below 0.5 threshold)
+    \item \textbf{Question} \quad Can individual larvae be phenotyped using kernel parameters?
+    \item \textbf{Challenge} \quad Sparse data with $\sim$18--25 events per 10--20 min track
+    \item \textbf{Finding} \quad Apparent phenotypic clusters are artifacts of sparse data
+    \item Gap statistic suggests optimal $k=1$ cluster indicating no discrete phenotypes
+    \item Round-trip validation ARI = 0.128 falls below 0.5 threshold
     \item Only 8.6\% of tracks show genuine individual differences
 \end{itemize}
 
 \vspace{0.5cm}
-\textbf{Key Result:} Population-level analysis is robust; individual-level phenotyping requires protocol modifications (burst stimulation, longer recordings).
+\textbf{Key Result} \quad Population-level analysis is robust; individual-level phenotyping requires protocol modifications including burst stimulation and longer recordings.
 \end{frame}
 
-\begin{frame}{Figure 1: The Clustering Illusion}
+\begin{frame}{The Clustering Illusion}
 \centering
-\includegraphics[height=0.8\textheight]{figures/core/fig1_clustering_illusion.pdf}
+\includegraphics[height=0.8\textheight]{../figures/core/fig1_clustering_illusion.pdf}
 
-\textbf{Caption:} PCA reveals unimodal distribution, not discrete clusters. All validation methods failed (ARI $<$ 0.5). Gap statistic suggests optimal $k=1$.
+PCA reveals unimodal distribution rather than discrete clusters. All validation methods failed with ARI $<$ 0.5. Gap statistic suggests optimal $k=1$.
 \end{frame}
 
-\begin{frame}{Figure 2: Data Sparsity Challenge}
+\begin{frame}{Data Sparsity Challenge}
 \centering
-\includegraphics[height=0.8\textheight]{figures/core/fig2_data_sparsity.pdf}
+\includegraphics[height=0.8\textheight]{../figures/core/fig2_data_sparsity.pdf}
 
-\textbf{Caption:} With only $\sim$18 events per track and 6 kernel parameters, the data-to-parameter ratio is 3:1 (recommended: 10:1).
+With only $\sim$18 events per track and 6 kernel parameters, the data-to-parameter ratio is 3 to 1. Recommended ratio is 10 to 1.
 \end{frame}
 
-\begin{frame}{Figure 3: Hierarchical Shrinkage}
+\begin{frame}{Hierarchical Shrinkage}
 \centering
-\includegraphics[height=0.8\textheight]{figures/core/fig3_hierarchical_shrinkage.pdf}
+\includegraphics[height=0.8\textheight]{../figures/core/fig3_hierarchical_shrinkage.pdf}
 
-\textbf{Caption:} Hierarchical Bayesian model shrinks extreme MLE estimates toward population mean ($\tau_1 = 0.63$s). Only 8.6\% are genuine outliers.
+Hierarchical Bayesian model shrinks extreme MLE estimates toward population mean of $\tau_1 = 0.63$s. Only 8.6\% are genuine outliers.
 \end{frame}
 
-\begin{frame}{Figure 4: Candidate Fast Responders}
+\begin{frame}{Candidate Fast Responders}
 \centering
-\includegraphics[height=0.8\textheight]{figures/core/fig4_fast_responders.pdf}
+\includegraphics[height=0.8\textheight]{../figures/core/fig4_fast_responders.pdf}
 
-\textbf{Caption:} 22 candidate fast-responder tracks (8.6\%) show $\tau_1 \approx 0.45$s vs population mean 0.63s. Require independent validation.
+22 candidate fast-responder tracks representing 8.6\% show $\tau_1 \approx 0.45$s versus population mean of 0.63s. Independent validation required.
 \end{frame}
 
-\begin{frame}{Figure 5: Power Analysis}
+\begin{frame}{Power Analysis}
 \centering
-\includegraphics[height=0.8\textheight]{figures/fig5_power_analysis.pdf}
+\includegraphics[height=0.8\textheight]{../figures/fig5_power_analysis.pdf}
 
-\textbf{Caption:} Current data achieves only 20--30\% power to detect $\Delta\tau_1 = 0.2$s. Reaching 80\% power requires $\sim$100 events/track.
+Current data achieves only 20--30\% power to detect $\Delta\tau_1 = 0.2$s. Reaching 80\% power requires $\sim$100 events per track.
 \end{frame}
 
-\begin{frame}{Figure 6: Identifiability Problem}
+\begin{frame}{Identifiability Problem}
 \centering
-\includegraphics[height=0.8\textheight]{figures/fig2_identifiability_v3.pdf}
+\includegraphics[height=0.8\textheight]{../figures/fig2_identifiability_v3.pdf}
 
-\textbf{Caption:} Fisher Information analysis reveals burst stimulation provides 10$\times$ higher information for $\tau_1$ than continuous stimulation.
+Fisher Information analysis reveals burst stimulation provides 10$\times$ higher information for $\tau_1$ than continuous stimulation.
 \end{frame}
 
-\begin{frame}{Figure 7: Design Comparison}
+\begin{frame}{Design Comparison}
 \centering
-\includegraphics[height=0.8\textheight]{figures/fig_design_comparison_summary.pdf}
+\includegraphics[height=0.8\textheight]{../figures/fig_design_comparison_summary.pdf}
 
-\textbf{Caption:} Optimal design depends on kernel regime. For inhibition-dominated kernels (current data), burst stimulation is required.
+Optimal design depends on kernel regime. For inhibition-dominated kernels in current data, burst stimulation is required.
 \end{frame}
 
-\begin{frame}{Figure 8: Stimulation Protocol Recommendations}
+\begin{frame}{Stimulation Protocol Recommendations}
 \centering
-\includegraphics[height=0.8\textheight]{figures/fig_stimulation_schematic.pdf}
+\includegraphics[height=0.8\textheight]{../figures/fig_stimulation_schematic.pdf}
 
-\textbf{Caption:} Recommended burst design: 10 pulses $\times$ 0.5s ON with 0.5s gaps. Achieves 8$\times$ more informative events than continuous 10s ON.
+Recommended burst design uses 10 pulses of 0.5s ON with 0.5s gaps. This achieves 8$\times$ more informative events than continuous 10s ON.
 \end{frame}
 
-\begin{frame}{Figure 9: Kernel Model Comparison}
+\begin{frame}{Kernel Model Comparison}
 \centering
-\includegraphics[height=0.8\textheight]{figures/fig_kernel_comparison.pdf}
+\includegraphics[height=0.8\textheight]{../figures/fig_kernel_comparison.pdf}
 
-\textbf{Caption:} Gamma-difference kernel (6 params) achieves R$^2$ = 0.968 compared to raised cosine basis (12 params), validating the parametric form.
+Gamma-difference kernel with 6 parameters achieves R$^2$ = 0.968 compared to raised cosine basis with 12 parameters, validating the parametric form.
 \end{frame}
 
 %% ===========================================
@@ -179,31 +179,31 @@
 \textbf{Original Study}
 \begin{itemize}
     \item Gamma-difference kernel accurately models population-level reorientation dynamics
-    \item Two timescales: fast excitation ($\tau_1$) and slow suppression ($\tau_2$)
+    \item Two timescales govern behavior including fast excitation $\tau_1$ and slow suppression $\tau_2$
     \item Robust across 14 experiments via LOEO cross-validation
 \end{itemize}
 
 \vspace{0.5cm}
 \textbf{Follow-Up Study}
 \begin{itemize}
-    \item Individual phenotyping fails with current protocols (sparse data)
-    \item Apparent clusters are artifacts, not genuine phenotypes
+    \item Individual phenotyping fails with current protocols due to sparse data
+    \item Apparent clusters are artifacts rather than genuine phenotypes
     \item 8.6\% candidate fast responders require independent validation
-    \item Recommendations: burst stimulation, $\geq$100 events/track, composite phenotypes
+    \item Recommendations include burst stimulation, $\geq$100 events per track, and composite phenotypes
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Recommendations for Future Work}
 \begin{enumerate}
-    \item \textbf{Protocol modification:} Replace 10s continuous ON with burst trains (10 $\times$ 0.5s pulses)
-    \item \textbf{Extended recording:} Target 40+ minutes to achieve $\geq$50 events/track
-    \item \textbf{Model simplification:} Fix $\tau_2$, $A$, $B$ at population values; estimate only $\tau_1$
-    \item \textbf{Alternative phenotypes:} ON/OFF ratio, first-event latency (robust with sparse data)
-    \item \textbf{Within-condition analysis:} Avoid confounding by condition effects
+    \item \textbf{Protocol modification} \quad Replace 10s continuous ON with burst trains of 10 $\times$ 0.5s pulses
+    \item \textbf{Extended recording} \quad Target 40+ minutes to achieve $\geq$50 events per track
+    \item \textbf{Model simplification} \quad Fix $\tau_2$, $A$, $B$ at population values and estimate only $\tau_1$
+    \item \textbf{Alternative phenotypes} \quad Use ON/OFF ratio and first-event latency which are robust with sparse data
+    \item \textbf{Within-condition analysis} \quad Avoid confounding by condition effects
 \end{enumerate}
 
 \vspace{0.5cm}
-\textbf{Bottom line:} Population-level analysis is robust and publishable. Individual phenotyping requires experimental redesign.
+\textbf{Bottom line} \quad Population-level analysis is robust and publishable. Individual phenotyping requires experimental redesign.
 \end{frame}
 
 \begin{frame}
@@ -215,4 +215,3 @@
 \end{frame}
 
 \end{document}
-
