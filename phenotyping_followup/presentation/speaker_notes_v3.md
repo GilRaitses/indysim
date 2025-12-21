@@ -43,7 +43,57 @@ These timescales may correspond to distinct neural circuit mechanisms. The fast 
 
 ---
 
-## Slide 4: Simulated vs Empirical Event Counts
+## Slide 4: PSTH Computation Methods
+
+**Two Approaches**
+- **Empirical PSTH**: Direct histogram binning of event times relative to LED onset. No functional form assumed. Uses 100ms bins.
+- **Parametric PSTH**: Derived from the Bernoulli event model. At each timestep, event probability p(t) = 1 - exp(-lambda(t) * dt).
+
+**Key Distinction**
+Empirical PSTH is what we observe. Parametric PSTH is what the model predicts. Model fitting minimizes the gap between them.
+
+**Why This Matters**
+Understanding both approaches is essential for interpreting model validation and simulation accuracy.
+
+---
+
+## Slide 5: Simulation Track Generation
+
+**Bernoulli Point Process**
+This is how we generate simulated tracks:
+1. Compute hazard rate at each timestep: lambda(t) = lambda0 * exp(K(t) + eta)
+2. Convert to probability: p(t) = 1 - exp(-lambda(t) * dt)
+3. Draw Bernoulli sample at each timestep
+4. Enforce 2-second refractory period
+
+**Key Parameters**
+- Baseline intercept controls mean event rate
+- Track-level std (eta) controls across-track variance
+
+**Connection to Phenotyping**
+Simulations with known ground truth let us test whether clustering can recover true phenotypes.
+
+---
+
+## Slide 6: Parameter Sweep for Simulation Calibration
+
+**The Optimization Problem**
+We need simulations that match empirical data. Two parameters control the event distribution:
+- Intercept: controls mean event rate
+- Track std: controls variance across tracks
+
+**Grid Search**
+Swept intercept from -7.0 to -6.0 and std from 0.1 to 0.8. Compared each combination to empirical distribution using KS test.
+
+**Optimal Values Found**
+- Intercept = -6.54
+- Track std = 0.38
+
+These produce 14.9 events per 10-minute track with realistic variance.
+
+---
+
+## Slide 7: Simulated vs Empirical Event Counts
 
 **Validation Message**
 Before using the model for anything, we need to confirm it generates realistic data. Panel A shows the histograms overlap well. Panel B shows the box plots match.
@@ -52,13 +102,14 @@ Before using the model for anything, we need to confirm it generates realistic d
 - 260 empirical tracks
 - 300 simulated tracks
 - Both show median around 15 events per track
+- Simulated using optimized intercept = -6.54 and std = 0.38
 
 **Why This Matters**
 The simulation framework is the foundation for power analysis. If simulations do not match empirical data, power calculations are meaningless.
 
 ---
 
-## Slide 5: Habituation Dynamics
+## Slide 8: Habituation Dynamics
 
 **Behavioral Phenomenon**
 Turn fraction increases across LED pulses in all four experimental conditions. Larvae spend more time turning and less time running as the session progresses.
@@ -73,7 +124,7 @@ Habituation is the behavioral manifestation of the slow suppressive component ac
 
 ---
 
-## Slide 6: Behavioral State Analysis
+## Slide 9: Behavioral State Analysis
 
 **Detailed State Breakdown**
 - Gray: Forward running
@@ -89,7 +140,7 @@ By pulse 17 in the 50-250 Cycling condition, larvae spend nearly 40% of their ti
 
 ---
 
-## Slide 7: LOEO Validation
+## Slide 10: LOEO Validation
 
 **What This Shows**
 Leave-one-experiment-out cross-validation tests whether kernel parameters estimated from 13 experiments generalize to the held-out experiment.
@@ -105,7 +156,7 @@ This result motivated the follow-up question: Can we phenotype individual larvae
 
 ---
 
-## Slide 8: Executive Summary — Follow-Up Study
+## Slide 11: Executive Summary — Follow-Up Study
 
 **Key Points to Emphasize**
 - The answer to individual phenotyping is **negative** with current protocols
@@ -118,7 +169,7 @@ The follow-up study is a negative result. We could not phenotype individuals. Bu
 
 ---
 
-## Slide 9: The Clustering Illusion
+## Slide 12: The Clustering Illusion
 
 **Figure Walkthrough**
 - Panel A: PCA reveals unimodal distribution, not discrete clusters
@@ -133,7 +184,7 @@ Clusters identified by unsupervised learning are artifacts of sparse data, not g
 
 ---
 
-## Slide 10: Data Sparsity Explains Instability
+## Slide 13: Data Sparsity Explains Instability
 
 **The Math Problem**
 - Mean 25 events per track
@@ -149,7 +200,7 @@ Panel C shows the calculation: 4 parameters divided by 25 events equals a ratio 
 
 ---
 
-## Slide 11: Hierarchical Shrinkage
+## Slide 14: Hierarchical Shrinkage
 
 **What Shrinkage Does**
 Bayesian hierarchical estimation pulls individual estimates toward the population mean. Tracks with sparse data shrink more. Tracks with abundant data retain their individual estimates.
@@ -162,7 +213,7 @@ Shrinkage cannot create information that is absent. With only 25 events, almost 
 
 ---
 
-## Slide 12: The Identifiability Problem
+## Slide 15: The Identifiability Problem
 
 **Figure Walkthrough**
 - Panel A: Continuous design produces high bias and RMSE
@@ -178,7 +229,7 @@ Switch to burst stimulation to sample the early excitatory window repeatedly.
 
 ---
 
-## Slide 13: Stimulation Protocol Comparison
+## Slide 16: Stimulation Protocol Comparison
 
 **Four Designs Shown**
 - A: Current continuous 10s ON, 20s OFF
@@ -191,7 +242,7 @@ Burst design provides 8× more Fisher Information than continuous. This could re
 
 ---
 
-## Slide 14: Kernel Model Comparison
+## Slide 17: Kernel Model Comparison
 
 **Why Compare Models**
 We chose the gamma-difference kernel for interpretability, but we need to verify it fits as well as flexible alternatives.
@@ -205,7 +256,7 @@ The gamma-difference captures 96.8% of the variance explained by the flexible mo
 
 ---
 
-## Slide 15: Recommendation 1 — Protocol Modification
+## Slide 18: Recommendation 1 — Protocol Modification
 
 **Primary Recommendation**
 Replace continuous 10-second ON periods with burst trains. Each burst event carries 10× more Fisher Information.
@@ -218,7 +269,7 @@ Change the LED control code to deliver 10 pulses of 0.5 seconds each with 2-seco
 
 ---
 
-## Slide 16: Recommendation 2 — Extended Recording
+## Slide 19: Recommendation 2 — Extended Recording
 
 **Secondary Recommendation**
 Target 40 minutes or more of recording to achieve at least 50 reorientation events per track.
@@ -231,7 +282,7 @@ Current 10-20 minute recordings yield only 18-25 events.
 
 ---
 
-## Slide 17: Recommendation 3 — Model Simplification
+## Slide 20: Recommendation 3 — Model Simplification
 
 **Approach**
 Reduce the parameter space by fixing population-derived parameters.
@@ -246,7 +297,7 @@ Hierarchical Bayesian estimation provides natural regularization toward the popu
 
 ---
 
-## Slide 18: Recommendation 4 — Alternative Phenotypes
+## Slide 21: Recommendation 4 — Alternative Phenotypes
 
 **Pragmatic Alternative**
 Use robust composite phenotypes that avoid kernel fitting entirely.
@@ -260,7 +311,7 @@ These phenotypes require only event counts, not full 6-parameter kernel estimati
 
 ---
 
-## Slide 19: Recommendation 5 — Within-Condition Analysis
+## Slide 22: Recommendation 5 — Within-Condition Analysis
 
 **Methodological Point**
 Analyze individual differences within experimental conditions rather than pooling across conditions.
@@ -273,7 +324,7 @@ The ARI near zero across all validation methods indicates no reproducible struct
 
 ---
 
-## Slide 20: Conclusions — Original Study
+## Slide 23: Conclusions — Original Study
 
 **Summary of Success**
 - Gamma-difference kernel accurately models population-level dynamics
@@ -283,7 +334,7 @@ The ARI near zero across all validation methods indicates no reproducible struct
 
 ---
 
-## Slide 21: Conclusions — Follow-Up Study
+## Slide 24: Conclusions — Follow-Up Study
 
 **Summary of Challenge**
 - Individual phenotyping fails with current protocols due to sparse data
@@ -296,14 +347,14 @@ Population-level analysis is robust and biologically meaningful. Individual phen
 
 ---
 
-## Slide 22: Thank You
+## Slide 25: Thank You
 
 **Transition to Questions**
 I am happy to take questions. For common questions, I have prepared some FAQ slides.
 
 ---
 
-## Slides 23-27: FAQ
+## Slides 26-30: FAQ
 
 **Prepared Answers**
 
@@ -348,13 +399,14 @@ A: Implement burst stimulation protocol and collect new data with 40+ minute rec
 | Slides | Section | Target Time |
 |--------|---------|-------------|
 | 1-2 | Introduction | 2 min |
-| 3-7 | Original Study | 8 min |
-| 8-14 | Follow-Up Study | 10 min |
-| 15-19 | Recommendations | 5 min |
-| 20-22 | Conclusions | 3 min |
-| 23-27 | FAQ (if needed) | 5 min |
+| 3-7 | PSTH/Simulation Methods | 5 min |
+| 8-10 | Original Study Results | 6 min |
+| 11-17 | Follow-Up Study | 10 min |
+| 18-22 | Recommendations | 5 min |
+| 23-25 | Conclusions | 3 min |
+| 26-30 | FAQ (if needed) | 5 min |
 
-**Total: 28-33 minutes**
+**Total: 31-36 minutes**
 
 ---
 

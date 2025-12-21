@@ -48,12 +48,71 @@ The model was validated across 14 experiments comprising 701 unique larval track
 \small The gamma-difference kernel $K(t) = A \cdot \Gamma(t;\alpha_1,\beta_1) - B \cdot \Gamma(t;\alpha_2,\beta_2)$ modulates reorientation hazard rate following LED onset. The left panel shows the combined kernel with peak excitation at 0.3 seconds followed by suppression reaching minimum at 3 seconds. The right panel decomposes this into fast excitatory gamma in green with $\tau_1 = 0.29$s and slow suppressive gamma in red with $\tau_2 = 3.81$s.
 \end{frame}
 
+\begin{frame}{PSTH Computation Methods}
+\textbf{Empirical vs Parametric Approaches}
+
+\vspace{0.3cm}
+\textbf{Empirical PSTH} \quad The peri-stimulus time histogram bins event times relative to LED onset into 100ms intervals. Each bin contains the fraction of events occurring at that latency across all trials. The empirical PSTH is computed directly from data using histogram binning without assuming any functional form.
+
+\vspace{0.3cm}
+\textbf{Parametric PSTH} \quad The Bernoulli event probability is derived from the fitted kernel. At each timestep, event probability $p(t) = 1 - \exp(-\lambda(t) \cdot \Delta t)$ where $\lambda(t) = \lambda_0 \exp(K(t))$ is the hazard rate modulated by kernel $K(t)$. The parametric PSTH evaluates this probability function at each time point.
+
+\vspace{0.3cm}
+\textbf{Model Fitting} \quad The kernel is fitted by maximizing the likelihood that empirical event times arise from the Bernoulli process. The empirical PSTH is used for visualization and validation. The parametric model enables prediction and simulation.
+\end{frame}
+
+\begin{frame}{Simulation Track Generation}
+\textbf{Bernoulli Point Process Framework}
+
+\vspace{0.3cm}
+Simulated tracks are generated using the fitted population kernel as follows.
+
+\vspace{0.2cm}
+\textbf{Step 1} \quad For each timestep $\Delta t = 0.1$s, compute the hazard rate $\lambda(t) = \lambda_0 \exp(K(t) + \eta_{\text{track}})$ where $\eta_{\text{track}} \sim \mathcal{N}(0, \sigma^2)$ is track-specific random intercept.
+
+\vspace{0.2cm}
+\textbf{Step 2} \quad Convert hazard to event probability $p(t) = 1 - \exp(-\lambda(t) \cdot \Delta t)$.
+
+\vspace{0.2cm}
+\textbf{Step 3} \quad Draw Bernoulli sample $E(t) \sim \text{Bernoulli}(p(t))$ for each timestep.
+
+\vspace{0.2cm}
+\textbf{Step 4} \quad Impose 2-second refractory period after each event.
+
+\vspace{0.3cm}
+The baseline intercept and track-level variability $\sigma$ determine mean event rate and across-track variance.
+\end{frame}
+
+\begin{frame}{Parameter Sweep for Simulation Calibration}
+\textbf{Optimizing Simulation to Match Empirical Data}
+
+\vspace{0.3cm}
+A grid search over simulation parameters found the combination that best matches empirical event count distributions.
+
+\vspace{0.3cm}
+\textbf{Parameters swept}
+\begin{itemize}
+\item Baseline intercept: $-7.0$ to $-6.0$ in steps of $0.02$
+\item Track intercept standard deviation: $0.1$ to $0.8$ in steps of $0.02$
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Optimal values found}
+\begin{itemize}
+\item Intercept $= -6.54$ produces mean 14.9 events per 10-minute track
+\item Track std $\sigma = 0.38$ produces realistic across-track variance
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Validation} \quad Simulated event count distribution with optimized parameters matches empirical distribution with KS test p $> 0.05$.
+\end{frame}
+
 \begin{frame}{Simulated vs Empirical Event Counts}
 \centering
 \includegraphics[height=0.68\textheight]{../figures/fig_simulation_design.pdf}
 
 \vspace{0.15cm}
-\small Validation of the simulation model against empirical data. Panel A shows overlapping histograms of event counts per track for 260 empirical tracks in cyan and 300 simulated tracks in pink. Panel B shows box plots comparing the distributions. The simulated tracks were generated using the fitted population kernel and match the empirical distribution with similar median of 15 events and interquartile range.
+\small Validation of the simulation model against empirical data. Panel A shows overlapping histograms of event counts per track for 260 empirical tracks in cyan and 300 simulated tracks in pink. Panel B shows box plots comparing the distributions. The simulated tracks were generated using the fitted population kernel with intercept $= -6.54$ and track std $= 0.38$ and match the empirical distribution with median 15 events per track.
 \end{frame}
 
 \begin{frame}{Habituation Dynamics}
