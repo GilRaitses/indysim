@@ -1,0 +1,839 @@
+\documentclass[11pt,twoside]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{microtype}
+\usepackage{charter}
+\usepackage[scaled=0.95]{helvet}
+\usepackage[scaled=0.85]{beramono}
+\renewcommand{\familydefault}{\rmdefault}
+
+% Colors
+\definecolor{arcblue}{HTML}{2563EB}
+\definecolor{slidegray}{HTML}{374151}
+\definecolor{keyorange}{HTML}{EA580C}
+\definecolor{notebg}{HTML}{F8FAFC}
+\definecolor{emphgreen}{HTML}{059669}
+
+% Section formatting
+\titleformat{\section}
+  {\Large\sffamily\bfseries\color{arcblue}}
+  {Arc \thesection:}{0.5em}{}
+\titleformat{\subsection}
+  {\large\sffamily\bfseries\color{slidegray}}
+  {Slide \thesubsection}{0.5em}{}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\small Presenter's Companion}
+\fancyhead[RE,LO]{\sffamily\small Sensorimotor Habituation}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Custom boxes
+\newtcolorbox{keypoint}{
+  colback=keyorange!5,
+  colframe=keyorange,
+  fonttitle=\sffamily\bfseries,
+  title=Key Point,
+  boxrule=0.5pt,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{transition}{
+  colback=arcblue!5,
+  colframe=arcblue,
+  fonttitle=\sffamily\bfseries,
+  title=Transition,
+  boxrule=0.5pt,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{timing}{
+  colback=emphgreen!5,
+  colframe=emphgreen,
+  fonttitle=\sffamily\bfseries,
+  title=Timing,
+  boxrule=0.5pt,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{arcsummary}{
+  colback=notebg,
+  colframe=slidegray,
+  fonttitle=\sffamily\bfseries\large,
+  boxrule=1pt,
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  arc=3pt
+}
+
+% Title
+\title{%
+  \sffamily\bfseries\Huge
+  Presenter's Companion\\[0.3cm]
+  \Large Sensorimotor Habituation in \textit{Drosophila} Larvae\\[0.2cm]
+  \large Population-Level Modeling and Individual Phenotyping Validation
+}
+\author{\sffamily Gil Raitses \\ \small Syracuse University}
+\date{\sffamily December 2025}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\vfill
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Total Slides} & 27 \\
+\textbf{Target Duration} & 30 minutes + Q\&A \\
+\textbf{Presentation Arcs} & 6 \\
+\textbf{Version} & v3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vfill
+
+\newpage
+
+%% ==================================================
+%% TABLE OF CONTENTS
+%% ==================================================
+
+\tableofcontents
+\newpage
+
+%% ==================================================
+%% ARC 1: INTRODUCTION
+%% ==================================================
+
+\section{Introduction}
+\textit{Slides 1--2 · Target: 2 minutes}
+
+\begin{arcsummary}
+\textbf{Arc Purpose}
+
+Establish context and preview the two-part structure. The audience should understand that the presentation covers both a successful population-level model and a failed attempt to extend it to individual phenotyping.
+
+\vspace{0.5cm}
+
+\textbf{Core Message}
+
+Larval reorientation dynamics can be modeled with a parametric kernel that has biologically interpretable timescales. The same model fails at the individual level due to data sparsity.
+
+\vspace{0.5cm}
+
+\textbf{Audience Anchor}
+
+Two timescales govern behavior: $\tau_1 \approx 0.3$s for excitation and $\tau_2 \approx 4$s for suppression.
+\end{arcsummary}
+
+\vspace{1cm}
+
+\subsection{Title Slide}
+
+\textbf{Opening Statement}
+
+``Thank you for having me. I will present work on sensorimotor habituation in \textit{Drosophila} larvae, covering both our population-level modeling success and our subsequent attempt to extend the approach to individual phenotyping.''
+
+\begin{timing}
+30 seconds. Do not linger. Move directly to slide 2.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Executive Summary — Original Study}
+
+\textbf{Points to Emphasize}
+\begin{itemize}[noitemsep]
+  \item The gamma-difference kernel has \textbf{two timescales} that govern behavior
+  \item Fast excitation at $\tau_1 \approx 0.3$ seconds captures initial sensory response
+  \item Slow suppression at $\tau_2 \approx 4$ seconds produces habituation
+  \item Model validated across 14 experiments and 701 unique tracks
+\end{itemize}
+
+\begin{keypoint}
+If the audience remembers only one thing from the original study, it should be: Larval reorientation dynamics follow a simple parametric model with biologically interpretable timescales.
+\end{keypoint}
+
+\begin{transition}
+``Let me show you the kernel structure that captures these dynamics.''
+\end{transition}
+
+\newpage
+
+%% ==================================================
+%% ARC 2: ORIGINAL STUDY
+%% ==================================================
+
+\section{Original Study — Population-Level Modeling}
+\textit{Slides 3--7 · Target: 8 minutes}
+
+\begin{arcsummary}
+\textbf{Arc Purpose}
+
+Present the gamma-difference kernel model, validate it against empirical data, demonstrate habituation dynamics, and reveal the first hint of individual-level problems through LOEO validation.
+
+\vspace{0.5cm}
+
+\textbf{Core Message}
+
+The population-level model works. It captures the essential temporal structure of sensorimotor transformation. But LOEO validation shows that individual experiments are highly variable, foreshadowing the individual-level problems.
+
+\vspace{0.5cm}
+
+\textbf{Key Figures}
+
+\begin{tabular}{lll}
+Slide 3 & Kernel Structure & Central theoretical construct \\
+Slide 4 & Simulation Validation & Generative model works \\
+Slide 5 & Habituation Dynamics & Behavioral phenomenon \\
+Slide 6 & Behavioral States & Detailed state breakdown \\
+Slide 7 & LOEO Validation & First hint of problems \\
+\end{tabular}
+\end{arcsummary}
+
+\vspace{1cm}
+
+\subsection{Kernel Structure}
+
+\textbf{Figure Walkthrough}
+\begin{itemize}[noitemsep]
+  \item Left panel: Combined kernel showing full temporal response
+  \item Right panel: Decomposition into fast gamma (green) and slow gamma (red)
+  \item Fast component peaks at 0.3 seconds and drives immediate response
+  \item Slow component peaks around 4 seconds and produces delayed suppression
+\end{itemize}
+
+\textbf{Mathematical Point}
+
+``The kernel $K(t)$ modulates reorientation hazard rate. Positive values increase turning probability. Negative values suppress it. The crossover from positive to negative creates the characteristic excitation-then-inhibition pattern.''
+
+\textbf{Connection to Biology}
+
+``These timescales may correspond to distinct neural circuit mechanisms. The fast component could reflect direct sensory activation. The slow component could reflect adaptation or inhibitory feedback.''
+
+\begin{timing}
+2 minutes. Spend time here—this is the core theoretical contribution.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Simulated vs Empirical Event Counts}
+
+\textbf{Validation Message}
+
+``Before using the model for anything, we confirm it generates realistic data. Panel A shows the histograms overlap well. Panel B shows the box plots match.''
+
+\textbf{Key Numbers}
+\begin{itemize}[noitemsep]
+  \item 260 empirical tracks
+  \item 300 simulated tracks
+  \item Both show median around 15 events per track
+\end{itemize}
+
+\begin{keypoint}
+The simulation framework is the foundation for power analysis. If simulations do not match empirical data, power calculations are meaningless.
+\end{keypoint}
+
+\begin{timing}
+1 minute. Quick validation slide—do not over-explain.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Habituation Dynamics}
+
+\textbf{Behavioral Phenomenon}
+
+``Turn fraction increases across LED pulses in all four experimental conditions. Larvae spend more time turning and less time running as the session progresses.''
+
+\textbf{Condition Comparison}
+\begin{itemize}[noitemsep]
+  \item 0-250 Cycling: Strongest habituation, slope +0.031 per pulse
+  \item 50-250 conditions: Weaker effects
+  \item Shaded bands: 95\% confidence intervals
+\end{itemize}
+
+\textbf{Interpretation}
+
+``Habituation is the behavioral manifestation of the slow suppressive component accumulating across pulses. The kernel model predicts this effect.''
+
+\begin{timing}
+1.5 minutes. Link habituation to the kernel.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Behavioral State Analysis}
+
+\textbf{State Breakdown}
+\begin{itemize}[noitemsep]
+  \item Gray: Forward running
+  \item Pink: Turning
+  \item Blue: Pausing (remains below 5\%)
+  \item Orange: Reverse crawling
+\end{itemize}
+
+\begin{keypoint}
+Habituation manifests as increased turning, not increased pausing or freezing. By pulse 17, larvae spend nearly 40\% of time turning versus 20\% at pulse 0.
+\end{keypoint}
+
+\begin{timing}
+1.5 minutes. Emphasize that pausing stays low.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Leave-One-Experiment-Out Validation}
+
+\textbf{What This Shows}
+
+``LOEO tests whether kernel parameters estimated from 13 experiments generalize to the held-out experiment.''
+
+\textbf{Key Result}
+
+``Pass rate of 50\% falls within the null distribution with $p = 0.618$. Cross-experiment generalization is no better than chance.''
+
+\textbf{Interpretation}
+
+``The population model fits well overall, but individual experiments show high variability. This foreshadows the individual-level problems we will see next.''
+
+\begin{transition}
+``This result motivated the follow-up question: Can we phenotype individual larvae using their unique kernel parameters?''
+\end{transition}
+
+\begin{timing}
+2 minutes. This is the pivot point to the follow-up study.
+\end{timing}
+
+\newpage
+
+%% ==================================================
+%% ARC 3: FOLLOW-UP STUDY
+%% ==================================================
+
+\section{Follow-Up Study — Individual Phenotyping Failure}
+\textit{Slides 8--14 · Target: 10 minutes}
+
+\begin{arcsummary}
+\textbf{Arc Purpose}
+
+Present the negative result: Individual phenotyping fails. Explain why: data sparsity and identifiability problems. Demonstrate that apparent clusters are artifacts.
+
+\vspace{0.5cm}
+
+\textbf{Core Message}
+
+The model is not wrong—the data is insufficient. With only 25 events per track and 6 parameters to estimate, the problem is fundamentally underdetermined. The solution requires more data or simpler models.
+
+\vspace{0.5cm}
+
+\textbf{Key Figures}
+
+\begin{tabular}{lll}
+Slide 8 & Executive Summary & Frame the negative result \\
+Slide 9 & Clustering Illusion & Clusters are artifacts \\
+Slide 10 & Data Sparsity & Root cause explanation \\
+Slide 11 & Hierarchical Shrinkage & Partial mitigation \\
+Slide 12 & Identifiability & Protocol design matters \\
+Slide 13 & Stimulation Protocols & Visual comparison \\
+Slide 14 & Model Comparison & Gamma-diff vs flexible \\
+\end{tabular}
+\end{arcsummary}
+
+\vspace{1cm}
+
+\subsection{Executive Summary — Follow-Up Study}
+
+\textbf{Points to Emphasize}
+\begin{itemize}[noitemsep]
+  \item The answer to individual phenotyping is \textbf{negative} with current protocols
+  \item Sparse data: Only 18--25 events per track
+  \item Apparent clusters are statistical artifacts
+  \item Only 8.6\% of tracks show genuine individual differences
+\end{itemize}
+
+\begin{keypoint}
+The follow-up study is a negative result. We could not phenotype individuals. But the negative result is informative because it identifies the root cause and points toward solutions.
+\end{keypoint}
+
+\begin{timing}
+1.5 minutes. Set expectations clearly.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{The Clustering Illusion}
+
+\textbf{Figure Walkthrough}
+\begin{itemize}[noitemsep]
+  \item Panel A: PCA reveals unimodal distribution, not discrete clusters
+  \item Panel B: All four validation methods fail with ARI $< 0.13$
+  \item Panel C: Gap statistic minimized at $k=1$—no clusters
+\end{itemize}
+
+\textbf{Key Message}
+
+``K-means will always produce $k$ clusters regardless of whether true clusters exist. The gap statistic tells us $k=1$ is optimal. There are no discrete phenotypes in this data.''
+
+\begin{keypoint}
+Publishing these clusters would be misleading. They are artifacts of sparse data, not genuine biological phenotypes.
+\end{keypoint}
+
+\begin{timing}
+1.5 minutes. Emphasize the validation failures.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Data Sparsity Explains Instability}
+
+\textbf{The Math Problem}
+\begin{itemize}[noitemsep]
+  \item Mean 25 events per track
+  \item 6 kernel parameters to estimate
+  \item Data-to-parameter ratio: 4:1
+  \item Reliable MLE requires at least 10:1
+\end{itemize}
+
+\textbf{Key Number}
+
+\textbf{100 events per track} is the target for stable estimation. Current protocols deliver only 25.
+
+\begin{timing}
+1.5 minutes. The math is simple—make it memorable.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Hierarchical Shrinkage}
+
+\textbf{What Shrinkage Does}
+
+``Bayesian hierarchical estimation pulls individual estimates toward the population mean. Tracks with sparse data shrink more. Tracks with abundant data retain individual estimates.''
+
+\textbf{Limitation}
+
+``Shrinkage cannot create information that is absent. With only 25 events, almost all individual estimates shrink heavily toward the population mean.''
+
+\begin{timing}
+1 minute. Quick explanation of mitigation attempt.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{The Identifiability Problem}
+
+\textbf{Figure Walkthrough}
+\begin{itemize}[noitemsep]
+  \item Panel A: Continuous design produces high bias and RMSE
+  \item Panel B: Burst design extracts \textbf{10$\times$ more Fisher Information}
+  \item Panel C: MLE recovery differs dramatically by design
+  \item Panel D: Continuous fails because inhibition dominates during LED-ON
+\end{itemize}
+
+\begin{keypoint}
+The problem is not just data quantity but data quality. Continuous 10-second pulses produce events during the suppressive phase. These events carry almost no information about $\tau_1$.
+\end{keypoint}
+
+\begin{timing}
+2 minutes. This is the key mechanistic insight.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Stimulation Protocol Comparison}
+
+\textbf{Four Designs}
+\begin{itemize}[noitemsep]
+  \item A: Current continuous 10s ON, 20s OFF
+  \item B: Recommended burst 10$\times$0.5s
+  \item C: Alternative 4$\times$1s
+  \item D: Alternative 2$\times$2s
+\end{itemize}
+
+\textbf{Key Number}
+
+Burst design provides \textbf{8$\times$ more Fisher Information} than continuous.
+
+\begin{timing}
+1 minute. Visual comparison—quick.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Kernel Model Comparison}
+
+\textbf{Results}
+\begin{itemize}[noitemsep]
+  \item Raised cosine basis: $R^2 = 0.974$ with 12 parameters
+  \item Gamma-difference: $R^2 = 0.968$ with 6 parameters
+\end{itemize}
+
+\textbf{Interpretation}
+
+``The gamma-difference captures 96.8\% of variance with half the parameters. The timescales $\tau_1$ and $\tau_2$ represent genuine temporal structure, not curve-fitting artifacts.''
+
+\begin{transition}
+``Now let me present five recommendations for enabling individual phenotyping in future work.''
+\end{transition}
+
+\begin{timing}
+1 minute. Justification for model choice.
+\end{timing}
+
+\newpage
+
+%% ==================================================
+%% ARC 4: RECOMMENDATIONS
+%% ==================================================
+
+\section{Recommendations for Future Work}
+\textit{Slides 15--19 · Target: 5 minutes}
+
+\begin{arcsummary}
+\textbf{Arc Purpose}
+
+Transform the negative result into actionable guidance. Present five concrete recommendations that would enable individual phenotyping in future experiments.
+
+\vspace{0.5cm}
+
+\textbf{Core Message}
+
+The failure is not fundamental—it is fixable. Protocol modification (burst stimulation), extended recording (40+ minutes), model simplification, alternative phenotypes, and within-condition analysis can together solve the problem.
+
+\vspace{0.5cm}
+
+\textbf{Recommendation Hierarchy}
+
+\begin{tabular}{llc}
+\textbf{Priority} & \textbf{Recommendation} & \textbf{Slide} \\
+\midrule
+Primary & Protocol Modification (Burst) & 15 \\
+Secondary & Extended Recording & 16 \\
+Tertiary & Model Simplification & 17 \\
+Alternative & Simpler Phenotypes & 18 \\
+Methodological & Within-Condition Analysis & 19 \\
+\end{tabular}
+\end{arcsummary}
+
+\vspace{1cm}
+
+\subsection{Recommendation 1 — Protocol Modification}
+
+\textbf{Primary Recommendation}
+
+``Replace continuous 10-second ON periods with burst trains. Each burst event carries 10$\times$ more Fisher Information.''
+
+\textbf{Quantitative Benefit}
+
+This modification alone could reduce required events from 100 to approximately 30.
+
+\textbf{Implementation}
+
+``Change LED control code to deliver 10 pulses of 0.5 seconds each with 2-second spacing instead of a single 10-second pulse.''
+
+\begin{timing}
+1 minute. Emphasize this is the highest-leverage intervention.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Recommendation 2 — Extended Recording}
+
+\textbf{Secondary Recommendation}
+
+``Target 40 minutes or more of recording to achieve at least 50 reorientation events per track.''
+
+\textbf{Current State}
+
+Current 10--20 minute recordings yield only 18--25 events.
+
+\begin{timing}
+45 seconds. Quick—complements Rec 1.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Recommendation 3 — Model Simplification}
+
+\textbf{Approach}
+
+``Reduce parameter space by fixing population-derived parameters.''
+
+\textbf{Specific Suggestion}
+\begin{itemize}[noitemsep]
+  \item Fix $\tau_2$ at population estimate of 3.8 seconds
+  \item Fix amplitude ratio $B/A$ at population value
+  \item Estimate only $\tau_1$ per individual track
+\end{itemize}
+
+\begin{timing}
+45 seconds. One free parameter may be enough.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Recommendation 4 — Alternative Phenotypes}
+
+\textbf{Pragmatic Alternative}
+
+``Use robust composite phenotypes that avoid kernel fitting entirely.''
+
+\textbf{Examples}
+\begin{itemize}[noitemsep]
+  \item ON/OFF event ratio
+  \item First-event latency
+\end{itemize}
+
+\begin{timing}
+45 seconds. Simpler may be better.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Recommendation 5 — Within-Condition Analysis}
+
+\textbf{Methodological Point}
+
+``Analyze individual differences within experimental conditions rather than pooling across conditions.''
+
+\textbf{Why}
+
+When data from different stimulation intensities are pooled, condition effects dominate and mask genuine individual variation.
+
+\begin{timing}
+45 seconds. Important caveat for future analyses.
+\end{timing}
+
+\newpage
+
+%% ==================================================
+%% ARC 5: CONCLUSIONS
+%% ==================================================
+
+\section{Conclusions}
+\textit{Slides 20--22 · Target: 3 minutes}
+
+\begin{arcsummary}
+\textbf{Arc Purpose}
+
+Summarize both studies. Leave the audience with a clear understanding of what succeeded, what failed, and why.
+
+\vspace{0.5cm}
+
+\textbf{Core Message}
+
+Population-level modeling succeeds because pooled data provides sufficient statistical power. Individual phenotyping fails because the same model is overparameterized for sparse individual data. The solution requires either more data per individual or simpler models.
+
+\vspace{0.5cm}
+
+\textbf{Take-Home Numbers}
+
+\begin{tabular}{ll}
+$\tau_1 \approx 0.3$s & Fast excitatory timescale \\
+$\tau_2 \approx 4$s & Slow suppressive timescale \\
+$R^2 = 0.968$ & Kernel fit quality \\
+25 events/track & Current data \\
+100 events/track & Required for phenotyping \\
+8.6\% & Tracks with genuine individual variation \\
+10$\times$ & Information gain from burst protocol \\
+\end{tabular}
+\end{arcsummary}
+
+\vspace{1cm}
+
+\subsection{Conclusions — Original Study}
+
+\textbf{Summary of Success}
+\begin{itemize}[noitemsep]
+  \item Gamma-difference kernel accurately models population-level dynamics
+  \item Two timescales: $\tau_1 \approx 0.3$s for excitation, $\tau_2 \approx 4$s for suppression
+  \item Model is robust across experimental conditions
+  \item Biological interpretability with equivalent goodness of fit
+\end{itemize}
+
+\begin{timing}
+1 minute.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Conclusions — Follow-Up Study}
+
+\textbf{Summary of Challenge}
+\begin{itemize}[noitemsep]
+  \item Individual phenotyping fails with current protocols due to sparse data
+  \item Apparent clusters are statistical artifacts
+  \item Only 8.6\% of tracks show individual variation exceeding noise
+  \item Current protocols achieve only 20--30\% statistical power
+\end{itemize}
+
+\begin{keypoint}
+Population-level analysis is robust and biologically meaningful. Individual phenotyping requires experimental redesign before kernel-based classification becomes reliable.
+\end{keypoint}
+
+\begin{timing}
+1.5 minutes.
+\end{timing}
+
+\vspace{0.5cm}
+
+\subsection{Thank You}
+
+\textbf{Transition to Questions}
+
+``I am happy to take questions. For common questions, I have prepared some FAQ slides.''
+
+\begin{timing}
+30 seconds.
+\end{timing}
+
+\newpage
+
+%% ==================================================
+%% ARC 6: FAQ
+%% ==================================================
+
+\section{Frequently Asked Questions}
+\textit{Slides 23--27 · Target: 5 minutes (if needed)}
+
+\begin{arcsummary}
+\textbf{Arc Purpose}
+
+Provide prepared answers to anticipated questions. Use only if time permits or if specific questions arise.
+
+\vspace{0.5cm}
+
+\textbf{Prepared Questions}
+
+\begin{enumerate}[noitemsep]
+  \item What is the sequence of processes in the original study?
+  \item What processes were used in the follow-up study?
+  \item Why does population modeling succeed but individual fails?
+  \item What is hierarchical shrinkage?
+  \item How should clustering results be interpreted?
+\end{enumerate}
+\end{arcsummary}
+
+\vspace{1cm}
+
+\subsection{FAQ — Original Study Methods}
+
+\textbf{Prepared Answer}
+
+Data collection $\rightarrow$ MAGAT trajectory extraction $\rightarrow$ Event detection $\rightarrow$ Population kernel fitting $\rightarrow$ LOEO validation
+
+\vspace{0.5cm}
+
+\subsection{FAQ — Follow-Up Study Methods}
+
+\textbf{Prepared Answer}
+
+Individual MLE fitting $\rightarrow$ K-means/hierarchical clustering $\rightarrow$ Round-trip validation $\rightarrow$ Power analysis $\rightarrow$ Identifiability analysis
+
+\vspace{0.5cm}
+
+\subsection{FAQ — Why Population Succeeds but Individual Fails}
+
+\textbf{Prepared Answer}
+
+``Data-to-parameter ratio. Population pools approximately 15,000 events for 6 parameters, giving a ratio of 2500:1. Individual uses approximately 25 events for 6 parameters, giving a ratio of 4:1.''
+
+\vspace{0.5cm}
+
+\subsection{FAQ — What is Hierarchical Shrinkage}
+
+\textbf{Prepared Answer}
+
+``Bayesian regularization that pulls individual estimates toward the population mean proportionally to data sparsity. It is optimal regularization under the assumption that individuals are exchangeable members of a population.''
+
+\vspace{0.5cm}
+
+\subsection{FAQ — How to Interpret Clustering Results}
+
+\textbf{Prepared Answer}
+
+``With extreme skepticism. K-means will always produce $k$ clusters. The gap statistic shows $k=1$ is optimal. Round-trip validation shows ARI $< 0.2$. Clusters are artifacts, not phenotypes.''
+
+\newpage
+
+%% ==================================================
+%% APPENDIX: TIMING AND GLOSSARY
+%% ==================================================
+
+\appendix
+\section{Timing Summary}
+
+\begin{center}
+\begin{tabular}{llc}
+\toprule
+\textbf{Arc} & \textbf{Slides} & \textbf{Target Time} \\
+\midrule
+1. Introduction & 1--2 & 2 min \\
+2. Original Study & 3--7 & 8 min \\
+3. Follow-Up Study & 8--14 & 10 min \\
+4. Recommendations & 15--19 & 5 min \\
+5. Conclusions & 20--22 & 3 min \\
+6. FAQ (if needed) & 23--27 & 5 min \\
+\midrule
+\textbf{Total} & 27 slides & 28--33 min \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Technical Glossary}
+
+\begin{description}[style=nextline]
+  \item[Gamma-difference kernel] Difference of two gamma distributions, one fast (excitatory) and one slow (suppressive)
+  \item[PSTH] Peri-stimulus time histogram; empirical distribution of event times relative to stimulus onset
+  \item[Fisher Information] Measure of how much information an observable contains about an unknown parameter
+  \item[Hierarchical shrinkage] Bayesian regularization toward population mean
+  \item[Gap statistic] Method for determining optimal number of clusters by comparing within-cluster dispersion to null reference
+  \item[ARI] Adjusted Rand Index; measure of agreement between two clusterings, corrected for chance
+  \item[MLE] Maximum likelihood estimation
+  \item[LOEO] Leave-one-experiment-out cross-validation
+\end{description}
+
+\section{Anticipated Questions}
+
+\textbf{Q: Could a different kernel form work better for individual phenotyping?}
+
+A: Unlikely. The problem is data quantity and quality, not kernel form. Simpler models might help by reducing parameters.
+
+\vspace{0.5cm}
+
+\textbf{Q: What about using machine learning instead of kernel fitting?}
+
+A: ML methods face the same fundamental problem. With 25 events per track, there is insufficient information to distinguish individuals regardless of the algorithm.
+
+\vspace{0.5cm}
+
+\textbf{Q: How confident are you in the 100-event threshold?}
+
+A: The threshold comes from simulation-based power analysis targeting 80\% power for a 0.2-second effect. Different effect sizes would require different thresholds.
+
+\vspace{0.5cm}
+
+\textbf{Q: Are there any larvae that do show reliable phenotypes?}
+
+A: Yes, 8.6\% of tracks show variation exceeding measurement noise. These are the outliers that retain individual estimates after shrinkage. But 8.6\% is too few for systematic phenotyping.
+
+\vspace{0.5cm}
+
+\textbf{Q: What is the next step for this research?}
+
+A: Implement burst stimulation protocol and collect new data with 40+ minute recordings. Rerun phenotyping analysis with improved data.
+
+\end{document}
+
