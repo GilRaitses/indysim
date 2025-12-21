@@ -407,5 +407,27 @@ Slides & Section & Target Time \\
 
 \textbf{LOEO} Leave-one-experiment-out cross-validation.
 
+\section{Slide 31: From Counting to Simulation}
+
+\textbf{Connecting to Traditional Methods}
+
+Most behavioral analysis uses counting and visualization. Event counts per condition. Heatmaps of spatial position. Histograms of event timing. These methods describe what happened but cannot predict new outcomes.
+
+\textbf{The Extension}
+
+The kernel-based hazard model is generative. Given stimulation timing and kernel parameters, it produces event probabilities at every moment. The model does not just summarize past data. It predicts future behavior under conditions that have not been tested.
+
+\textbf{Practical Value for Experiment Design}
+
+Fisher Information analysis revealed that burst stimulation extracts 10 times more information per event than continuous. This insight emerged from simulation, not from running additional experiments. Power analysis determined that 100 events are needed for individual phenotyping. Protocol designers can use this threshold before collecting any new data.
+
+\textbf{Round-Trip Validation}
+
+Simulation allows testing of analysis pipelines with known ground truth. Clustering algorithms can be validated by generating data from known phenotypes and checking whether the algorithm recovers them. This is impossible with empirical data where ground truth is unknown.
+
+\textbf{Key Message}
+
+Simulation modeling transforms descriptive behavioral science into predictive science. It bridges the gap between what was observed and what will happen, enabling rational experiment design and rigorous validation.
+
 \end{document}
 

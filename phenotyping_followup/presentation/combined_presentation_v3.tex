@@ -413,5 +413,26 @@ The continuous unimodal PCA distribution confirms that kernel parameter variatio
 Future clustering should be attempted only after protocol modifications increase event counts to 100 or more per track and reduce the parameter space to 1 or 2 dimensions.
 \end{frame}
 
+\begin{frame}{From Counting to Simulation}
+\textbf{Traditional Methods}
+
+Behavioral analysis typically relies on counting events, computing heatmaps, and visualizing discretized event histograms. These descriptive statistics summarize what happened but cannot predict what will happen under new conditions.
+
+\vspace{0.3cm}
+\textbf{What Simulation Modeling Extends}
+
+The kernel-based hazard model converts descriptive counts into a generative process. Given LED timing and kernel parameters, the model predicts event probabilities at every timestep. Simulation generates synthetic trajectories that can be compared against empirical data to validate the model and test hypotheses before running experiments.
+
+\vspace{0.3cm}
+\textbf{Experiment Refinement}
+
+Fisher Information analysis identifies which stimulation designs maximize parameter identifiability. Power analysis determines the minimum recording duration needed to detect individual differences. These computations guide protocol design before data collection begins, reducing wasted experimental effort.
+
+\vspace{0.3cm}
+\textbf{Additional Merits}
+
+Simulation enables round-trip validation of clustering, ground-truth testing of phenotyping pipelines, and exploration of parameter space without animal use.
+\end{frame}
+
 \end{document}
 
