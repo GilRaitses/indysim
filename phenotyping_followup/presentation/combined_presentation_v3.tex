@@ -103,88 +103,49 @@ Only 8.6\% of tracks show genuine individual differences that exceed measurement
 \textbf{Key Result} \quad Individual-level phenotyping requires experimental protocol modifications before reliable kernel-based phenotyping becomes feasible.
 \end{frame}
 
-%% Clustering Illusion
-\begin{frame}{PCA Distribution}
+%% Clustering Illusion - Use ORIGINAL multi-panel figure (Dec 21 12:52)
+\begin{frame}{The Clustering Illusion}
 \centering
-\includegraphics[height=0.68\textheight]{figures/clustering_panel_A.pdf}
+\includegraphics[height=0.72\textheight]{../figures/core/fig1_clustering_illusion.pdf}
 
-\vspace{0.15cm}
-\small Principal component analysis of kernel parameters across 256 tracks reveals a unimodal continuous distribution rather than discrete clusters. Points are shown without cluster coloring because no true clusters exist in the data. The smooth elliptical spread indicates that variation in kernel parameters is continuous rather than representing distinct phenotypic groups.
+\vspace{0.1cm}
+\small Panel A shows true PCA distribution revealing unimodal structure with some outliers. Panel B shows all four validation methods failed with ARI below 0.13. Panel C shows gap statistic is minimized at k=1 indicating no discrete clusters exist.
 \end{frame}
 
-\begin{frame}{Validation Failures}
+%% Data Sparsity - Use ORIGINAL multi-panel figure (Dec 21 12:52)
+\begin{frame}{Data Sparsity Explains Instability}
 \centering
-\includegraphics[height=0.68\textheight]{figures/clustering_panel_B.pdf}
+\includegraphics[height=0.72\textheight]{../figures/core/fig2_data_sparsity.pdf}
 
-\vspace{0.15cm}
-\small Four validation methods tested whether apparent clusters are reproducible across different analysis approaches. All methods failed with Adjusted Rand Index scores below 0.13 far below the 0.5 success threshold shown by the green dashed line. Round-trip validation simulates events from fitted kernel parameters and re-clusters to test whether the same clusters emerge. All methods show near-zero agreement confirming clusters are artifacts.
+\vspace{0.1cm}
+\small Panel A shows mean 25 events per track versus the 100 required for stable estimation. Panel B shows many MLE estimates fall in the implausible range above 1.5 seconds. Panel C shows the math problem: 4 parameters divided by 25 events equals a 6:1 ratio which is underdetermined.
 \end{frame}
 
-\begin{frame}{Gap Statistic}
+%% Hierarchical Shrinkage - Use ORIGINAL multi-panel figure (Dec 21 12:52)
+\begin{frame}{Hierarchical Shrinkage}
 \centering
-\includegraphics[height=0.68\textheight]{figures/clustering_panel_C.pdf}
+\includegraphics[height=0.72\textheight]{../figures/core/fig3_hierarchical_shrinkage.pdf}
 
-\vspace{0.15cm}
-\small The gap statistic compares within-cluster dispersion in the data to that expected under a uniform null reference distribution. The gap statistic reaches its maximum at k=1 indicating that a single cluster best describes the data. Increasing k to 2 or more clusters does not improve the gap statistic suggesting the apparent cluster structure is not distinguishable from random variation in a unimodal distribution.
+\vspace{0.1cm}
+\small Bayesian estimates shrink toward population mean proportionally to data sparsity. Tracks with extreme MLE values show the most shrinkage while tracks with abundant data retain individual estimates.
 \end{frame}
 
-%% Data Sparsity
-\begin{frame}{Event Distribution}
+%% Identifiability - Use ORIGINAL multi-panel figure (Dec 21 12:52)
+\begin{frame}{The Identifiability Problem}
 \centering
-\includegraphics[height=0.68\textheight]{figures/sparsity_panel_A.pdf}
+\includegraphics[height=0.72\textheight]{../figures/fig2_identifiability_v3.pdf}
 
-\vspace{0.15cm}
-\small Histogram of reorientation events per track across 256 tracks. The red vertical line indicates the observed mean of 31 events per track. The green dashed line indicates the minimum of approximately 100 events needed for stable 6-parameter estimation based on power analysis. Current data has a data-to-parameter ratio of only 5 to 1 when 10 to 1 is required for reliable maximum likelihood estimation.
+\vspace{0.1cm}
+\small Panel A shows continuous design produces high bias and RMSE. Panel B shows burst design extracts 10x more Fisher Information. Panel C shows MLE recovery differs by design. Panel D explains why continuous fails: inhibition dominates.
 \end{frame}
 
-\begin{frame}{MLE Estimate Instability}
+%% Stimulation Protocols - Use ORIGINAL multi-panel figure (Dec 21 12:52)
+\begin{frame}{Stimulation Protocol Comparison}
 \centering
-\includegraphics[height=0.68\textheight]{figures/sparsity_panel_B.pdf}
+\includegraphics[height=0.72\textheight]{../figures/fig_stimulation_schematic.pdf}
 
-\vspace{0.15cm}
-\small Distribution of maximum likelihood estimates for the fast timescale $\tau_1$ across individual tracks. Green bars indicate biologically plausible values between 0.3 and 1.5 seconds consistent with the population estimate of 0.63 seconds. Red bars indicate fitting failures where $\tau_1$ exceeds 1.5 seconds or hits optimization boundaries. Approximately 40\% of tracks produce implausible estimates due to sparse data.
-\end{frame}
-
-\begin{frame}{Shrinkage Effect}
-\centering
-\includegraphics[height=0.68\textheight]{figures/sparsity_panel_C.pdf}
-
-\vspace{0.15cm}
-\small Comparison of hierarchical Bayesian estimates versus MLE estimates for $\tau_1$. The dashed diagonal line indicates no shrinkage where Bayesian and MLE estimates would be identical. The purple horizontal line indicates the population mean at 0.63 seconds. Bayesian estimates with sparse data shrink strongly toward the population mean as expected from hierarchical regularization. Tracks with extreme MLE values show the most shrinkage.
-\end{frame}
-
-%% Identifiability
-\begin{frame}{Same Events -- Different Information}
-\centering
-\includegraphics[height=0.68\textheight]{figures/identifiability_panel_A.pdf}
-
-\vspace{0.15cm}
-\small Both continuous and burst stimulation designs yield approximately 17 events per track yet produce dramatically different estimation accuracy. Continuous 10-second ON periods produce high positive bias of 0.61 seconds and high RMSE of 0.71 seconds. Burst stimulation with 10 half-second pulses produces low bias of 0.14 seconds and low RMSE of 0.38 seconds. The difference arises from information content per event.
-\end{frame}
-
-\begin{frame}{Fisher Information}
-\centering
-\includegraphics[height=0.68\textheight]{figures/identifiability_panel_B.pdf}
-
-\vspace{0.15cm}
-\small Fisher Information quantifies how much statistical information each event contains about the fast timescale $\tau_1$. Burst stimulation design extracts 10 times more information per event than continuous stimulation because burst pulses repeatedly sample the early excitatory window where $\tau_1$ is identifiable. Continuous stimulation saturates and events occur primarily during the LED-OFF period when $\tau_1$ cannot be estimated.
-\end{frame}
-
-%% Stimulation Protocols
-\begin{frame}{Current Protocol -- Continuous 10s}
-\centering
-\includegraphics[width=0.88\textwidth]{figures/stimulation_panel_A.pdf}
-
-\vspace{0.2cm}
-\small Current experimental protocol uses 10-second continuous LED-ON periods followed by 20-second OFF periods. The sustained stimulation causes kernel inhibition to dominate so approximately 80\% of reorientation events occur during the OFF period when $\tau_1$ information is unavailable.
-\end{frame}
-
-\begin{frame}{Recommended Protocol -- Burst 10x0.5s}
-\centering
-\includegraphics[width=0.88\textwidth]{figures/stimulation_panel_B.pdf}
-
-\vspace{0.2cm}
-\small Recommended protocol uses 10 pulses of 0.5 seconds separated by 0.5 second gaps within each 30-second cycle. Burst stimulation samples the early excitatory window 10 times per cycle extracting 8 times more information about $\tau_1$ than continuous stimulation while maintaining the same total stimulus duration.
+\vspace{0.1cm}
+\small Four LED stimulation designs showing the 30-second cycle structure. Panel A shows current continuous 10s design with low power. Panel B shows recommended burst 10x0.5s with 8x more information. Panels C and D show intermediate alternatives.
 \end{frame}
 
 %% Kernel Comparison
@@ -202,42 +163,42 @@ Only 8.6\% of tracks show genuine individual differences that exceed measurement
 
 \begin{frame}{Recommendation 1 -- Protocol Modification}
 \centering
-\includegraphics[width=0.85\textwidth]{figures/stimulation_panel_B.pdf}
+\includegraphics[height=0.65\textheight]{../figures/fig4_recommendations_v2.pdf}
 
 \vspace{0.15cm}
-\small Replace continuous 10-second ON periods with burst trains of 10 pulses at 0.5 seconds each separated by 0.5 second gaps. Burst design samples the early excitatory window where $\tau_1$ is identifiable. Each burst event carries 10 times more Fisher information than continuous events. This modification alone could reduce the number of events required for reliable estimation from 100 to 30.
+\small Replace continuous 10-second ON periods with burst trains. Burst design samples the early excitatory window where $\tau_1$ is identifiable. Each burst event carries 10 times more Fisher information than continuous events. This modification alone could reduce the number of events required for reliable estimation from 100 to 30.
 \end{frame}
 
 \begin{frame}{Recommendation 2 -- Extended Recording}
 \centering
-\includegraphics[height=0.65\textheight]{figures/sparsity_panel_A.pdf}
+\includegraphics[height=0.65\textheight]{../figures/fig5_power_analysis.pdf}
 
 \vspace{0.15cm}
-\small Target 40 minutes or more of recording to achieve at least 50 reorientation events per track. Current 10 to 20 minute recordings yield only 18 to 25 events which is insufficient for 6-parameter estimation. Power analysis indicates that 100 events are required for 80\% power to detect a 0.2 second difference in $\tau_1$ at the individual level. The recommended data-to-parameter ratio of 10 to 1 requires substantial increases in recording duration.
+\small Target 40 minutes or more of recording to achieve at least 50 reorientation events per track. Current 10 to 20 minute recordings yield only 18 to 25 events which is insufficient for 6-parameter estimation. Power analysis indicates that 100 events are required for 80\% power to detect a 0.2 second difference in $\tau_1$ at the individual level.
 \end{frame}
 
 \begin{frame}{Recommendation 3 -- Model Simplification}
 \centering
-\includegraphics[height=0.65\textheight]{figures/sparsity_panel_C.pdf}
+\includegraphics[height=0.65\textheight]{../figures/core/fig3_hierarchical_shrinkage.pdf}
 
 \vspace{0.15cm}
-\small Reduce the parameter space by fixing population-derived parameters. Fix $\tau_2$ at the population estimate of 3.8 seconds and fix the amplitude ratio B/A at the population value of 8. Estimate only the fast timescale $\tau_1$ per individual track. This reduces the estimation problem from 6 dimensions to 1 dimension and dramatically improves identifiability with sparse data. Hierarchical Bayesian estimation provides natural regularization.
+\small Reduce the parameter space by fixing population-derived parameters. Fix $\tau_2$ at the population estimate of 3.8 seconds and fix the amplitude ratio B/A at the population value of 8. Estimate only the fast timescale $\tau_1$ per individual track. Hierarchical Bayesian estimation provides natural regularization toward the population mean.
 \end{frame}
 
 \begin{frame}{Recommendation 4 -- Alternative Phenotypes}
 \centering
-\includegraphics[height=0.65\textheight]{figures/identifiability_panel_A.pdf}
+\includegraphics[height=0.65\textheight]{../figures/core/fig4_fast_responders.pdf}
 
 \vspace{0.15cm}
-\small Use robust composite phenotypes that avoid kernel fitting entirely. The ON/OFF event ratio measures whether larvae respond preferentially during LED-ON versus LED-OFF periods and requires only event counts not full kernel estimation. First-event latency measures the time from LED onset to first reorientation and captures response speed directly. Both metrics are robust with sparse data and provide complementary phenotypic information.
+\small Use robust composite phenotypes that avoid kernel fitting entirely. The ON/OFF event ratio measures whether larvae respond preferentially during LED-ON versus LED-OFF periods and requires only event counts not full kernel estimation. First-event latency measures the time from LED onset to first reorientation and captures response speed directly.
 \end{frame}
 
 \begin{frame}{Recommendation 5 -- Within-Condition Analysis}
 \centering
-\includegraphics[height=0.65\textheight]{figures/clustering_panel_B.pdf}
+\includegraphics[height=0.65\textheight]{../figures/core/fig1_clustering_illusion.pdf}
 
 \vspace{0.15cm}
-\small Analyze individual differences within experimental conditions rather than pooling across conditions. When data from different stimulation intensities and temporal patterns are pooled the condition effects dominate and mask genuine individual variation. The ARI near zero across all validation methods indicates no reproducible structure when pooling. Condition-specific analysis may reveal individual differences that are otherwise obscured.
+\small Analyze individual differences within experimental conditions rather than pooling across conditions. When data from different stimulation intensities and temporal patterns are pooled the condition effects dominate and mask genuine individual variation. The ARI near zero across all validation methods indicates no reproducible structure when pooling.
 \end{frame}
 
 %% ===========================================
