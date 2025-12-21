@@ -18,8 +18,8 @@ The presentation has two parts. The first covers the original study where we dev
 
 **Key Points to Emphasize**
 - The gamma-difference kernel has **two timescales** that govern behavior
-- Fast excitation at τ₁ ≈ 0.3 seconds captures the initial sensory response
-- Slow suppression at τ₂ ≈ 4 seconds produces habituation across repeated stimuli
+- Fast excitation at tau1 ~ 0.3 seconds captures the initial sensory response
+- Slow suppression at tau2 ~ 4 seconds produces habituation across repeated stimuli
 - Model validated across 14 experiments and 701 unique tracks
 
 **Audience Anchor**
@@ -171,7 +171,7 @@ Shrinkage cannot create information that is absent. With only 25 events, almost 
 - Panel D: Continuous fails because inhibition dominates during LED-ON
 
 **Key Insight**
-The problem is not just data quantity but data quality. Continuous 10-second LED pulses produce events during the suppressive phase of the kernel. These events carry almost no information about τ₁.
+The problem is not just data quantity but data quality. Continuous 10-second LED pulses produce events during the suppressive phase of the kernel. These events carry almost no information about tau1.
 
 **Recommendation Preview**
 Switch to burst stimulation to sample the early excitatory window repeatedly.
@@ -201,7 +201,7 @@ We chose the gamma-difference kernel for interpretability, but we need to verify
 - Gamma-difference: R² = 0.968 with 6 parameters
 
 **Interpretation**
-The gamma-difference captures 96.8% of the variance explained by the flexible model with half the parameters. The timescales τ₁ and τ₂ are not just curve-fitting artifacts. They represent genuine temporal structure.
+The gamma-difference captures 96.8% of the variance explained by the flexible model with half the parameters. The timescales tau1 and tau2 are not just curve-fitting artifacts. They represent genuine temporal structure.
 
 ---
 
@@ -227,7 +227,7 @@ Target 40 minutes or more of recording to achieve at least 50 reorientation even
 Current 10-20 minute recordings yield only 18-25 events.
 
 **Power Analysis Result**
-100 events are required for 80% power to detect a 0.2-second difference in τ₁ at the individual level.
+100 events are required for 80% power to detect a 0.2-second difference in tau1 at the individual level.
 
 ---
 
@@ -237,9 +237,9 @@ Current 10-20 minute recordings yield only 18-25 events.
 Reduce the parameter space by fixing population-derived parameters.
 
 **Specific Suggestion**
-- Fix τ₂ at the population estimate of 3.8 seconds
+- Fix tau2 at the population estimate of 3.8 seconds
 - Fix the amplitude ratio B/A at the population value
-- Estimate only the fast timescale τ₁ per individual track
+- Estimate only the fast timescale tau1 per individual track
 
 **Rationale**
 Hierarchical Bayesian estimation provides natural regularization toward the population mean. With only one free parameter, even 25 events may be sufficient.
@@ -277,7 +277,7 @@ The ARI near zero across all validation methods indicates no reproducible struct
 
 **Summary of Success**
 - Gamma-difference kernel accurately models population-level dynamics
-- Two timescales govern behavior: τ₁ ≈ 0.3s for excitation, τ₂ ≈ 4s for suppression
+- Two timescales govern behavior: tau1 ~ 0.3s for excitation, tau2 ~ 4s for suppression
 - Model is robust across experimental conditions
 - Biological interpretability with equivalent goodness of fit
 
