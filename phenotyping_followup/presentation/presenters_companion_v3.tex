@@ -1008,5 +1008,86 @@ A: Yes, 8.6\% of tracks show variation exceeding measurement noise. These are th
 
 A: Implement burst stimulation protocol and collect new data with 40+ minute recordings. Rerun phenotyping analysis with improved data.
 
+\newpage
+
+\section{Supplemental Slides (S1--S8)}
+
+\begin{tcolorbox}[colback=arcblue!5,colframe=arcblue,title=\sffamily\bfseries Appendix Overview]
+\textbf{Purpose:} Provide additional supporting analyses and figures. \\
+\textbf{Slides:} 8 supplemental slides organized chronologically by analysis stage.
+\end{tcolorbox}
+
+\subsection{S1. Population-Level Data Summary}
+
+\begin{keypoint}
+14 experiments, 701 tracks, 19\% track completeness, 3.9-fold variation in timescales.
+\end{keypoint}
+
+\textbf{Key Statistics}
+
+Intensity effect is the largest at Hedges g = 2.4. Background cycling has moderate effect at g = 0.6. Mean R-squared exceeds 0.9 for most conditions.
+
+\subsection{S2. Early vs Late Habituation}
+
+\begin{keypoint}
+Turn fraction increases from 44\% to 77\% across pulses in the 0-250 Constant condition.
+\end{keypoint}
+
+\textbf{Interpretation}
+
+Progressive habituation develops throughout stimulation. All conditions show this pattern.
+
+\subsection{S3. PSTH to Kernel Fitting}
+
+\begin{keypoint}
+Empirical PSTH $\rightarrow$ Fitted kernel $\rightarrow$ Event probability.
+\end{keypoint}
+
+\textbf{Model Logic}
+
+The kernel modulates baseline hazard rate. The fitted kernel captures initial excitation followed by sustained suppression.
+
+\subsection{S4. Posterior Predictive Checks}
+
+\begin{keypoint}
+Only 37.2\% of tracks pass all PPC metrics.
+\end{keypoint}
+
+\textbf{Key Insight}
+
+Model captures event rates but not detailed temporal structure. Individual heterogeneity exceeds population model capacity.
+
+\subsection{S5. Simulated Larval Trajectories}
+
+\begin{keypoint}
+Example tracks show 1.2 to 2.8 events per minute, illustrating natural variation.
+\end{keypoint}
+
+\subsection{S6. Factorial Design Analysis}
+
+\begin{keypoint}
+2x2 factorial reveals intensity and cycling-by-intensity interaction effects.
+\end{keypoint}
+
+\subsection{S7. Validation Journey}
+
+\begin{keypoint}
+Initial clusters with silhouette 0.54 fail round-trip validation with ARI below 0.2.
+\end{keypoint}
+
+\textbf{Key Message}
+
+K-means always finds clusters. Validation with ground truth is essential.
+
+\subsection{S8. Design Comparison Summary}
+
+\begin{keypoint}
+Burst stimulation yields 8-fold more events with 3-fold lower RMSE.
+\end{keypoint}
+
+\textbf{Recommendation}
+
+Switch to burst protocol for future phenotyping experiments.
+
 \end{document}
 

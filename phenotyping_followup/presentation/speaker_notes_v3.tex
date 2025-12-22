@@ -487,5 +487,101 @@ New experiments can be processed with the same pipeline. Reports are generated a
 
 github.com/GilRaitses/retrovibez
 
+\section{Supplemental Slides}
+
+The following supplemental slides provide additional detail on population-level analyses, model validation, and design optimization.
+
+\subsection{S1. Population-Level Data Summary}
+
+\textbf{Key Statistics}
+
+The dataset contains 14 experiments with 701 larval tracks across four stimulation conditions. Only 19\% of tracks meet all quality thresholds for kernel fitting. Track completeness varies by experiment, with some experiments having higher drop-out rates due to tracking failures.
+
+\textbf{Condition Effects}
+
+Kernel timescales vary 3.9-fold across conditions. The intensity manipulation from 0 to 250 versus 50 to 250 PWM produces the largest effect size at Hedges g of 2.4. Background cycling has a modest effect with g of 0.6.
+
+\textbf{Interpretation}
+
+The population-level model performs well across all conditions except 50-250 Cycling, which shows reduced fit quality. Condition effects are interpretable through the factorial design.
+
+\subsection{S2. Early vs Late Habituation}
+
+\textbf{Key Finding}
+
+Turn fraction increases substantially from early to late pulses across all conditions. The 0-250 Constant condition shows the strongest effect, rising from 44\% to 77\%.
+
+\textbf{Interpretation}
+
+Progressive habituation develops throughout the stimulation protocol. Larvae become increasingly likely to turn as they experience more light pulses. The model captures this effect through the suppression timescale tau2.
+
+\subsection{S3. PSTH to Kernel Fitting}
+
+\textbf{Panel Description}
+
+Panel A shows the empirical PSTH computed by histogram binning. Panel B shows the fitted kernel with suppression trough at 2.5 seconds. Panel C converts kernel values to Bernoulli event probabilities.
+
+\textbf{Model Logic}
+
+The kernel modulates the baseline hazard rate. Positive values increase event probability while negative values suppress it. The fitted kernel captures the empirical pattern of initial excitation followed by sustained suppression.
+
+\subsection{S4. Posterior Predictive Checks}
+
+\textbf{PPC Metrics}
+
+Event count compares the number of simulated events to observed. Mean ISI compares the average interval between events. PSTH shape uses the Kolmogorov-Smirnov statistic to compare temporal distributions.
+
+\textbf{Results}
+
+Event count and mean ISI show modest pass rates at 53.6\%. PSTH shape fails almost universally at 4.4\%. Only 37.2\% of tracks pass all three checks.
+
+\textbf{Interpretation}
+
+The model captures overall event rates but not the detailed temporal structure of individual responses. Individual heterogeneity exceeds what the population model can capture.
+
+\subsection{S5. Simulated Larval Trajectories}
+
+\textbf{Visualization}
+
+Upper panels show XY movement paths with turn locations marked in red. Lower panels show event timing relative to LED-ON periods in yellow.
+
+\textbf{Event Variability}
+
+The three example tracks show 1.2 to 2.8 events per minute, illustrating natural variation in reorientation rates. The simulation generates realistic heterogeneity.
+
+\subsection{S6. Factorial Design Analysis}
+
+\textbf{Design}
+
+The 2x2 factorial manipulates intensity step and background pattern. Intensity step compares 0 to 250 versus 50 to 250 PWM. Background pattern compares constant at 7 PWM versus cycling between 5 and 15 PWM.
+
+\textbf{Results}
+
+Intensity modulation produces a significant negative effect on alpha, indicating faster suppression onset. The cycling-by-intensity interaction is significant. Rebound effect gamma shows the largest uncertainty.
+
+\subsection{S7. Validation Journey}
+
+\textbf{Narrative}
+
+The figure traces the progression from apparent phenotypes to continuous variation. Initial clustering suggests four distinct phenotypes with high classification accuracy. Round-trip validation reveals that clusters are artifacts. Only 8.6\% of tracks show genuine variation exceeding measurement noise.
+
+\textbf{Key Message}
+
+K-means will always find clusters. The critical step is validation, which requires round-trip testing with known ground truth.
+
+\subsection{S8. Design Comparison Summary}
+
+\textbf{Current Protocol}
+
+Continuous 10-second ON and 20-second OFF produces only 1.9 events per track per LED cycle. RMSE for tau1 estimation is 0.108 seconds.
+
+\textbf{Burst Protocol}
+
+Ten 0.5-second pulses increase event yield 8-fold to 14.9 per track. RMSE drops to 0.036 seconds, a 3-fold improvement.
+
+\textbf{Recommendation}
+
+Switching to burst stimulation would substantially improve individual phenotyping feasibility without extending recording duration. The tradeoff between event yield and information per event favors burst design.
+
 \end{document}
 

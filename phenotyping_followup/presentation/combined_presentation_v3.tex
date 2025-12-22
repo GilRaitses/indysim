@@ -560,5 +560,97 @@ New experiments can be processed through the same pipeline. Reports are generate
 \textbf{Repository} \quad \texttt{github.com/GilRaitses/retrovibez}
 \end{frame}
 
+%% ==================================================
+%% SUPPLEMENTAL SLIDES
+%% ==================================================
+
+\appendix
+
+\begin{frame}{Supplemental Materials}
+\centering
+\vspace{1cm}
+{\Large \textbf{Appendix}}
+
+\vspace{1cm}
+Additional figures and analyses supporting the main presentation.
+
+\vspace{0.5cm}
+Organized chronologically by analysis stage.
+\end{frame}
+
+%% --- Data and Population ---
+
+\begin{frame}{S1. Population-Level Data Summary}
+\centering
+\includegraphics[height=0.65\textheight]{../../figures/population_eda.png}
+
+\vspace{0.15cm}
+\small The dataset comprises 14 experiments with 701 larval tracks across four stimulation conditions. Track completeness analysis shows 19\% of tracks meet all quality thresholds for kernel fitting. Kernel timescales vary 3.9-fold across conditions, with the fast timescale tau1 ranging from 0.3 to 1.2 seconds. The intensity manipulation produces the largest effect size at g=2.4, exceeding the threshold for large effects. Mean R-squared values remain above 0.9 for all conditions except 50-250 Cycling, which shows reduced model fit at R-squared 0.73.
+\end{frame}
+
+\begin{frame}{S2. Early vs Late Habituation}
+\centering
+\includegraphics[height=0.65\textheight]{../../figures/figure_habituation_early_late.png}
+
+\vspace{0.15cm}
+\small Turn fraction increases substantially from early pulses 0-2 to late pulses 15-17 across all four experimental conditions. The 0-250 Constant condition shows the strongest habituation effect, rising from 44\% to 77\% turn fraction. All conditions display the same pattern of increased turning in later pulses, confirming that habituation develops progressively throughout the stimulation protocol. The cycling conditions show similar magnitude increases despite their more complex temporal structure.
+\end{frame}
+
+%% --- Model Fitting and Validation ---
+
+\begin{frame}{S3. PSTH to Kernel Fitting}
+\centering
+\includegraphics[height=0.65\textheight]{../figures/fig3_psth_kernel_v2.pdf}
+
+\vspace{0.15cm}
+\small Panel A shows the empirical peri-stimulus time histogram computed by binning reorientation events relative to LED onset. Panel B displays the fitted gamma-difference kernel with tau1 at 2.5 seconds indicating peak suppression timing. Panel C demonstrates how the Bernoulli process converts kernel values to event probabilities. The fitted kernel captures the empirical pattern of initial excitation followed by sustained suppression.
+\end{frame}
+
+\begin{frame}{S4. Posterior Predictive Checks}
+\centering
+\includegraphics[height=0.65\textheight]{../figures/fig6_posterior_predictive.pdf}
+
+\vspace{0.15cm}
+\small Posterior predictive checks evaluate whether the fitted model generates data consistent with observations. Panel A shows pass rates for three metrics at event count 53.6\%, mean inter-stimulus interval 53.6\%, and PSTH shape at only 4.4\%. Panel B summarizes overall model adequacy with 37.2\% of simulated datasets passing all checks. The low PSTH shape pass rate indicates the model captures event timing but not the detailed temporal structure of individual responses.
+\end{frame}
+
+%% --- Trajectories and Simulation ---
+
+\begin{frame}{S5. Simulated Larval Trajectories}
+\centering
+\includegraphics[height=0.65\textheight]{../../figures/figure3_trajectories.png}
+
+\vspace{0.15cm}
+\small Three example simulated trajectories demonstrate the stochastic Bernoulli point process generating reorientation events. Track 1 shows 39 events at 2.0 per minute, Track 2 shows 24 events at 1.2 per minute, and Track 3 shows 56 events at 2.8 per minute. Red markers indicate turn locations along the movement path. Yellow shading in the lower panels shows LED-ON periods. Event timing follows the fitted kernel with higher probability during LED-ON suppression windows.
+\end{frame}
+
+%% --- Factorial Design ---
+
+\begin{frame}{S6. Factorial Design Analysis}
+\centering
+\includegraphics[height=0.65\textheight]{../../figures/figure5_factorial.png}
+
+\vspace{0.15cm}
+\small The 2x2 factorial design manipulates intensity step from 0 to 250 versus 50 to 250 PWM and background pattern constant versus cycling. Panel A shows suppression amplitude across conditions with the 0-250 Cycling condition producing the strongest suppression at 1.16. Panel B displays coefficient estimates with 95\% confidence intervals. Intensity modulation produces a significant negative effect on alpha, indicating faster suppression onset. The cycling-by-intensity interaction reaches statistical significance at p less than 0.05.
+\end{frame}
+
+\begin{frame}{S7. Validation Journey}
+\centering
+\includegraphics[height=0.65\textheight]{../figures/fig1_validation_journey_v2.pdf}
+
+\vspace{0.15cm}
+\small The validation journey traces the progression from apparent phenotypes to continuous variation. Panel A shows initial clustering with silhouette 0.54 and 99.6\% classification accuracy suggesting four distinct phenotypes. Panel B reveals that round-trip validation fails with ARI below 0.2 for all cluster numbers. Panel C shows the method agreement matrix with cross-method ARI values below 0.3 indicating each method produces different clusters. Panel D identifies only 8.6\% of tracks as genuine outliers, with the remaining 91.4\% showing variation indistinguishable from measurement noise.
+\end{frame}
+
+%% --- Design Optimization ---
+
+\begin{frame}{S8. Design Comparison Summary}
+\centering
+\includegraphics[height=0.65\textheight]{../figures/fig_design_comparison_summary.pdf}
+
+\vspace{0.15cm}
+\small Panel A compares event yield across stimulation designs with the current continuous protocol producing only 1.9 events per track. Burst stimulation with ten 0.5-second pulses increases yield 8-fold to 14.9 events. Panel B shows estimation error reduction with burst design achieving 3-fold lower RMSE at 0.036 seconds versus 0.108 for continuous. Panel C plots Fisher Information per event against event yield, demonstrating that burst design maximizes both metrics. The recommended protocol change would substantially improve individual phenotyping feasibility.
+\end{frame}
+
 \end{document}
 
