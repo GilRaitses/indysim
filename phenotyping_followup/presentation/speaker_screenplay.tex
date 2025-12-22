@@ -1,0 +1,409 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{parskip}
+
+% Fonts
+\setmainfont{Courier New}
+\setsansfont{Helvetica Neue}
+
+% Colors
+\definecolor{slugline}{HTML}{1E3A5F}
+\definecolor{direction}{HTML}{666666}
+\definecolor{character}{HTML}{000000}
+
+% Screenplay formatting
+\newcommand{\slugline}[1]{%
+  \vspace{1em}%
+  {\sffamily\bfseries\color{slugline}\MakeUppercase{#1}}%
+  \vspace{0.5em}%
+}
+
+\newcommand{\direction}[1]{%
+  \vspace{0.3em}%
+  {\itshape\color{direction}#1}%
+  \vspace{0.3em}%
+}
+
+\newcommand{\dialogue}[1]{%
+  \begin{quote}%
+  #1%
+  \end{quote}%
+}
+
+\newcommand{\cue}[1]{%
+  \vspace{0.5em}%
+  {\sffamily\small\color{slugline}[#1]}%
+  \vspace{0.3em}%
+}
+
+\newcommand{\fallback}[2]{%
+  \vspace{0.5em}%
+  {\sffamily\small\bfseries If asked: ``#1''}\\
+  \dialogue{#2}%
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\sffamily\small SENSORIMOTOR HABITUATION}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\title{\sffamily\bfseries SENSORIMOTOR HABITUATION\\IN \textit{DROSOPHILA} LARVAE\\[1em]\large A Speaker's Screenplay}
+\author{Gil Raitses\\Syracuse University}
+\date{Bhattacharya Lab General Meeting\\December 2025}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\newpage
+
+%% ============================================
+\section{ACT ONE: THE POPULATION STORY}
+%% ============================================
+
+\slugline{Opening --- Before Slide 1}
+
+\direction{Take a breath. Stand still. Make eye contact with the room.}
+
+\dialogue{What I want to do today is walk through how I've been thinking about this data, rather than just show results. We collect complex behavioral data in the lab, and the question I've been asking is how far we can push interpretability before we start overreading structure. I'm using modeling, simulation, and validation the same way we use controls in experiments, to figure out what kinds of explanations are justified at different scales.}
+
+\direction{Small pause. Let the frame settle.}
+
+\dialogue{What you'll see is that this works really well at the population level. We get clean, interpretable structure that lines up nicely with how we already think about sensory response and adaptation. But what's more interesting to me is what happens when we try to push the same ideas down to individuals. That's where things stop working in a useful way, and that failure turns out to be very informative.}
+
+\cue{Advance to Slide 1}
+
+\dialogue{So I'm going to start at the population level, where everything behaves nicely, and then I'll move to the individual level to show where the boundaries are and how we might push them experimentally.}
+
+\direction{Pause. Point to the slide.}
+
+\dialogue{This is sensorimotor behavior in larvae under optogenetic stimulation, pooled across experiments and conditions.}
+
+\cue{Advance to Slide 2}
+
+\dialogue{At this scale, the behavior is very regular. When the light turns on, reorientation probability rises quickly and then drops over time as the system adapts. You can see that across conditions and across experiments. The point here isn't just that we can fit it, it's that the structure is consistent enough to summarize in a small number of parameters that actually mean something biologically.}
+
+\cue{Advance to Slide 3}
+
+\dialogue{This kernel is just a compact way of describing that structure over time. There's a fast component right after light onset and a slower component that suppresses behavior later on. I'm not going to dwell on the math here. Conceptually, this is just a way of separating early response from longer term adaptation so they don't get mixed together.}
+
+\direction{Small pause.}
+
+\dialogue{At the population level, this representation is very stable, and that's what makes it useful.}
+
+\cue{Advance to Slide 4}
+
+\dialogue{This slide shows the transition from counting events to modeling behavior as a time varying probability. The histogram tells you what happened. The model lets you ask what would happen under different timing, which becomes important later when I talk about simulation.}
+
+\direction{Pause.}
+
+\dialogue{Up to this point, everything is working well, and this is the version of the story that's comfortable.}
+
+\direction{Stop. End of first two minutes.}
+
+\newpage
+
+%% ============================================
+\section{INTERLUDE: THE GAMMA PARAMETERS}
+%% ============================================
+
+\slugline{Technical Clarification --- If Asked}
+
+\direction{This section is for when someone asks about the gamma difference parameters. Deliver calmly.}
+
+\dialogue{Each gamma component is describing the shape of a response over time, very much like how you'd describe the envelope of a sound. There is an onset or attack phase, a peak or sustain region, and a decay. But instead of naming those explicitly, the gamma distribution uses parameters that jointly control those features.}
+
+\direction{Brief pause.}
+
+\dialogue{Conceptually, each gamma component answers three questions. When does this process start to matter after the stimulus. How sharply does it rise to its peak. How long does its influence persist before fading out.}
+
+\dialogue{Those three properties together define the temporal gesture of the process. In the fast component, that gesture is brief and early. In the slow component, it is delayed and long lasting. The amplitudes then set how much each gesture contributes relative to the other.}
+
+\direction{If someone wants a one-liner:}
+
+\dialogue{Each gamma component defines a temporal envelope, how fast it turns on, when it peaks, and how long it lasts.}
+
+\direction{If someone pushes mathematically:}
+
+\dialogue{The shape and scale parameters jointly control rise time and decay, so they are not redundant even though they both affect timing.}
+
+\direction{That's enough. Do not go deeper in a general lab talk.}
+
+\newpage
+
+%% ============================================
+\section{ACT TWO: WHERE IT BREAKS}
+%% ============================================
+
+\slugline{The Pivot --- After Slide 4}
+
+\direction{You've just said the model lets you ask what would happen under different timing.}
+
+\dialogue{At this point, everything is still very comfortable. The population data are dense, the structure is clear, and the model behaves the way we'd hope.}
+
+\cue{Advance to Slide 8}
+
+\dialogue{Here's one example of that. Across repeated light pulses, turning behavior gradually increases. That slow change is exactly what the later part of the kernel is capturing. So the model isn't just fitting a curve, it's tracking something we already recognize as habituation.}
+
+\cue{Advance to Slide 9}
+
+\dialogue{You can see the same thing from a different angle here. As pulses progress, larvae spend less time running and more time turning. Again, this is population level structure, and it's very consistent.}
+
+\direction{Pause.}
+
+\dialogue{Up to here, the story is straightforward. The model is doing something sensible.}
+
+\direction{Now slow down before advancing.}
+
+\dialogue{The natural question at this point, and the one I was most interested in, is whether these same parameters can tell us something meaningful about individual larvae.}
+
+\cue{Advance to Slide 11}
+
+\dialogue{This is where things start to change.}
+
+\dialogue{At first glance, it looks promising. When you fit the same model to individual tracks and cluster the parameters, you appear to get distinct groups.}
+
+\cue{Advance to Slide 12}
+
+\dialogue{But when you actually test whether those groups are stable or reproducible, they fall apart. Different methods disagree, resampling doesn't preserve structure, and the data look continuous rather than clustered.}
+
+\direction{Pause.}
+
+\dialogue{This is not because the clustering algorithm is bad. It's because we're asking more of the data than they can support.}
+
+\cue{Advance to Slide 13}
+
+\dialogue{Most individual larvae only produce about twenty reorientation events. Trying to estimate a full temporal shape from that is mathematically underdetermined.}
+
+\direction{Pause here. Let it land.}
+
+\newpage
+
+%% ============================================
+\section{INTERRUPTION HANDLING}
+%% ============================================
+
+\slugline{When Someone Interrupts}
+
+\direction{If someone asks ``why not just fit fewer parameters'' or ``why not trust the clusters'':}
+
+\dialogue{That's exactly what I tried next, and it turns out to be very revealing.}
+
+\cue{Then advance to Slide 14}
+
+\vspace{1em}
+
+\direction{General interruption deflection:}
+
+\dialogue{That's a good question, and I'm going to answer it explicitly in about two slides, so let me show you the failure mode first.}
+
+\direction{This keeps you in control without shutting anyone down.}
+
+\vspace{1em}
+
+\direction{If someone asks a simulation question too early:}
+
+\dialogue{I'll get to simulation shortly, but the short version is that it helps explain why this breaks, not rescue it.}
+
+\vspace{1em}
+
+\direction{The pivot sentence that carries you from failure into design insight:}
+
+\dialogue{Once the individual level fails, the question stops being how do we fit this model, and becomes what would we need to change experimentally for this to work at all.}
+
+\direction{This sentence is the bridge into identifiability, Fisher information, and protocol redesign.}
+
+\newpage
+
+%% ============================================
+\section{ACT THREE: FISHER INFORMATION}
+%% ============================================
+
+\slugline{The Information Geometry --- After Slide 14}
+
+\direction{You are on Slide 14. Pause briefly.}
+
+\dialogue{So at this point, the model is telling us something important. When we try to estimate individual parameters, almost everything collapses back to the population mean. That's not a failure of the statistics. It's a sign that the individual data just don't contain enough information.}
+
+\cue{Advance to Slide 15}
+
+\dialogue{This slide is about why that happens.}
+
+\dialogue{What matters here isn't just how many events we collect, but when those events occur relative to the stimulus. Some events are informative about the fast response, and others really aren't.}
+
+\direction{Point gently, don't trace curves.}
+
+\dialogue{In the continuous stimulation design, most events happen during periods dominated by suppression. That means they tell us almost nothing about the fast timescale, even though they still count as events.}
+
+\direction{Pause.}
+
+\dialogue{So you can collect more data and still not learn the thing you care about.}
+
+\cue{Advance to Slide 16}
+
+\dialogue{This is where stimulation geometry starts to matter. By breaking the light into brief pulses, you repeatedly sample the early response window. Each event now carries more information about the fast process.}
+
+\direction{Pause.}
+
+\dialogue{This is the key idea. It's not that burst stimulation magically creates data. It just makes each event more useful for the question we're asking.}
+
+\direction{If someone looks confused, use this translation:}
+
+\dialogue{You can think of it like probing a system at the wrong time versus the right time. Same number of measurements, very different insight.}
+
+\cue{Advance to Slide 18}
+
+\dialogue{Once you frame it this way, you can actually ask practical questions. How many events would we need. How long would we need to record. What kind of protocol would make individual differences detectable at all.}
+
+\direction{Pause.}
+
+\dialogue{Under the current design, individual phenotyping just isn't feasible. Under a redesigned protocol, it might be.}
+
+\cue{Advance to Slide 20}
+
+\dialogue{And when information is limited, the model naturally simplifies. Instead of trying to recover a full temporal shape, the data support much simpler summaries, things like response latency or ON versus OFF bias.}
+
+\direction{Pause.}
+
+\dialogue{That's not giving up. That's being honest about what the data can tell us at this scale.}
+
+\newpage
+
+%% ============================================
+\section{FALLBACK EXPLANATIONS}
+%% ============================================
+
+\slugline{Fisher Information Questions}
+
+\fallback{What is Fisher information?}{It's a way of quantifying how sensitive the data are to a parameter. If changing a parameter barely changes what you observe, you can't estimate it reliably.}
+
+\fallback{Why not just collect more animals?}{More animals help only if the experiment samples the right part of the response. Otherwise you just get more of the same uninformative data.}
+
+\fallback{Isn't this circular since you assume the model?}{The simulation isn't claiming the model is true. It's asking whether, if the model were true, the experiment could ever detect its parameters.}
+
+\direction{This last sentence is extremely strong and shuts down the circularity worry cleanly.}
+
+\vspace{1em}
+
+\slugline{Bridge Sentence}
+
+\dialogue{Once you see where information comes from, the question shifts from fitting models to designing experiments that make interpretation possible.}
+
+\direction{This is the intellectual heart of your talk.}
+
+\newpage
+
+%% ============================================
+\section{ACT FOUR: THE CLOSE}
+%% ============================================
+
+\slugline{Final Three Minutes --- After Slide 21}
+
+\direction{Slow your pace slightly here.}
+
+\dialogue{So stepping back, what this analysis really shows is not just what works, but why it works at one scale and not another. At the population level, behavior is dense and regular enough that interpretable structure emerges cleanly. At the individual level, the same approach stops being informative, and that boundary turns out to be very sharp.}
+
+\direction{Pause.}
+
+\dialogue{What I find useful about this is that it tells us where effort is best spent. Instead of forcing increasingly complex models onto sparse data, we can either simplify what we try to estimate or redesign the experiment to extract information more efficiently.}
+
+\cue{Advance to the final summary slide}
+
+\dialogue{Simulation plays a very specific role here. It doesn't replace experiments, and it doesn't tell us what biology is doing. It helps us see whether a question is even answerable with a given protocol, and what would need to change for it to become answerable.}
+
+\direction{Pause.}
+
+\dialogue{In that sense, the simulations aren't predictions. They're diagnostics.}
+
+\direction{Short pause.}
+
+\dialogue{So the takeaway for me is that interpretability isn't something you add after the fact. It's something that emerges when the scale of analysis, the structure of the data, and the experimental design line up.}
+
+\direction{Now stop advancing slides.}
+
+\dialogue{That's where I'll stop, and I'm very happy to talk through questions or dig into any part of the pipeline.}
+
+\newpage
+
+%% ============================================
+\section{QUESTION HANDLING}
+%% ============================================
+
+\slugline{First Question Protocol}
+
+\direction{The first question almost always sets the tone.}
+
+\vspace{1em}
+
+\direction{If the first question is broad or vague:}
+
+\dialogue{That's a good place to zoom in. Are you asking more about the modeling side, the simulation side, or the experimental implications?}
+
+\direction{This lets the questioner self-specify and gives you control.}
+
+\vspace{1em}
+
+\direction{If the first question is aggressive or skeptical:}
+
+\dialogue{That concern is exactly what motivated this analysis, so let me answer it in the context of what worked and what didn't.}
+
+\direction{Then answer briefly and stop.}
+
+\vspace{1em}
+
+\direction{If you don't want to answer in detail yet:}
+
+\dialogue{I don't want to give a sloppy answer to that, but I can tell you what the analysis says at a high level and we can follow up on details afterward.}
+
+\direction{This reads as integrity, not evasion.}
+
+\vspace{1em}
+
+\slugline{Recovery Sentence}
+
+\direction{If discussion starts to wander, use this to refocus:}
+
+\dialogue{The main point I wanted to make today is that the limits we're seeing are not failures of modeling, they're measurements of where our experiments stop being informative.}
+
+\direction{This sentence brings everything back into focus.}
+
+\newpage
+
+%% ============================================
+\section{FINAL REMINDER}
+%% ============================================
+
+\slugline{Before You Walk In}
+
+\direction{Read this to yourself before entering the room.}
+
+\vspace{2em}
+
+\begin{center}
+\large\itshape
+You are not defending a model.\\[0.5em]
+You are presenting a careful investigation\\
+into what your data can and cannot support.\\[0.5em]
+That stance is unusually strong,\\
+especially in a lab setting,\\
+and it will be recognized as such.
+\end{center}
+
+\vspace{3em}
+
+\begin{center}
+{\sffamily\bfseries END OF SCREENPLAY}
+\end{center}
+
+\end{document}
+
