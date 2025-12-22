@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169,11pt]{beamer}
+\documentclass[aspectratio=169,10pt]{beamer}
 \usetheme{metropolis}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -12,6 +12,14 @@
 % Reduce bottom margin for captions
 \setbeamertemplate{frametitle}[default][left]
 \addtobeamertemplate{frametitle}{}{\vspace{-0.3em}}
+
+% Tighter spacing for text-heavy slides
+\setlength{\parskip}{0.15em}
+\setbeamersize{text margin left=0.8cm,text margin right=0.8cm}
+
+% Smaller itemize spacing
+\setlength{\itemsep}{0.1em}
+\setlength{\parsep}{0pt}
 
 % Remove default footline
 \setbeamertemplate{footline}{}
@@ -44,16 +52,16 @@
 \begin{frame}{Original Study Overview}
 \textbf{Population-Level Sensorimotor Habituation Model}
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Larval reorientation behavior follows a gamma-difference kernel with two distinct timescales that capture the dynamics of sensory response and adaptation.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 The fast excitatory component with $\tau_1 \approx 0.3$ seconds drives the initial response to optogenetic light onset. The slow inhibitory component with $\tau_2 \approx 4$ seconds produces delayed suppression that underlies behavioral habituation across repeated stimuli.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 The model was validated across 14 experiments comprising 701 unique larval tracks collected under four stimulation conditions.
 
-\vspace{0.4cm}
+\vspace{0.15cm}
 \textbf{Key Result} \quad The gamma-difference kernel accurately predicts population-level reorientation dynamics and provides biologically interpretable timescales.
 \end{frame}
 
@@ -81,46 +89,47 @@ The model was validated across 14 experiments comprising 701 unique larval track
 \begin{frame}{Simulation Track Generation}
 \textbf{Bernoulli Point Process Framework}
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Simulated tracks are generated using the fitted population kernel as follows.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Step 1} \quad For each timestep $\Delta t = 0.1$s, compute the hazard rate $\lambda(t) = \lambda_0 \exp(K(t) + \eta_{\text{track}})$ where $\eta_{\text{track}} \sim \mathcal{N}(0, \sigma^2)$ is track-specific random intercept.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Step 2} \quad Convert hazard to event probability $p(t) = 1 - \exp(-\lambda(t) \cdot \Delta t)$.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Step 3} \quad Draw Bernoulli sample $E(t) \sim \text{Bernoulli}(p(t))$ for each timestep.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Step 4} \quad Impose 2-second refractory period after each event.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 The baseline intercept and track-level variability $\sigma$ determine mean event rate and across-track variance.
 \end{frame}
 
 \begin{frame}{Parameter Sweep for Simulation Calibration}
+\small
 \textbf{Optimizing Simulation to Match Empirical Data}
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 A grid search over simulation parameters found the combination that best matches empirical event count distributions.
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 \textbf{Parameters swept}
-\begin{itemize}
+\begin{itemize}\setlength{\itemsep}{0pt}
 \item Baseline intercept: $-7.0$ to $-6.0$ in steps of $0.02$
 \item Track intercept standard deviation: $0.1$ to $0.8$ in steps of $0.02$
 \end{itemize}
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 \textbf{Optimal values found}
-\begin{itemize}
+\begin{itemize}\setlength{\itemsep}{0pt}
 \item Intercept $= -6.54$ produces mean 14.9 events per 10-minute track
 \item Track std $\sigma = 0.38$ produces realistic across-track variance
 \end{itemize}
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 \textbf{Validation} \quad Simulated event count distribution with optimized parameters matches empirical distribution with KS test p $> 0.05$.
 \end{frame}
 
@@ -163,19 +172,19 @@ A grid search over simulation parameters found the combination that best matches
 \begin{frame}{Follow-Up Study Overview}
 \textbf{Individual-Level Phenotyping Validation}
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 The follow-up study asked whether individual larvae can be phenotyped using kernel parameters. The answer is negative with current protocols.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Challenge} \quad Sparse data with only 18 to 25 events per 10 to 20 minute track makes 6-parameter kernel estimation unreliable.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Finding} \quad Apparent phenotypic clusters identified by K-means are statistical artifacts of sparse data. Gap statistic optimization suggests k=1 is optimal indicating no discrete phenotypes exist.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Only 8.6\% of tracks show genuine individual differences that exceed measurement noise.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Key Result} \quad Individual-level phenotyping requires experimental protocol modifications before reliable kernel-based phenotyping becomes feasible.
 \end{frame}
 
@@ -282,37 +291,39 @@ Only 8.6\% of tracks show genuine individual differences that exceed measurement
 %% ===========================================
 
 \begin{frame}{Original Study Summary}
+\small
 \textbf{Population-Level Modeling Success}
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 The gamma-difference kernel accurately models population-level reorientation dynamics across 14 experiments and 701 unique larval tracks.
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 Two timescales govern behavioral dynamics. Fast excitation with $\tau_1 \approx 0.3$ seconds captures the initial sensory response to optogenetic stimulation. Slow suppression with $\tau_2 \approx 4$ seconds captures habituation-like adaptation that accumulates across repeated stimuli.
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 The model is robust across experimental conditions as demonstrated by leave-one-experiment-out cross-validation and bootstrap confidence intervals.
 
-\vspace{0.3cm}
+\vspace{0.15cm}
 The gamma-difference form provides biological interpretability that flexible basis function models lack while achieving equivalent goodness of fit.
 \end{frame}
 
 \begin{frame}{Follow-Up Study Summary}
+\small
 \textbf{Individual Phenotyping Challenges}
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Individual phenotyping using kernel parameters fails with current experimental protocols due to fundamentally sparse data.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Apparent clusters identified by K-means or hierarchical clustering are statistical artifacts of fitting high-dimensional models to low-event tracks rather than genuine discrete phenotypes.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Only 8.6\% of tracks show individual variation that exceeds the measurement noise floor.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 Current protocols achieve only 20 to 30\% statistical power for detecting fast responder phenotypes.
 
-\vspace{0.4cm}
+\vspace{0.15cm}
 \textbf{Bottom Line} \quad Population-level analysis is robust and biologically meaningful. Individual phenotyping requires experimental redesign before kernel-based classification becomes reliable.
 \end{frame}
 
@@ -329,134 +340,131 @@ Current protocols achieve only 20 to 30\% statistical power for detecting fast r
 %% ===========================================
 
 \begin{frame}{Original Study Methods}
+\small
 \textbf{What is the sequence of processes in the original study?}
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Data collection} \quad 14 optogenetic experiments with 701 larval tracks under four stimulation conditions varying intensity from 0-250 PWM versus 50-250 PWM and temporal pattern from constant versus cycling.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Trajectory extraction} \quad MAGAT Analyzer extracts larval trajectories from video and segments behavioral states including runs and reorientations.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Event detection} \quad Reorientation onset times are extracted from MAGAT segmentation as point events for hazard modeling.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Kernel fitting} \quad Population-level gamma-difference kernel is fitted using maximum likelihood estimation on the pooled PSTH.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 \textbf{Validation} \quad Leave-one-experiment-out cross-validation and bootstrap confidence intervals assess generalization and parameter uncertainty.
 \end{frame}
 
 \begin{frame}{Follow-Up Study Methods}
+\footnotesize
 \textbf{What processes were used in the follow-up study?}
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 \textbf{Individual fitting} \quad Maximum likelihood estimation of 6-parameter gamma-difference kernel per track using the same event data.
 
-\vspace{0.2cm}
+\vspace{0.06cm}
 \textbf{Clustering} \quad K-means and hierarchical clustering applied to individual kernel parameters to identify putative phenotypic groups.
 
-\vspace{0.2cm}
+\vspace{0.06cm}
 \textbf{Validation} \quad Round-trip validation simulates from fitted kernels and re-clusters to test reproducibility. Gap statistic tests whether k clusters improve over k=1.
 
-\vspace{0.2cm}
+\vspace{0.06cm}
 \textbf{Power analysis} \quad Simulation-based analysis estimates statistical power for phenotype detection as a function of event count and protocol design.
 
-\vspace{0.2cm}
+\vspace{0.06cm}
 \textbf{Identifiability analysis} \quad Fisher Information quantifies how much information each event contains about kernel parameters under different stimulation designs.
 \end{frame}
 
 \begin{frame}{Why Population Modeling Succeeds}
+\footnotesize
 \textbf{The key is the data-to-parameter ratio}
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Population modeling pools approximately 15,000 reorientation events across 701 tracks to estimate 6 kernel parameters. The data-to-parameter ratio exceeds 2,500 to 1 providing strong statistical power.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Individual modeling attempts to estimate the same 6 parameters from only 18 to 25 events per track. The data-to-parameter ratio is only 3 to 5 which is far below the minimum of 10 to 1 needed for reliable maximum likelihood estimation.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 The gamma-difference kernel is overparameterized for individual-level sparse data. Identifiability analysis reveals that only $\tau_1$ and possibly the amplitude ratio can be reliably estimated with fewer than 50 events.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Hierarchical Bayesian estimation provides partial mitigation by shrinking individual estimates toward the population mean but cannot create information that is not present in the data.
 \end{frame}
 
 \begin{frame}{Hierarchical Shrinkage Explained}
+\footnotesize
 \textbf{Regularization through shared population structure}
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Hierarchical Bayesian models assume individual parameters are drawn from a population distribution with unknown mean and variance.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Tracks with sparse data are shrunk toward the population mean because their individual estimates are uncertain. Tracks with abundant data retain individual estimates because they contain sufficient information.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 The amount of shrinkage is determined automatically by the posterior distribution. More sparse data produces more shrinkage.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Shrinkage is not a bias correction. It is optimal regularization under the assumption that individuals are exchangeable members of a population.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 In the data sparsity regime of this study almost all individual estimates are shrunk heavily toward the population mean confirming that individual phenotyping is not feasible without protocol changes.
 \end{frame}
 
 \begin{frame}{Interpreting Clustering Results}
+\footnotesize
 \textbf{Clusters in sparse high-dimensional data are usually artifacts}
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 K-means and hierarchical clustering will always produce k clusters regardless of whether true clusters exist in the data.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 The gap statistic compares within-cluster dispersion to a null reference and finds that k=1 is optimal meaning no discrete clusters are present.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Round-trip validation tests whether clusters are reproducible by simulating new data from fitted parameters and re-clustering. Agreement below ARI = 0.2 indicates clusters are not reproducible.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 The continuous unimodal PCA distribution confirms that kernel parameter variation is smooth rather than discrete.
 
-\vspace{0.3cm}
+\vspace{0.08cm}
 Future clustering should be attempted only after protocol modifications increase event counts to 100 or more per track and reduce the parameter space to 1 or 2 dimensions.
 \end{frame}
 
 \begin{frame}{Data Structures and Extraction Methods}
-\textbf{MAGAT Analyzer}
+\scriptsize
+\textbf{MAGAT Analyzer} \quad Marc Gershow's MAGAT Analyzer extracts larval trajectories from video and segments behavioral states. The segmentation identifies runs, reorientations, and head swings based on heading angle changes and movement patterns. Reorientation onset events are detected as transitions from RUN to TURN state.
 
-Marc Gershow's MAGAT Analyzer extracts larval trajectories from video and segments behavioral states. The segmentation identifies runs, reorientations, and head swings based on heading angle changes and movement patterns. Reorientation onset events are detected as transitions from RUN to TURN state. These discrete events serve as the dependent variable for hazard modeling.
+\vspace{0.06cm}
+\textbf{Run Tables} \quad Run tables structure run-level statistics using reorientation events as boundaries. Each row represents a forward movement period between two reorientations. Fields include run duration, run distance, mean speed, heading change, and LED state at run start. Mason Klein developed the run table methodology for organizing behavioral segments.
 
-\vspace{0.3cm}
-\textbf{Run Tables}
+\vspace{0.06cm}
+\textbf{Events Group} \quad The events group records reorientation start events detected by MAGAT segmentation. Each row is a discrete reorientation onset with timestamp, position, LED state, and preceding run statistics. The events group contains 7,867 reorientations across 414 tracks while the run table contains 8,822 runs across 424 tracks.
 
-Run tables structure run-level statistics using reorientation events as boundaries. Each row represents a forward movement period between two reorientations. Fields include run duration, run distance, mean speed, heading change, and LED state at run start. Mason Klein developed the run table methodology for organizing behavioral segments into analyzable units.
-
-\vspace{0.3cm}
-\textbf{Events Group}
-
-The events group records reorientation start events detected by MAGAT segmentation. Each row is a discrete reorientation onset with timestamp, position, LED state, and preceding run statistics. The events group contains 7,867 reorientations across 414 tracks while the run table contains 8,822 runs across 424 tracks. The difference arises because run tables count all runs including final runs that may not end in reorientations.
-
-\vspace{0.3cm}
+\vspace{0.06cm}
 \textbf{Usage} \quad Kernel fitting uses the events group because it directly counts reorientation events. Run tables provide complementary run-level statistics for quality filtering and behavioral characterization.
 \end{frame}
 
 \begin{frame}{From Counting to Simulation}
-\textbf{Traditional Methods}
-
+\footnotesize
+\textbf{Traditional Methods} \quad
 Behavioral analysis typically relies on counting events, computing heatmaps, and visualizing discretized event histograms. These descriptive statistics summarize what happened but cannot predict what will happen under new conditions.
 
-\vspace{0.3cm}
-\textbf{What Simulation Modeling Extends}
-
+\vspace{0.08cm}
+\textbf{What Simulation Modeling Extends} \quad
 The kernel-based hazard model converts descriptive counts into a generative process. Given LED timing and kernel parameters, the model predicts event probabilities at every timestep. Simulation generates synthetic trajectories that can be compared against empirical data to validate the model and test hypotheses before running experiments.
 
-\vspace{0.3cm}
-\textbf{Experiment Refinement}
+\vspace{0.08cm}
+\textbf{Experiment Refinement} \quad
+Fisher Information analysis identifies which stimulation designs maximize parameter identifiability. Power analysis determines the minimum recording duration needed to detect individual differences.
 
-Fisher Information analysis identifies which stimulation designs maximize parameter identifiability. Power analysis determines the minimum recording duration needed to detect individual differences. These computations guide protocol design before data collection begins, reducing wasted experimental effort.
-
-\vspace{0.3cm}
-\textbf{Additional Merits}
-
+\vspace{0.08cm}
+\textbf{Additional Merits} \quad
 Simulation enables round-trip validation of clustering, ground-truth testing of phenotyping pipelines, and exploration of parameter space without animal use.
 \end{frame}
 
@@ -473,40 +481,36 @@ Simulation enables round-trip validation of clustering, ground-truth testing of 
 \end{frame}
 
 \begin{frame}{MagatFairy Pipeline}
-\textbf{Input}
+\footnotesize
+\textbf{Input} \quad MAGAT Analyzer experiments stored as MATLAB .mat files in ESET directory structures. Each experiment contains track data, contours, derived quantities, and global measurements including LED timing.
 
-MAGAT Analyzer experiments stored as MATLAB .mat files in ESET directory structures. Each experiment contains track data, contours, derived quantities, and global measurements including LED timing.
+\vspace{0.08cm}
+\textbf{Conversion Process} \quad The MATLAB Engine loads each experiment using the DataManager class. Track-level data including positions, velocities, heading vectors, and behavioral states are extracted. Global quantities such as LED values and camera calibration are preserved. The ExportManager writes structured H5 files with standardized schema.
 
-\vspace{0.3cm}
-\textbf{Conversion Process}
+\vspace{0.08cm}
+\textbf{Output} \quad Clean H5 files ready for Python analysis. Each file contains complete track arrays, derived quantities, LED timing at the ETI level, and camera calibration data. The standardized format enables consistent downstream processing across experiments.
 
-The MATLAB Engine loads each experiment using the DataManager class. Track-level data including positions, velocities, heading vectors, and behavioral states are extracted. Global quantities such as LED values and camera calibration are preserved. The ExportManager writes structured H5 files with standardized schema.
-
-\vspace{0.3cm}
-\textbf{Output}
-
-Clean H5 files ready for Python analysis. Each file contains complete track arrays, derived quantities, LED timing at the ETI level, and camera calibration data. The standardized format enables consistent downstream processing across experiments.
-
-\vspace{0.3cm}
+\vspace{0.08cm}
 \textbf{Usage} \quad Run \texttt{magatfairy convert auto /path/to/data} to process an entire genotype directory. The tool auto-detects data structure and handles batch conversion.
 \end{frame}
 
 \begin{frame}{MagatFairy in This Project}
+\footnotesize
 \textbf{Role in Data Pipeline}
 
 MagatFairy converted all 14 experiments comprising 701 larval tracks from the original MATLAB format to H5 files. The consolidated dataset used for kernel fitting and phenotyping analysis was assembled from these H5 outputs.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Fields Extracted}
 
 Track positions in millimeters, heading vectors, velocity components, SpeedRunVel, behavioral state flags including is\_reorientation and is\_run, LED state at each frame, and experiment timing. These fields feed directly into the hazard model.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Going Forward}
 
 New experiments can be processed with the same pipeline to ensure consistent data format. The H5 schema is documented at \texttt{docs/field-mapping.md}. Validation scripts verify that derived quantities match MATLAB reference implementations.
 
-\vspace{0.3cm}
+\vspace{0.12cm}
 \textbf{Repository} \quad \texttt{github.com/GilRaitses/magatfairy}
 \end{frame}
 
@@ -523,47 +527,33 @@ New experiments can be processed with the same pipeline to ensure consistent dat
 \end{frame}
 
 \begin{frame}{RetroVibez Pipeline}
-\textbf{Stage 1: MATLAB Analysis}
+\footnotesize
+\textbf{Stage 1: MATLAB Analysis} \quad Headless MATLAB execution computes SpeedRunVel from heading and velocity vectors. Reversal events are detected when SpeedRunVel remains negative for at least 3 seconds. Results are saved as track-level H5 files.
 
-Headless MATLAB execution computes SpeedRunVel from heading and velocity vectors. Reversal events are detected when SpeedRunVel remains negative for at least 3 seconds. Results are saved as track-level H5 files.
+\vspace{0.08cm}
+\textbf{Stage 2: Figure Generation} \quad Parallel Python processing generates trajectory plots with speed-colored paths and reversals marked in purple. Dot product time series show the heading-velocity relationship. Close-up plots highlight individual reversal events.
 
-\vspace{0.3cm}
-\textbf{Stage 2: Figure Generation}
+\vspace{0.08cm}
+\textbf{Stage 3: QMD Report} \quad A Quarto document is auto-generated from the analysis results. All figures are embedded with captions. Summary statistics are computed and formatted as tables.
 
-Parallel Python processing generates trajectory plots with speed-colored paths and reversals marked in purple. Dot product time series show the heading-velocity relationship. Close-up plots highlight individual reversal events.
-
-\vspace{0.3cm}
-\textbf{Stage 3: QMD Report}
-
-A Quarto document is auto-generated from the analysis results. All figures are embedded with captions. Summary statistics are computed and formatted as tables.
-
-\vspace{0.3cm}
-\textbf{Stage 4: Rendering}
-
-Quarto renders the QMD to both PDF and HTML formats. The PDF uses TinyTeX for clean typography. The HTML version enables interactive viewing.
+\vspace{0.08cm}
+\textbf{Stage 4: Rendering} \quad Quarto renders the QMD to both PDF and HTML formats. The PDF uses TinyTeX for clean typography. The HTML version enables interactive viewing.
 \end{frame}
 
 \begin{frame}{RetroVibez in This Project}
-\textbf{Attribution}
+\footnotesize
+\textbf{Attribution} \quad RetroVibez implements the reverse crawling detection algorithm from Klein et al. 2015. The core detection uses SpeedRunVel computed as the dot product of heading and velocity vectors. Negative values indicate backward movement.
 
-RetroVibez implements the reverse crawling detection algorithm described in Klein et al. 2015. The core detection uses SpeedRunVel computed as the dot product of heading and velocity vectors. Negative values indicate backward movement.
+\vspace{0.06cm}
+\textbf{Role in Analysis} \quad Reverse crawl events were detected and quantified for data quality assessment. The Klein run table uses reversal boundaries for run segmentation. The detection algorithm is bundled within the MATLAB analysis script at \texttt{matlab/mason\_analysis.m}.
 
-\vspace{0.3cm}
-\textbf{Role in Analysis}
+\vspace{0.06cm}
+\textbf{Report Generation} \quad RetroVibez generates standardized analysis reports for each experiment documenting reversal counts, durations, and spatial distributions. The Quarto-based workflow enables reproducible report generation from raw data.
 
-Reverse crawl events were detected and quantified for data quality assessment. The Klein run table uses reversal boundaries for run segmentation. The detection algorithm is bundled within the MATLAB analysis script at \texttt{matlab/mason\_analysis.m}.
+\vspace{0.06cm}
+\textbf{Going Forward} \quad New experiments can be processed through the same pipeline. Reports are generated automatically with consistent formatting. The modular design allows extension to additional behavioral metrics.
 
-\vspace{0.3cm}
-\textbf{Report Generation}
-
-RetroVibez generates standardized analysis reports for each experiment. These reports document reversal counts, durations, and spatial distributions. The Quarto-based workflow enables reproducible report generation from raw data.
-
-\vspace{0.3cm}
-\textbf{Going Forward}
-
-New experiments can be processed through the same pipeline. Reports are generated automatically with consistent formatting. The modular design allows extension to additional behavioral metrics.
-
-\vspace{0.3cm}
+\vspace{0.06cm}
 \textbf{Repository} \quad \texttt{github.com/GilRaitses/retrovibez}
 \end{frame}
 
