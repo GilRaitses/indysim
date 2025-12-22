@@ -1,36 +1,48 @@
-\contentsline {section}{\numberline {1}Introduction}{3}{}%
-\contentsline {subsection}{\numberline {1.1}Title Slide}{3}{}%
-\contentsline {subsection}{\numberline {1.2}Executive Summary — Original Study}{3}{}%
-\contentsline {section}{\numberline {2}Original Study — Population-Level Modeling}{4}{}%
-\contentsline {subsection}{\numberline {2.1}Kernel Structure}{4}{}%
-\contentsline {subsection}{\numberline {2.2}Simulated vs Empirical Event Counts}{5}{}%
-\contentsline {subsection}{\numberline {2.3}Habituation Dynamics}{5}{}%
-\contentsline {subsection}{\numberline {2.4}Behavioral State Analysis}{5}{}%
-\contentsline {subsection}{\numberline {2.5}Leave-One-Experiment-Out Validation}{6}{}%
-\contentsline {section}{\numberline {3}Follow-Up Study — Individual Phenotyping Failure}{7}{}%
-\contentsline {subsection}{\numberline {3.1}Executive Summary — Follow-Up Study}{7}{}%
-\contentsline {subsection}{\numberline {3.2}The Clustering Illusion}{7}{}%
-\contentsline {subsection}{\numberline {3.3}Data Sparsity Explains Instability}{8}{}%
-\contentsline {subsection}{\numberline {3.4}Hierarchical Shrinkage}{8}{}%
-\contentsline {subsection}{\numberline {3.5}The Identifiability Problem}{9}{}%
-\contentsline {subsection}{\numberline {3.6}Stimulation Protocol Comparison}{9}{}%
-\contentsline {subsection}{\numberline {3.7}Kernel Model Comparison}{9}{}%
-\contentsline {section}{\numberline {4}Recommendations for Future Work}{11}{}%
-\contentsline {subsection}{\numberline {4.1}Recommendation 1 — Protocol Modification}{11}{}%
-\contentsline {subsection}{\numberline {4.2}Recommendation 2 — Extended Recording}{11}{}%
-\contentsline {subsection}{\numberline {4.3}Recommendation 3 — Model Simplification}{12}{}%
-\contentsline {subsection}{\numberline {4.4}Recommendation 4 — Alternative Phenotypes}{12}{}%
-\contentsline {subsection}{\numberline {4.5}Recommendation 5 — Within-Condition Analysis}{12}{}%
-\contentsline {section}{\numberline {5}Conclusions}{13}{}%
-\contentsline {subsection}{\numberline {5.1}Conclusions — Original Study}{13}{}%
-\contentsline {subsection}{\numberline {5.2}Conclusions — Follow-Up Study}{13}{}%
-\contentsline {subsection}{\numberline {5.3}Thank You}{14}{}%
-\contentsline {section}{\numberline {6}Frequently Asked Questions}{15}{}%
-\contentsline {subsection}{\numberline {6.1}FAQ — Original Study Methods}{15}{}%
-\contentsline {subsection}{\numberline {6.2}FAQ — Follow-Up Study Methods}{15}{}%
-\contentsline {subsection}{\numberline {6.3}FAQ — Why Population Succeeds but Individual Fails}{15}{}%
-\contentsline {subsection}{\numberline {6.4}FAQ — What is Hierarchical Shrinkage}{15}{}%
-\contentsline {subsection}{\numberline {6.5}FAQ — How to Interpret Clustering Results}{16}{}%
-\contentsline {section}{\numberline {A}Timing Summary}{17}{}%
-\contentsline {section}{\numberline {B}Technical Glossary}{17}{}%
-\contentsline {section}{\numberline {C}Anticipated Questions}{17}{}%
+\contentsline {section}{\numberline {1}Introduction}{4}{}%
+\contentsline {subsection}{\numberline {1.1}Title Slide}{4}{}%
+\contentsline {subsection}{\numberline {1.2}Executive Summary — Original Study}{4}{}%
+\contentsline {section}{\numberline {2}Original Study — Population-Level Modeling}{5}{}%
+\contentsline {subsection}{\numberline {2.1}Kernel Structure}{5}{}%
+\contentsline {subsection}{\numberline {2.2}Simulated vs Empirical Event Counts}{6}{}%
+\contentsline {subsection}{\numberline {2.3}Habituation Dynamics}{6}{}%
+\contentsline {subsection}{\numberline {2.4}Behavioral State Analysis}{6}{}%
+\contentsline {subsection}{\numberline {2.5}Leave-One-Experiment-Out Validation}{7}{}%
+\contentsline {section}{\numberline {3}Follow-Up Study — Individual Phenotyping Failure}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Executive Summary — Follow-Up Study}{8}{}%
+\contentsline {subsection}{\numberline {3.2}The Clustering Illusion}{8}{}%
+\contentsline {subsection}{\numberline {3.3}Data Sparsity Explains Instability}{9}{}%
+\contentsline {subsection}{\numberline {3.4}Hierarchical Shrinkage}{9}{}%
+\contentsline {subsection}{\numberline {3.5}The Identifiability Problem}{10}{}%
+\contentsline {subsection}{\numberline {3.6}Stimulation Protocol Comparison}{10}{}%
+\contentsline {subsection}{\numberline {3.7}Kernel Model Comparison}{10}{}%
+\contentsline {section}{\numberline {4}Recommendations for Future Work}{12}{}%
+\contentsline {subsection}{\numberline {4.1}Recommendation 1 — Protocol Modification}{12}{}%
+\contentsline {subsection}{\numberline {4.2}Recommendation 2 — Extended Recording}{12}{}%
+\contentsline {subsection}{\numberline {4.3}Recommendation 3 — Model Simplification}{13}{}%
+\contentsline {subsection}{\numberline {4.4}Recommendation 4 — Alternative Phenotypes}{13}{}%
+\contentsline {subsection}{\numberline {4.5}Recommendation 5 — Within-Condition Analysis}{13}{}%
+\contentsline {section}{\numberline {5}Conclusions}{14}{}%
+\contentsline {subsection}{\numberline {5.1}Conclusions — Original Study}{14}{}%
+\contentsline {subsection}{\numberline {5.2}Conclusions — Follow-Up Study}{14}{}%
+\contentsline {subsection}{\numberline {5.3}Thank You}{15}{}%
+\contentsline {section}{\numberline {6}Frequently Asked Questions}{16}{}%
+\contentsline {subsection}{\numberline {6.1}FAQ — Original Study Methods}{16}{}%
+\contentsline {subsection}{\numberline {6.2}FAQ — Follow-Up Study Methods}{16}{}%
+\contentsline {subsection}{\numberline {6.3}FAQ — Why Population Succeeds but Individual Fails}{16}{}%
+\contentsline {subsection}{\numberline {6.4}FAQ — What is Hierarchical Shrinkage}{16}{}%
+\contentsline {subsection}{\numberline {6.5}FAQ — How to Interpret Clustering Results}{17}{}%
+\contentsline {section}{\numberline {7}Methods and Tooling (Slides 28--38)}{18}{}%
+\contentsline {subsection}{\numberline {7.28}PSTH Computation Methods}{18}{}%
+\contentsline {subsection}{\numberline {7.29}Simulation Track Generation}{18}{}%
+\contentsline {subsection}{\numberline {7.30}Parameter Sweep}{18}{}%
+\contentsline {subsection}{\numberline {7.31}Data Structures and Extraction Methods}{19}{}%
+\contentsline {subsection}{\numberline {7.32}From Counting to Simulation}{19}{}%
+\contentsline {subsection}{\numberline {7.33}MagatFairy Overview}{19}{}%
+\contentsline {subsection}{\numberline {7.34}MagatFairy Pipeline}{19}{}%
+\contentsline {subsection}{\numberline {7.35}MagatFairy in This Project}{20}{}%
+\contentsline {subsection}{\numberline {7.36}RetroVibez Overview}{20}{}%
+\contentsline {subsection}{\numberline {7.37}RetroVibez Pipeline}{20}{}%
+\contentsline {subsection}{\numberline {7.38}RetroVibez in This Project}{20}{}%
+\contentsline {section}{\numberline {A}Timing Summary}{21}{}%
+\contentsline {section}{\numberline {B}Technical Glossary}{21}{}%
+\contentsline {section}{\numberline {C}Anticipated Questions}{22}{}%

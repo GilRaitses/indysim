@@ -769,6 +769,170 @@ Individual MLE fitting $\rightarrow$ K-means/hierarchical clustering $\rightarro
 \newpage
 
 %% ==================================================
+%% ARC 7: METHODS AND TOOLING
+%% ==================================================
+
+\section{Methods and Tooling (Slides 28--38)}
+
+\begin{tcolorbox}[colback=arcblue!5,colframe=arcblue,title=\sffamily\bfseries Arc Summary]
+\textbf{Purpose:} Explain the computational infrastructure that enables this research. \\
+\textbf{Core Message:} Data extraction, simulation modeling, and analysis reporting are automated through purpose-built tools. \\
+\textbf{Key Slides:} Data Structures, From Counting to Simulation, MagatFairy, RetroVibez
+\end{tcolorbox}
+
+\setcounter{subsection}{27}
+
+\subsection{PSTH Computation Methods}
+
+\begin{keypoint}
+Empirical PSTH uses histogram binning. Parametric PSTH derives from the Bernoulli hazard model.
+\end{keypoint}
+
+\textbf{Empirical PSTH}
+
+Direct histogram binning of event times relative to LED onset. No functional form assumed. Uses 100ms bins.
+
+\textbf{Parametric PSTH}
+
+At each timestep, event probability $p(t) = 1 - \exp(-\lambda(t) \cdot \Delta t)$. The kernel modulates the hazard rate $\lambda(t)$.
+
+\textbf{Key Distinction}
+
+Empirical PSTH is what we observe. Parametric PSTH is what the model predicts.
+
+\vspace{0.5cm}
+
+\subsection{Simulation Track Generation}
+
+\begin{keypoint}
+Simulated tracks are generated using a Bernoulli point process with the fitted kernel.
+\end{keypoint}
+
+\textbf{Four Steps}
+
+1. Compute hazard rate at each timestep. 2. Convert to event probability. 3. Draw Bernoulli sample. 4. Enforce refractory period.
+
+\textbf{Key Parameters}
+
+Baseline intercept controls mean event rate. Track-level std controls across-track variance.
+
+\vspace{0.5cm}
+
+\subsection{Parameter Sweep}
+
+\begin{keypoint}
+Optimal simulation parameters: intercept = $-6.54$, track std = $0.38$.
+\end{keypoint}
+
+Grid search over intercept and track std to match empirical event count distribution. KS test validates the match.
+
+\vspace{0.5cm}
+
+\subsection{Data Structures and Extraction Methods}
+
+\begin{keypoint}
+MAGAT detects reorientations. Run tables structure run-level statistics. Events group records discrete event times.
+\end{keypoint}
+
+\textbf{MAGAT Analyzer}
+
+Marc Gershow's software for trajectory extraction and behavioral state segmentation.
+
+\textbf{Run Tables}
+
+Mason Klein's methodology for organizing run segments between reorientations.
+
+\textbf{Events Group}
+
+Records each reorientation onset as a discrete event. Used for kernel fitting.
+
+\vspace{0.5cm}
+
+\subsection{From Counting to Simulation}
+
+\begin{keypoint}
+Simulation modeling transforms descriptive science into predictive science.
+\end{keypoint}
+
+\textbf{Traditional Methods}
+
+Counting, heatmaps, histograms describe what happened but cannot predict new conditions.
+
+\textbf{What Simulation Extends}
+
+Generative modeling predicts event probabilities. Enables Fisher Information analysis and power analysis before experiments.
+
+\vspace{0.5cm}
+
+\subsection{MagatFairy Overview}
+
+\begin{keypoint}
+MagatFairy converts MAGAT MATLAB experiments to clean H5 files.
+\end{keypoint}
+
+\textbf{Purpose}
+
+MATLAB files are difficult to work with in Python. H5 provides standardized, portable format.
+
+\textbf{Repository}
+
+github.com/GilRaitses/magatfairy
+
+\vspace{0.5cm}
+
+\subsection{MagatFairy Pipeline}
+
+\textbf{Input}
+
+MAGAT experiments as MATLAB .mat files in ESET directories.
+
+\textbf{Process}
+
+MATLAB Engine loads experiments via DataManager. Track data, LED timing, camera calibration extracted.
+
+\textbf{Output}
+
+H5 files with standardized schema for Python analysis.
+
+\vspace{0.5cm}
+
+\subsection{MagatFairy in This Project}
+
+All 14 experiments converted using MagatFairy. The consolidated dataset with 701 tracks assembled from H5 outputs.
+
+\vspace{0.5cm}
+
+\subsection{RetroVibez Overview}
+
+\begin{keypoint}
+RetroVibez detects reverse crawling using Mason Klein's SpeedRunVel method.
+\end{keypoint}
+
+\textbf{Detection}
+
+SpeedRunVel computed as dot product of heading and velocity. Negative values for 3+ seconds indicate reversal.
+
+\textbf{Repository}
+
+github.com/GilRaitses/retrovibez
+
+\vspace{0.5cm}
+
+\subsection{RetroVibez Pipeline}
+
+\textbf{Four Stages}
+
+1. MATLAB analysis computes SpeedRunVel. 2. Python generates figures in parallel. 3. QMD report auto-generated. 4. Quarto renders to PDF and HTML.
+
+\vspace{0.5cm}
+
+\subsection{RetroVibez in This Project}
+
+Reverse crawl detection used for data quality assessment. Klein run table uses reversal boundaries. Report generation enables reproducible analysis.
+
+\newpage
+
+%% ==================================================
 %% APPENDIX: TIMING AND GLOSSARY
 %% ==================================================
 
@@ -781,13 +945,14 @@ Individual MLE fitting $\rightarrow$ K-means/hierarchical clustering $\rightarro
 \textbf{Arc} & \textbf{Slides} & \textbf{Target Time} \\
 \midrule
 1. Introduction & 1--2 & 2 min \\
-2. Original Study & 3--7 & 8 min \\
-3. Follow-Up Study & 8--14 & 10 min \\
-4. Recommendations & 15--19 & 5 min \\
-5. Conclusions & 20--22 & 3 min \\
-6. FAQ (if needed) & 23--27 & 5 min \\
+2. Original Study & 3--10 & 10 min \\
+3. Follow-Up Study & 11--17 & 10 min \\
+4. Recommendations & 18--22 & 5 min \\
+5. Conclusions & 23--25 & 3 min \\
+6. FAQ & 26--30 & 5 min \\
+7. Methods and Tooling & 31--38 & 8 min \\
 \midrule
-\textbf{Total} & 27 slides & 28--33 min \\
+\textbf{Total} & 38 slides & 38--43 min \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -803,6 +968,14 @@ Individual MLE fitting $\rightarrow$ K-means/hierarchical clustering $\rightarro
   \item[ARI] Adjusted Rand Index; measure of agreement between two clusterings, corrected for chance
   \item[MLE] Maximum likelihood estimation
   \item[LOEO] Leave-one-experiment-out cross-validation
+  \item[MAGAT Analyzer] Marc Gershow's software for trajectory extraction and behavioral state segmentation
+  \item[Run table] Mason Klein's data structure organizing run segments between reorientations
+  \item[Events group] Data structure recording each reorientation onset as a discrete event
+  \item[SpeedRunVel] Dot product of heading and velocity vectors; negative values indicate reverse crawling
+  \item[MagatFairy] Tool for converting MAGAT MATLAB experiments to H5 format
+  \item[RetroVibez] Pipeline for reverse crawl detection and Quarto report generation
+  \item[H5] HDF5 hierarchical data format for scientific computing
+  \item[Quarto] Open-source publishing system for reproducible documents
 \end{description}
 
 \section{Anticipated Questions}
